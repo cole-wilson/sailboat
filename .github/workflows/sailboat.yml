@@ -1,4 +1,4 @@
-# Workflow subs: [Sailboat, sailboat, , ]
+# Workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, mac_extension: ``, windows_extension: `.exe`]
 name: Publish system files for Sailboat.
 
 on:

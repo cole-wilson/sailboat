@@ -1,4 +1,4 @@
-# Workflow subs: [{name}, {short_name}, {mac}, {windows}]
+# Workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
 name: Publish system files for {name}.
 
 on:

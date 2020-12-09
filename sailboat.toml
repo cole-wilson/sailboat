@@ -13,7 +13,7 @@ modules = [ "toml",]
 fullname = "Sailboat"
 homebrew = false
 icon = ""
-latest_build = "0.0.3dev1"
+latest_build = "0.0.3dev2"
 
 [build]
 type = "1"
@@ -24,5 +24,5 @@ windows = true
 homebrew = false
 actions = true
 installer = false
-actions_built_latest = false
-release_notes = ""
+actions_built_latest = true
+release_notes = "Fixed extension for those not using .dmg installers"
