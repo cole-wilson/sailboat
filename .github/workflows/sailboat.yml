@@ -17,8 +17,6 @@ jobs:
             artifact_path: ./dist/pypi/*.whl
             asset_name: sailboat-$tag-py3-none-any.whl
             glob: true
-            body: ${{ github.event.head_commit.message }}
-            prerelease: true
           - os: windows-latest
             artifact_path: .\dist\pyinstaller\Sailboat.exe
             asset_name: sailboat-$tag-windows64.exe
@@ -37,6 +35,8 @@ jobs:
       run: |
         pip install sailboat
         python -m sailboat.actions
+    - name: Check for prerelease:
+      run: python -m actions.prerelease ${{ github.ref }} >> $GITHUB_ENV
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
@@ -45,3 +45,5 @@ jobs:
         asset_name: ${{ matrix.asset_name }}
         tag: ${{ github.ref }}
         file_glob: ${{ matrix.glob }}
+        body: ${{ github.event.head_commit.message }}
+        prerelease: $prerel

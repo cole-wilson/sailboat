@@ -9,7 +9,9 @@ def main(arguments,ids):
 	with open('.'+os.sep+'sailboat.toml') as datafile:
 		data = toml.loads(datafile.read())
 	data['build']['release_notes'] = ''
-	print('Please provide a summary of the changes (ctrl+c to finish):')
+	data['build']['release_notes'] +='\n'+input('One line release message:\n> ')
+	print('Extended desciption: (ctrl+c to finish):')
+
 	while True:
 		try:
 			data['build']['release_notes'] +='\n'+input('> ')
