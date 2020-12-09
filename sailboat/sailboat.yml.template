@@ -1,4 +1,4 @@
-# v2, workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
+# v0.0.3, workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
 name: Publish release files for {name}.
 
 on:
@@ -39,7 +39,7 @@ jobs:
 			run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
 
     - name: Upload binaries to prerelease
-			if: $prerel == 'true'
+			if: env.prerel == 'true'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
@@ -51,7 +51,7 @@ jobs:
 				prerelease: true
 			
     - name: Upload binaries to production release
-			if: $prerel == 'false'
+			if: env.prerel == 'false'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
