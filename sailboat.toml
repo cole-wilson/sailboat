@@ -24,5 +24,5 @@ windows = true
 homebrew = false
 actions = true
 installer = false
-actions_built_latest = true
-release_notes = "test..."
+actions_built_latest = false
+release_notes = ""
