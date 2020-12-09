@@ -13,7 +13,7 @@ modules = [ "toml",]
 fullname = "Sailboat"
 homebrew = false
 icon = ""
-latest_build = "0.0.3dev11"
+latest_build = "0.0.3dev12"
 
 [build]
 type = "1"
@@ -23,6 +23,6 @@ mac = true
 windows = true
 homebrew = false
 actions = true
-installer = false
+installer = true
 actions_built_latest = true
-release_notes = " prerelease checker / # A markdown test: / `test...` / > Hi /  - list /  - list"
+release_notes = "t... / Add prerelease checker / # A markdown test: / `test...` / > Hi /  - list /  - list"

@@ -166,10 +166,18 @@ def main(version,arguments,nointeraction=False):
 			os.remove("app.spec")			
 	# ============== Generate Installer Package ===============================================
 
-	if not doinstall:
+	if not doinstall and False:
 		pass
-	elif sys.platform.startswith('win'):#WINDOWS
-		print('Installer creation not yet supported on Windows.')
+	elif sys.platform.startswith('win') or True:#WINDOWS
+		os.system('pip install distro;pip install git+https://github.com/x24git/wixpy')
+		open('wixpy.json','w+').write(open(prefix+os.sep+'wixpy.template.json').read().format(
+			**data,
+			version=version,
+			icns=data['icon'],
+			keywo=", ".join(data['keywords'])
+		))
+		os.system('wix.py wixpy.json')
+
 	elif sys.platform.startswith('darwin'):#MAC
 		try:
 			import dmgbuild
@@ -181,7 +189,8 @@ def main(version,arguments,nointeraction=False):
 		open('build'+os.sep+'settings.py','w+').write(open(prefix+os.sep+'settings.py.template').read().format(
 			**data,
 			version=version,
-			icns=data['icon']
+			icns=data['icon'],
+			keywo=", ".join(data['keywords'])
 		))
 		os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{data["name"]}" ./dist/pyinstaller/{data["name"]}.dmg')
 
@@ -204,7 +213,6 @@ def main(version,arguments,nointeraction=False):
 			windows=""if data['build']['windows']else"#",
 			win_ext=".exe"if data['build']['installer']else".exe",
 			mac_ext=".dmg"if data['build']['installer']else"",
-			
 		).replace('\t','  ')
 		f.write(newdata)
 
