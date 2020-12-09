@@ -18,8 +18,7 @@ jobs:
             asset_name: sailboat-$tag-py3-none-any.whl
             glob: true
           - os: windows-latest
-#            artifact_path: .\dist\pyinstaller\Sailboat.exe
-            artifact_path: wixpy-0.1-win64.msi
+            artifact_path: .\dist\pyinstaller\Sailboat.exe
             asset_name: sailboat-$tag-windows64.exe
             glob: false
           - os: macos-latest
