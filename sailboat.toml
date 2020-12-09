@@ -13,7 +13,7 @@ modules = [ "toml",]
 fullname = "Sailboat"
 homebrew = false
 icon = ""
-latest_build = "0.0.3dev4"
+latest_build = "0.0.3dev5"
 
 [build]
 type = "1"
@@ -24,5 +24,5 @@ windows = true
 homebrew = false
 actions = true
 installer = false
-actions_built_latest = true
-release_notes = "Body text to workflow."
+actions_built_latest = false
+release_notes = "Added commit text to release body in workflow."

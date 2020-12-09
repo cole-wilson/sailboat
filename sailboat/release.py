@@ -16,7 +16,11 @@ def main(arguments,ids):
 		except KeyboardInterrupt:
 			print('\n\n')
 			break
+	f = open('.release-notes-latest','w+')
+	f.write(data['build']['release_notes'])
+	f.close()
 	data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')[3:]
+
 	try:
 		version = data['latest_build']
 	except:
@@ -38,7 +42,7 @@ def main(arguments,ids):
 			up = 'git push origin master;'
 		else:
 			up = ''
-		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "{data["build"]["release_notes"][0:10]}...";git commit --amend -m "{data["build"]["release_notes"][0:10]}...";git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";{up}git push origin master --tags;echo "--- done! ---"'
+		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -F .release-notes-latest;git commit --amend -F .release-notes-latest;git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";{up}git push origin master --tags;echo "--- done! ---"'
 		if up!="":
 			print('\n\nPushed twice to update workflow action before tagged push.')
 		os.system(f)
