@@ -13,7 +13,7 @@ modules = [ "toml",]
 fullname = "Sailboat"
 homebrew = false
 icon = ""
-latest_build = "0.0.1"
+latest_build = "0.0.2"
 
 [build]
 type = "1"
