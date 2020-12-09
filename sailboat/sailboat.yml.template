@@ -15,15 +15,15 @@ jobs:
           - os: ubuntu-latest
             artifact_path: .\dist\pypi\*.whl
             asset_name: {name}-pypi-wheel.whl
-						glob: true
+            glob: true
           - os: windows-latest
             artifact_path: .\dist\pyinstaller\{name}.exe
             asset_name: {name}-windows.exe
-						glob: false
+            glob: false
           - os: macos-latest
             artifact_path: ./dist/pyinstaller/{name}.dmg
             asset_name: {name}-mac.dmg
-						glob: false
+            glob: false
 
     steps:
     - uses: actions/checkout@v2
@@ -41,4 +41,4 @@ jobs:
         file: ${{{{ matrix.artifact_path }}}}
         asset_name: ${{{{ matrix.asset_name }}}}
         tag: ${{{{ github.ref }}}}
-				file_glob: ${{{{ matrix.glob }}}}
+        file_glob: ${{{{ matrix.glob }}}}
