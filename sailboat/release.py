@@ -16,8 +16,11 @@ def main(arguments,ids):
 		except KeyboardInterrupt:
 			print('\n\n')
 			break
-
-	version = data['latest_build']
+	try:
+		version = data['latest_build']
+	except:
+		print('You must run `sailboat build` first.')
+		exit()
 	if "pypi" in ids or len(ids)==1:
 		print("Please make sure that you have a https://pypi.org/ account.")
 		try:
@@ -27,6 +30,7 @@ def main(arguments,ids):
 			os.system('python3 -m pip install --user --upgrade twine || python3 -m pip install --upgrade twine')
 			import twine
 		del twine
+		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
 		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c '+data['build']['release_notes'])
 	if "github" in ids or len(ids)==1:
 		f = f'git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "Release v{version}";git commit --amend -m "Release v{version}";git add .;git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;git push -u origin master --tags;'
