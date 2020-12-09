@@ -19,7 +19,7 @@
   "_ProgramMenuFolder": "{name}",
   "_Shortcuts": [
       {{"Name": "{name}",
-       "Description": "{short_desc}",
+       "Description": "{short_description}",
        "Target": ".\\dist\\pyinstaller\\{name}.exe",
        "AddOnDesktop": true,
        "Open": [],
