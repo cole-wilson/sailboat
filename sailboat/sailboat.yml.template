@@ -14,15 +14,15 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_path: .\dist\pypi\*.whl
-            asset_name: {name}-pypi-wheel.whl
+            asset_name: {short_name}-$tag-py3-none-any.whl
             glob: true
           - os: windows-latest
             artifact_path: .\dist\pyinstaller\{name}.exe
-            asset_name: {name}-windows.exe
+            asset_name: {short_name}-$tag-windows64.exe
             glob: false
           - os: macos-latest
             artifact_path: ./dist/pyinstaller/{name}.dmg
-            asset_name: {name}-mac.dmg
+            asset_name: {short_name}-$tag-macos.dmg
             glob: false
 
     steps:
