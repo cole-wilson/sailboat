@@ -33,5 +33,5 @@ def main(arguments,ids):
 		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
 		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c "'+data['build']['release_notes'].replace('\n',' / ').replace('"','`')+'"')
 	if "github" in ids or len(ids)==1:
-		f = f'git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "Release v{version}";git commit --amend -m "Release v{version}";git add .;git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials:\u001b[0m";git push -u origin master --tags;'
+		f = f'git add .;git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "Release v{version}";git commit --amend -m "Release v{version}";git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials:\u001b[0m";git push -u origin master --tags;'
 		os.system(f)
