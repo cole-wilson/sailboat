@@ -33,5 +33,15 @@ def main(arguments,ids):
 		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
 		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c "'+data['build']['release_notes'].replace('\n',' / ').replace('"','`')+'"')
 	if "github" in ids or len(ids)==1:
-		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "Release v{version}";git commit --amend -m "Release v{version}";git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";git push origin master;git push origin master --tags;echo "Pushed twice to update workflow file first."'
+		if data['build']['actions_built_latest']:
+			up = 'git push origin master;'
+		else:
+			up = ''
+		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "Release v{version}";git commit --amend -m "Release v{version}";git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";{up}git push origin master --tags;echo "--- done! ---"'
+		if up!="":
+			print('\n\nPushed twice to update workflow action before tagged push.')
 		os.system(f)
+		data['build']['actions_built_latest'] = False
+		f = open('.'+os.sep+'sailboat.toml','w+')
+		f.write(toml.dumps(data))
+		f.close()

@@ -110,7 +110,7 @@ def main(version,arguments,nointeraction=False):
 			shutil.rmtree('dist')
 		except:
 			pass
-		os.system('python3 .'+os.sep+'setup.py sdist -d dist'+os.sep+'pypi bdist_wheel')
+		os.system('python3 .'+os.sep+'setup.py bdist_wheel sdist -d dist'+os.sep+'pypi')
 		try:
 			shutil.rmtree('build')
 		except:
@@ -189,12 +189,26 @@ def main(version,arguments,nointeraction=False):
 		print(f'Installer creation not yet supported for {sys.platform}!')
 	# ============== Generate Github Actions Workflow ===============================================
 	if doact:
+		# try:
+		oldact = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml').read().split('\n')[0]
+
+		# except:
+		# 	oldact = ''
 		try:
 			f = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml','w+')
 		except:
 			os.system('mkdir -p .github'+os.sep+'workflows'+os.sep)
 			f = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml','w+')
-		f.write(open(prefix+os.sep+'sailboat.yml.template').read().format(**data,version=version))
+		newdata = open(prefix+os.sep+'sailboat.yml.template').read().format(**data)
+		f.write(newdata)
+		# try:
+		# except:
+			# newact = ''
+		f.close()
+		newact = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml').read().split('\n')[0]
+		data['build']['actions_built_latest'] = newact != oldact
+		print(oldact)
+		print(newact)
 	# ============== Save Version ===============================================
 	print('saving version...')
 	data['latest_build'] = version

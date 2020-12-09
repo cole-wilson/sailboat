@@ -6,6 +6,11 @@ import os
 with open('sailboat.toml') as file:
 	data = toml.loads(file.read())
 
+try:
+	import wheel
+except:
+	os.system('pip install wheel')
+
 if sys.platform.startswith('win'):
 	sailboat.build.main(data['latest_build'],[],nointeraction=True)
 

@@ -1,3 +1,4 @@
+# Workflow subs: [{name},{short_name}]
 name: Publish system files for {name}.
 
 on:
