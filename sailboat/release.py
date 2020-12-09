@@ -16,7 +16,7 @@ def main(arguments,ids):
 		except KeyboardInterrupt:
 			print('\n\n')
 			break
-	data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')
+	data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')[3:]
 	try:
 		version = data['latest_build']
 	except:
