@@ -169,7 +169,8 @@ def main(version,arguments,nointeraction=False):
 	if not doinstall and False:
 		pass
 	elif sys.platform.startswith('win'):#WINDOWS
-		os.system('pip install distro;pip install git+https://github.com/x24git/wixpy')
+		os.system('pip install distro')
+		os.system('pip install git+https://github.com/x24git/wixpy')
 		open('wixpy.json','w+').write(open(prefix+os.sep+'wixpy.template.json').read().format(
 			**data,
 			version=version,
