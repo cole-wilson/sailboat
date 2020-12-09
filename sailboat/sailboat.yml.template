@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact_path: .\dist\pypi\*.whl
+            artifact_path: ./dist/pypi/*.whl
             asset_name: {short_name}-$tag-py3-none-any.whl
             glob: true
           - os: windows-latest
