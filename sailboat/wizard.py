@@ -66,7 +66,8 @@ def main():
 			print("\033[0m"+"Would you like to provide an installer for the app(s)? (recomended) [y/n]"+"\033[0m "+str(data['build']['installer']))
 		else:
 			data['build']['installer'] = True if input("\033[1;34m"+"Would you like to provide an installer for the app(s)? (recomended) [y/n]"+"\033[0m ")[0]=="y" else False
-
+	if (not data['build']['mac'] and not data['build']['windows']):
+		data['build']['installer'] = False
 	if not sys.platform.startswith('win') and data['build']['windows']:
 		print('\033[1;31mYou can only make a Windows app on a Windows computer.\033[0m')
 		needswin=True
@@ -87,6 +88,7 @@ def main():
 			data['build']['actions'] = actions
 	else:
 		actions = False
+		data['build']['actions'] = False
 	if actions:
 		try:
 			f = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml','w+')
@@ -114,12 +116,14 @@ def main():
 		else:
 			print('\033[1;34mDo you have a GitHub repo for this project yet? [y/n] \033[0my')
 	if os.path.isfile('README.md'):
-		shutil.copy('README.md','README.md.save')
-	open('README.md','w+').write(open(prefix+os.sep+'readme.template').read().format(**data))
+		if input('\033[1;34mOverwrite current README.md? [y/n]\033[0m ')[0]=='y':
+			open('README.md','w+').write(open(prefix+os.sep+'readme.template').read().format(**data))
+	else:
+		open('README.md','w+').write(open(prefix+os.sep+'readme.template').read().format(**data))
 	if 'bundle_id' not in data['build']:
 		data['build']['bundle_id'] = f"com.{data['author'].lower().replace(' ','')}.{data['short_name']}"
 	if 'homebrew' not in data['build']:
-		data['homebrew'] = False
+		data['build']['homebrew'] = False
 	if 'icon' not in data:
 		data['icon'] = ''
 	data['name']=data['name'].replace(' ','_').replace('/','-')
