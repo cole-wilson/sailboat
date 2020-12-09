@@ -201,7 +201,10 @@ def main(version,arguments,nointeraction=False):
 		newdata = open(prefix+os.sep+'sailboat.yml.template').read().format(
 			**data,
 			mac=""if data['build']['mac']else"#",
-			windows=""if data['build']['windows']else"#"
+			windows=""if data['build']['windows']else"#",
+			win_ext=".exe"if data['build']['installer']else".exe",
+			mac_ext=".dmg"if data['build']['installer']else"",
+			
 		).replace('\t','  ')
 		f.write(newdata)
 
