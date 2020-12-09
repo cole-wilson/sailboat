@@ -16,6 +16,7 @@ def main(arguments,ids):
 		except KeyboardInterrupt:
 			print('\n\n')
 			break
+	data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')
 	try:
 		version = data['latest_build']
 	except:
@@ -31,13 +32,13 @@ def main(arguments,ids):
 			import twine
 		del twine
 		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
-		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c "'+data['build']['release_notes'].replace('\n',' / ').replace('"','`')+'"')
+		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c "'+data['build']['release_notes']+'"')
 	if "github" in ids or len(ids)==1:
 		if data['build']['actions_built_latest']:
 			up = 'git push origin master;'
 		else:
 			up = ''
-		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "Release v{version}";git commit --amend -m "Release v{version}";git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";{up}git push origin master --tags;echo "--- done! ---"'
+		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -m "{data["build"]["release_notes"]}";git commit --amend -m "{data["build"]["release_notes"]}";git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";{up}git push origin master --tags;echo "--- done! ---"'
 		if up!="":
 			print('\n\nPushed twice to update workflow action before tagged push.')
 		os.system(f)
