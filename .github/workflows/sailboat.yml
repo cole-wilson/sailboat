@@ -1,4 +1,4 @@
-# v0.0.3, workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, mac_extension: `.dmg`, windows_extension: `.exe`]
+# v0.0.4, workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, mac_extension: `.dmg`, windows_extension: `.exe`]
 name: Publish release files for Sailboat.
 
 on:
@@ -51,7 +51,7 @@ jobs:
         prerelease: true
       
     - name: Upload binaries to production release
-      if: env.prerel == 'false'
+      if: env.prerel != 'true'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}

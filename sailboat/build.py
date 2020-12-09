@@ -171,12 +171,15 @@ def main(version,arguments,nointeraction=False):
 	elif sys.platform.startswith('win'):#WINDOWS
 		os.system('pip install distro')
 		os.system('pip install git+https://github.com/x24git/wixpy')
-		open('wixpy.json','w+').write(open(prefix+os.sep+'wixpy.template.json').read().format(
+		d = open(prefix+os.sep+'wixpy.template.json').read().format(
 			**data,
 			version=version,
 			icns=data['icon'],
 			keywo=", ".join(data['keywords'])
-		))
+		)
+		open('wixpy.json','w+').write(d)
+		print(d)
+		print('STARTING WIXPY...')
 		os.system('wix.py wixpy.json')
 
 	elif sys.platform.startswith('darwin'):#MAC
