@@ -1,5 +1,5 @@
 # Workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
-name: Publish system files for {name}.
+name: Publish release files for {name}.
 
 on:
   push:
@@ -17,6 +17,8 @@ jobs:
             artifact_path: ./dist/pypi/*.whl
             asset_name: {short_name}-$tag-py3-none-any.whl
             glob: true
+						body: ${{{{ github.event.head_commit.message }}}}
+						prerelease: true
 {windows}          - os: windows-latest
 {windows}            artifact_path: .\dist\pyinstaller\{name}{win_ext}
 {windows}            asset_name: {short_name}-$tag-windows64{win_ext}

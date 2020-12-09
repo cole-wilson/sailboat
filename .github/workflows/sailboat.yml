@@ -1,5 +1,5 @@
 # Workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, mac_extension: ``, windows_extension: `.exe`]
-name: Publish system files for Sailboat.
+name: Publish release files for Sailboat.
 
 on:
   push:
@@ -17,6 +17,8 @@ jobs:
             artifact_path: ./dist/pypi/*.whl
             asset_name: sailboat-$tag-py3-none-any.whl
             glob: true
+            body: ${{ github.event.head_commit.message }}
+            prerelease: true
           - os: windows-latest
             artifact_path: .\dist\pyinstaller\Sailboat.exe
             asset_name: sailboat-$tag-windows64.exe
