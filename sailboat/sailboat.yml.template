@@ -1,4 +1,4 @@
-# Workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
+# v1, workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
 name: Publish release files for {name}.
 
 on:
@@ -36,7 +36,7 @@ jobs:
         pip install sailboat
         python -m sailboat.actions
 		- name: Check for prerelease
-			run: python -m actions.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
+			run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
