@@ -183,7 +183,7 @@ def main(version,arguments,nointeraction=False):
 			version=version,
 			icns=data['icon']
 		))
-		os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{data["name"]}" {data["name"]}.dmg')
+		os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{data["name"]}" ./dist/pyinstaller/{data["name"]}.dmg')
 
 	else:
 		print(f'Installer creation not yet supported for {sys.platform}!')
