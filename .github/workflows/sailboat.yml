@@ -35,7 +35,7 @@ jobs:
       run: |
         pip install sailboat
         python -m sailboat.actions
-    - name: Check for prerelease:
+    - name: Check for prerelease
       run: python -m actions.prerelease ${{ github.ref }} >> $GITHUB_ENV
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
