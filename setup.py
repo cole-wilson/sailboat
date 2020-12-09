@@ -19,10 +19,10 @@ except:
 
 setuptools.setup(
     name="sailboat",
-    version="0.0.dev7",
+    version="0.0.dev8",
 		scripts=['bin/sailboat'],
 #		entry_points={
-#			'console_scripts': ['sailboat=sailboat.__main__'],
+#			'console_scripts': ['sailboat=sailboat.__main__.main()'],
 #		},
     author="Cole Wilson",
     author_email="cole@colewilson.xyz",

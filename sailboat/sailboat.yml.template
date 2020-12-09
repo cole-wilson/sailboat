@@ -1,4 +1,4 @@
-# Workflow subs: [{name},{short_name}]
+# Workflow subs: [{name}, {short_name}, {mac}, {windows}]
 name: Publish system files for {name}.
 
 on:
@@ -17,14 +17,14 @@ jobs:
             artifact_path: ./dist/pypi/*.whl
             asset_name: {short_name}-$tag-py3-none-any.whl
             glob: true
-          - os: windows-latest
-            artifact_path: .\dist\pyinstaller\{name}.exe
-            asset_name: {short_name}-$tag-windows64.exe
-            glob: false
-          - os: macos-latest
-            artifact_path: ./dist/pyinstaller/{name}.dmg
-            asset_name: {short_name}-$tag-macos.dmg
-            glob: false
+{windows}          - os: windows-latest
+{windows}            artifact_path: .\dist\pyinstaller\{name}.exe
+{windows}            asset_name: {short_name}-$tag-windows64.exe
+{windows}            glob: false
+{mac}          - os: macos-latest
+{mac}            artifact_path: ./dist/pyinstaller/{name}.dmg
+{mac}            asset_name: {short_name}-$tag-macos.dmg
+{mac}            glob: false
 
     steps:
     - uses: actions/checkout@v2

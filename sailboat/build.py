@@ -75,7 +75,7 @@ def main(version,arguments,nointeraction=False):
 		setup = template.format(
 			**data,
 			version = version,
-			entry_points = [data["short_name"]+"="+data["short_name"]+".__main__"] if data["file"]!="" else [""]
+			entry_points = [data["short_name"]+"="+data["short_name"]+".__main__.main()"] if data["file"]!="" else [""]
 		)
 		open('setup.py','w+').write(setup)
 
@@ -189,21 +189,22 @@ def main(version,arguments,nointeraction=False):
 		print(f'Installer creation not yet supported for {sys.platform}!')
 	# ============== Generate Github Actions Workflow ===============================================
 	if doact:
-		# try:
-		oldact = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml').read().split('\n')[0]
-
-		# except:
-		# 	oldact = ''
+		try:
+			oldact = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml').read().split('\n')[0]
+		except:
+			oldact="\n"
 		try:
 			f = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml','w+')
 		except:
 			os.system('mkdir -p .github'+os.sep+'workflows'+os.sep)
 			f = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml','w+')
-		newdata = open(prefix+os.sep+'sailboat.yml.template').read().format(**data)
+		newdata = open(prefix+os.sep+'sailboat.yml.template').read().format(
+			**data,
+			mac=""if data['build']['mac']else"#",
+			windows=""if data['build']['windows']else"#"
+		).replace('\t','  ')
 		f.write(newdata)
-		# try:
-		# except:
-			# newact = ''
+
 		f.close()
 		newact = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml').read().split('\n')[0]
 		data['build']['actions_built_latest'] = newact != oldact
