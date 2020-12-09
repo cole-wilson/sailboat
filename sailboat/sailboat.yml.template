@@ -37,7 +37,9 @@ jobs:
         python -m sailboat.actions
 		- name: Check for prerelease
 			run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
-    - name: Upload binaries to release
+			
+    - name: Upload binaries to prerelease
+			if: $prerel == 'true'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
@@ -46,4 +48,16 @@ jobs:
         tag: ${{{{ github.ref }}}}
         file_glob: ${{{{ matrix.glob }}}}
 				body: ${{{{ github.event.head_commit.message }}}}
-				prerelease: $prerel
+				prerelease: true
+			
+    - name: Upload binaries to production release
+			if: $prerel == 'false'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
+        file: ${{{{ matrix.artifact_path }}}}
+        asset_name: ${{{{ matrix.asset_name }}}}
+        tag: ${{{{ github.ref }}}}
+        file_glob: ${{{{ matrix.glob }}}}
+				body: ${{{{ github.event.head_commit.message }}}}
+				prerelease: false
