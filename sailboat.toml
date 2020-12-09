@@ -13,16 +13,16 @@ modules = [ "toml",]
 fullname = "Sailboat"
 homebrew = false
 icon = ""
-latest_build = "0.0.dev8"
+latest_build = "0.0.2"
 
 [build]
 type = "1"
 bundle_id = "com.colewilson.sailboat"
 github = "cole-wilson/sailboat"
-mac = false
+mac = true
 windows = true
 homebrew = false
 actions = true
 installer = false
 actions_built_latest = true
-release_notes = "fix..."
+release_notes = "test..."

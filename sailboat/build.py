@@ -154,7 +154,7 @@ def main(version,arguments,nointeraction=False):
 			typ,
 			*ico,
 			'--osx-bundle-identifier',
-			data['bundle_id']
+			data['build']['bundle_id']
 		]
 		print(options)
 		PyInstaller.__main__.run(options)
