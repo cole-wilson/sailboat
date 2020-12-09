@@ -28,9 +28,9 @@
   ],
   "_AddToPath": [""],
   "_AddBeforePath": [],
-  "_SourceDir": "../build",
+  "_SourceDir": ".",
   "_InstallDir": "wixpy-0.1",
   "_OutputName": "wixpy-0.1-win64.msi",
-  "_OutputDir": "../",
+  "_OutputDir": ".",
   "_SkipHidden": true
 }}
