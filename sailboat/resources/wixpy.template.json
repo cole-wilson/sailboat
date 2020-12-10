@@ -1,0 +1,36 @@
+{{
+  "Name": "{name}",
+  "UpgradeCode": "3AC4B4FF-10C4-4B8F-81AD-BAC3238BF690",
+  "Version": "{version}",
+  "Manufacturer": "{author}",
+  "Description": "{author} 0.1 Installer",
+  "Comments": "Licensed under {license}",
+  "Keywords": "{keywo}",
+  "Win64": true,
+  "Codepage": "1251",
+  "SummaryCodepage": "1251",
+  "Language": "1049",
+  "Languages": "1049",
+  "_OsCondition": "601",
+  "_CheckX64": true,
+  "_Conditions": [],
+  "_AppIcon": "",
+  "_Icons": [],
+  "_ProgramMenuFolder": "{name}",
+  "_Shortcuts": [
+      {{"Name": "{name}",
+       "Description": "{short_description}",
+       "Target": ".\\dist\\pyinstaller\\{name}.exe",
+       "AddOnDesktop": true,
+       "Open": [],
+       "OpenWith": [".png", ".svg", ".jpg"]
+       }}
+  ],
+  "_AddToPath": [""],
+  "_AddBeforePath": [],
+  "_SourceDir": ".",
+  "_InstallDir": "wixpy-0.1",
+  "_OutputName": "wixpy-0.1-win64.msi",
+  "_OutputDir": ".",
+  "_SkipHidden": true
+}}

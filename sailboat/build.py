@@ -4,7 +4,7 @@ import toml
 import glob
 import shutil
 
-prefix = os.path.dirname(os.path.abspath(__file__))
+prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 
 def main(version,arguments,nointeraction=False):
 	# ============== Get Data ===============================================
@@ -168,7 +168,7 @@ def main(version,arguments,nointeraction=False):
 
 	if not doinstall and False:
 		pass
-	elif sys.platform.startswith('win'):#WINDOWS
+	elif sys.platform.startswith('win') and False:#WINDOWS
 		os.system('pip install distro')
 		os.system('pip install git+https://github.com/x24git/wixpy')
 		d = open(prefix+os.sep+'wixpy.template.json').read().format(

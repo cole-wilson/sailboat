@@ -29,7 +29,7 @@ def main():
 	"""
 	The setup wizard for sailboat
 	"""
-	prefix = os.path.dirname(os.path.abspath(__file__))
+	prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 	data = {}
 	if os.path.isfile('.'+os.sep+'sailboat.toml'):
 		data = toml.loads(open('.'+os.sep+'sailboat.toml').read())

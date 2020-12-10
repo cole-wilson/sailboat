@@ -19,11 +19,11 @@ except:
 
 setuptools.setup(
     name="sailboat",
-    version="0.0.4dev5",
+    version="0.0.5.dev0",
 		scripts=['bin/sailboat'],
-#		entry_points={
-#			'console_scripts': ['sailboat=sailboat.__main__.main()'],
-#		},
+		entry_points={
+			'console_scripts': ['sailboat=sailboat.__main__:main','sail=sailboat.__main__:main',],
+		},
     author="Cole Wilson",
     author_email="cole@colewilson.xyz",
     description="A quick and easy way to distribute your python projects!",
