@@ -110,6 +110,10 @@ Whether or not the GitHub actions file was changed at the last build, updates au
 ### `latest_build`:
 The latest built version.
 
+### ``:
+Modules found in `*.py` files that do *NOT* need to be required.
+
+
 ### `git.github`:
 The upstream URL for `sailboat git` and `sailboat release`.
 

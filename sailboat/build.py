@@ -7,6 +7,8 @@ import sys
 import toml
 import glob
 import shutil
+import re
+import requests
 
 prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 
@@ -93,6 +95,27 @@ def main(version,arguments,nointeraction=False):
 		if data['build']['commands'][commandname] == '':
 			open("bin"+os.sep+commandname,'w+').write(f"#!"+os.sep+"usr"+os.sep+"bin"+os.sep+f"env bash\npython3 -m {data['short_name']} $@")
 			bins.append('bin'+os.sep+commandname)
+	# ============== Get module names ===============================================
+
+	if 'no_import' not in data['resources']:
+		data['resources']['no_import'] = []
+	mods = []
+	for x in glob.glob(data['short_name']+os.sep+'*.py'):
+		f = open(x)
+		mods += re.findall('(?m)(?:from[ ]+(\S+)[ ]+)?import[ ]+(\S+)(?:[ ]+as[ ]+\S+)?[ ]*$',f.read())
+		f.close()
+	modules = []
+	for x in mods:
+		modules.append(x[1].split('.')[0])
+	for module in set(modules):
+		if module not in data['resources']['no_import'] and ( module!= data['short_name'] and module not in sys.builtin_module_names and module not in data['resources']['modules']):
+			print('Checking for {} on PyPi...'.format(module))
+			response = requests.get("https://pypi.python.org/pypi/{}/json".format(module))
+			if response.status_code == 200:
+				data['resources']['modules'].append(module)
+			else:
+				data['resources']['no_import'].append(module)
+
 	# ============== Generate setup.py ===============================================
 	if doset:
 		if 'custom_setup' in data:
@@ -141,7 +164,8 @@ def main(version,arguments,nointeraction=False):
 		shutil.move(os.path.join(source_dir, file_name), target_dir+os.sep+file_name)
 	for filename in glob.glob(target_dir+os.sep+'LICE*'):
 		shutil.copyfile(filename,'LICENSE')
-	open(target_dir+'__init__.py','w+').write('# This file must exist, empty or not')
+	if not os.path.isfile(target_dir+'__init__.py'):
+		open(target_dir+'__init__.py','w+').write('# This file must exist, empty or not')
 	if data['resources']['file']!="" and not os.path.isfile(data['short_name']+os.sep+'__main__.py'):
 		try:
 			os.rename(data['short_name']+os.sep+data['resources']['file'],data['short_name']+os.sep+'__main__.py')

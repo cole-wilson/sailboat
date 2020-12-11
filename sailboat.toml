@@ -14,17 +14,19 @@ icon = ""
 data_files = [ "*.template", "*.template*", "*.txt",]
 modules = [ "toml", "requests",]
 file = "__main__.py"
+no_import = [ "getopt", "glob", "re", "shutil", "os", "wheel", "PyInstaller", "twine", "dmgbuild",]
 
 [build]
 build_script = "extra.py"
 type = "1"
 mac = true
 windows = true
-installer = true
+installer = false
 actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = false
 actions_built_latest = false
+release_notes = " Big Update! / This fixes tons of bugs. And imporves UX a ton! /  / All that is left is fixing installers before the big test and release to general public."
 
 [git]
 github = "cole-wilson/sailboat"
