@@ -4,26 +4,6 @@ import toml
 import sys
 import shutil
 
-questions = {
-	"name":"Full name of project",
-	"short_name":"Short name of project",
-	"author":"Your name(s)",
-	"email":"Project email",
-	"short_description":"Short description of your project",
-	"description":"Full description of your project",
-	"url":"Main project URL",
-	"license":"License",
-	"keywords":"Keywords seperated with a space",
-	"data_files":"Data files (with *) to include in project seperated with a space",
-	"file":"Main python file, leave blank for no main file",
-	"modules":"Required modules, seperated with space"
-}
-questions2= {
-	"type":"Please choose one of the following options for your project:\n\t1. My project only deals with text (not graphical).\n\t2. My project is a graphical app.\n>>>",
-	"mac":"Would you like to distribute a Mac app for your project? [y/n]",
-	"windows":"Would you like to distribute a Windows app for your project? [y/n]",
-}
-
 
 def main():
 	"""
@@ -32,103 +12,176 @@ def main():
 	prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 	data = {}
 	if os.path.isfile('.'+os.sep+'sailboat.toml'):
-		data = toml.loads(open('.'+os.sep+'sailboat.toml').read())
+		try:
+			data = toml.loads(open('.'+os.sep+'sailboat.toml').read())
+		except toml.decoder.TomlDecodeError as e:
+			print('Config error:\n\t'+str(e))
+			exit()
 	print("I'm going to ask you a few questions about your project to create a config file!\n\nPlease fill in everything to your ability. If you can't provide a value, leave it blank.\n")
+	# GENERAL ================================================
+	def red(string):
+		if sys.platform.startswith('win'):
+			return string
+		else:
+			return "\033[1;31m"+str(string)+"\033[0m"
+	def blue(string):
+		if sys.platform.startswith('win'):
+			return string
+		else:
+			return "\033[1;34m"+str(string)+"\033[0m"
+	def section(string):
+		if sys.platform.startswith('win'):
+			return string
+		else:
+			return "\n\u001b[4m\u001b[1;36m"+str(string)+"\u001b[0m"
+
+	# GENERAL ================================================
+	print(section('General Configuration:'))
+	questions = {
+		"name":"Full name of project",
+		"short_name":"Short name of project (unique)",
+		"author":"Your name(s)",
+		"email":"Project email",
+		"short_description":"Short description of your project",
+		"description":"Full description of your project",
+		"url":"Main project URL",
+		"keywords":"Keywords seperated with a space",
+		'license':''
+	}
+
+	licen = len(glob.glob('.'+os.sep+'LICENS*'))>0
+
 	for key in questions:
 		if key not in data:
-			if len(glob.glob('.'+os.sep+'LICENS*'))>0 and key=="license":
-				print('\033[1;34mYou seem to have a license file in your project, but what type is it?')
-				for license in "AGPL-3.0/Apache-2.0/BSD-2-Clause/BSD-3-Clause/GPL-2.0/GPL-3.0/LGPL-2.1/LGPL-3.0/MIT".split(os.sep+''):
-					print(f'\t- {license}')
-				data[key] = input(">>>\033[0m ")
-			elif len(glob.glob('.'+os.sep+'LICENSE*'))==0 and key=="license":
-				data[key]=""
-			elif key=="data_files" or key=="modules":
-				data[key] = input("\033[1;34m"+questions[key]+":\033[0m ").split(' ')
-				data[key] = list(filter(None, data[key]))
-
+			if key=='license':
+				if licen:
+					print('\033[1;34mYou seem to have a license file in your project, but what type is it?')
+					for license in "AGPL-3.0/Apache-2.0/BSD-2-Clause/BSD-3-Clause/GPL-2.0/GPL-3.0/LGPL-2.1/LGPL-3.0/MIT/Other SPDX License ID".split(os.sep+''):
+						print(f'\t- {license}')
+					data[key] = input(">>>\033[0m ")
+				else:
+					data[key] = ''
 			else:
-				data[key] = input("\033[1;34m"+questions[key]+":\033[0m ")
+				data[key] = input(blue(questions[key])+": ")
 		else:
-			print("\033[1;34m"+str(questions[key])+":\033[0m "+str(data[key]))
-	if "build" not in data:
+			print(blue(questions[key])+": "+str(data[key]))
+
+	# resource
+	print(section('Resource Settings:'))
+	if 'resources' not in data:
+		data['resources']={}
+	questions = {
+		"icon":"Square .png icon for your project, leave blank if none",
+		"data_files":"List of all data files for your project seperated with spaces. * counts as wildcard",
+		"modules":"Space seperated list of modules required for your project",
+		"file":"Main python file of your project. Leave blank if none"
+	}
+	for key in questions:
+		if key in data['resources']:
+			print(blue(questions[key])+': '+str(data['resources'][key]))
+		else:
+			if key in ('modules','data_files'):
+				data['resources'][key] = input(blue(questions[key])+": ").split()
+			else:
+				data['resources'][key] = input(blue(questions[key])+": ")
+	print(red('Be sure to prefix any paths to any resources with \u001b[4m`os.path.dirname(os.path.abspath(__file__))+os.sep`\u001b[0m\033[1;31m to make sure that they use the correct path and not the current directory.'))
+
+# build
+	print(section('Build Settings:'))
+	if 'build' not in data:
 		data['build']={}
-	data['fullname']=data['name']
-	
-	for key in questions2:
-		if key not in data['build']:
-			c=input("\033[1;34m"+questions2[key]+"\033[0m ")
-			data['build'][key] = c[0]=='y' if '[y/n]' in questions2[key] else c
+	questions = {
+		"type":"Please choose one of the following options for your project:\n\t1. My project only deals with text (not graphical).\n\t2. My project is a graphical app.\n>>>",
+		"mac":"Would you like to distribute a Mac app for your project? [y/n]",
+		"windows":"Would you like to distribute a Windows app for your project? [y/n]",
+	}
+	for key in questions:
+		if key in data['build']:
+			print(blue(questions[key])+': '+str(data['build'][key]))
 		else:
-			print("\033[1;34m"+str(questions2[key])+"\033[0m "+str(data['build'][key]))
+			if "[y/n]" in questions[key]:
+				data['build'][key] = input(blue(questions[key])+": ")[0]=='y'
+			else:
+				data['build'][key] = input(blue(questions[key])+": ")
+	if data['build']['type']=="1":
+		print(red('Be sure to add some user input in your script, or else the window will close too quickly!'))
 	if (data['build']['mac'] or data['build']['windows']):
 		if 'installer' in data['build']:
-			print("\033[0m"+"Would you like to provide an installer for the app(s)? (recomended) [y/n]"+"\033[0m "+str(data['build']['installer']))
+			print(blue("Would you like to provide an installer for the app(s)? (recomended) [y/n]: ")+str(data['build']['installer']))
 		else:
-			data['build']['installer'] = True if input("\033[1;34m"+"Would you like to provide an installer for the app(s)? (recomended) [y/n]"+"\033[0m ")[0]=="y" else False
+			data['build']['installer'] = input(blue("Would you like to provide an installer for the app(s)? (recomended) [y/n]: "))[0]=="y"
 	if (not data['build']['mac'] and not data['build']['windows']):
 		data['build']['installer'] = False
 	if not sys.platform.startswith('win') and data['build']['windows']:
-		print('\033[1;31mYou can only make a Windows app on a Windows computer.\033[0m')
+		print(red('You can only make a Windows app on a Windows computer.'))
 		needswin=True
 	else:
 		needswin=False
 	if sys.platform != 'darwin' and data['build']['mac']:
-		print('\033[1;31mYou can only make a Mac app on a Mac.\033[0m')
+		print(red('You can only make a Mac app on a Mac.'))
 		needsmac=True
 	else:
 		needsmac=False
 
-	if (needsmac or needswin):
+	if (needsmac or needswin) or data['build']['actions']:
 		if ('actions' in data['build']):
-			print('\033[1;34mGithub Actions can build your app on the cloud for free.\n\033[1;31mWould you like to use that to build your apps? [y/n] \033[0m'+str(data['build']['actions']))
+			print(blue('Github Actions can build your app on the cloud for free.\n\033[1;31mWould you like to use that to build your apps? [y/n]: ')+str(data['build']['actions']))
 			actions = data['build']['actions']
 		else:
-			actions = True if input('\033[1;34mGithub Actions can build your app on the cloud for free.\n\033[1;31mWould you like to use that to build your apps? [y/n] \033[0m')[0] == 'y' else False
+			actions=input('\033[1;34mGithub Actions can build your app on the cloud for free.\n\033[1;31mWould you like to use that to build your apps? [y/n]: \033[0m')[0]=='y'
 			data['build']['actions'] = actions
 	else:
 		actions = False
 		data['build']['actions'] = False
-	if actions:
-		try:
-			f = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml','w+')
-		except:
-			os.system('mkdir -p .github'+os.sep+'workflows'+os.sep)
-			f = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml','w+')
-		f.write(open(prefix+os.sep+'sailboat.yml.template').read())
-		if 'github' not in data['build']:
-			ghrepo = True if input('\033[1;34mDo you have a GitHub repo for this project yet? [y/n] \033[0m')[0] == 'y' else False
-			if not ghrepo:
-				create = True if input('\033[1;34mWould you like me to create one? (strongly recommended) [y/n] \033[0m')[0] == 'y' else False
-				if create:
-					print('\033[1;31mGo to https://github.com/new and create a repo called `'+data['short_name']+'`. When you\'ve done that, come back here and push enter.\033[0m')
-					input('')
-					ghusername = input("\033[1;34mYour github username: \033[0m")
-					data['build']['github'] = ghusername+"/"+data['short_name']
-					os.system(f'git init;git config user.name "{data["author"]}";git config user.email "{data["email"]}";git add .;git commit -m ":rocket: Initial Commit!";git remote add origin https://github.com/{ghusername}/{data["short_name"]}.git;git push -u origin master;')
-				else:
-					print('\033[1;31mOk!\033[0m')
-					data['build']['github'] = 'N/A'
-					print('\033[1;31m\nI have created the neccesary files in your project. Please upload this folder to GitHub to use this feature.\n\n\033[0mFor help, see https://docs.github.com/en/free-pro-team@latest/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line\033[0m')
-			else:
-				data['build']['github'] = input('\033[1;34mWhat is your repo? (user/repo): \033[0m')
-				print('\033[1;31m\nI have created the neccesary files in your project. Please upload this folder to GitHub to use this feature.\n\n\033[0mFor help, see https://docs.github.com/en/free-pro-team@latest/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line\033[0m')
-		else:
-			print('\033[1;34mDo you have a GitHub repo for this project yet? [y/n] \033[0my')
-	if os.path.isfile('README.md'):
-		if input('\033[1;34mOverwrite current README.md? [y/n]\033[0m ')[0]=='y':
-			open('README.md','w+').write(open(prefix+os.sep+'readme.template').read().format(**data))
+	if 'commands' in data['build']:
+		print(blue('Commands: ')+str(data['build']['commands']))
 	else:
-		open('README.md','w+').write(open(prefix+os.sep+'readme.template').read().format(**data))
+		print(section('Terminal Commands:'))
+		if input(blue('Does your project have any terminal commands associated with it? [y/n]: '))[0]=='y':
+			data['build']['commands'] = {}
+			print(red('`runs:` must be follow the rule \u001b[4m`module.function_name`\u001b[0m\033[1;31m, or be blank, which runs the main project file as a script. \n\nIt is recommended to use function wrappers.\n\nAn example would be:\n\t- name: test_command\n\t  runs: file.test\nThis would run the test() function in file.py\n\nPress ctrl+c to stop asking.'))
+			while True:
+				try:
+					n = input(blue('\t- name: '))
+					mod = input(blue('\t  runs: '))
+					data['build']['commands'][n]=mod
+					print()
+				except KeyboardInterrupt:
+					print('\nDone!\n\n')
+					break
+		else:
+			data['build']['commands'] = {}
+
+	installl = ''
+	if data['build']['mac'] or data['build']['mac'] or data['build']['actions']:
+		installl = "### " + " and ".join(["Mac" if data['build']['mac'] else "","Windows" if data['build']['mac'] else "","Unix" if data['build']['actions'] else ""])+f"\nGet the executable from the [latest release](/releases/latest)."
+		runn = " or run the application file."
+	else:
+		runn = "."
+
+
+	if os.path.isfile('README.md'):
+		print(section('README:'))
+		if input('\033[1;34mOverwrite current README.md? [y/n]:\033[0m ')[0]=='y':
+			open('README.md','w+').write(open(prefix+os.sep+'readme.template.md').read().format(**data,other_install=installl,other_run=runn))
+	else:
+		open('README.md','w+').write(open(prefix+os.sep+'readme.template.md').read().format(**data,other_install=installl,other_run=runn))
+
+	# Other
 	if 'bundle_id' not in data['build']:
 		data['build']['bundle_id'] = f"com.{data['author'].lower().replace(' ','')}.{data['short_name']}"
 	if 'homebrew' not in data['build']:
 		data['build']['homebrew'] = False
-	if 'icon' not in data:
-		data['icon'] = ''
 	data['name']=data['name'].replace(' ','_').replace('/','-')
+
+	print(section('Git Settings:'))
+	if 'git' not in data:
+		data['git'] = {}
+	print(blue('Please run `sailboat git` to setup GitHub.'))
+
+
 	f = open('.'+os.sep+'sailboat.toml','w+')
 	f.write(toml.dumps(data))
 	f.close()
 
-	print('\n\n\033[1;31m`sailboat.toml` has been created. Please edit that for further changes and advanced options.\033[0m')
+	print('\n\n\033'+red(section('`sailboat.toml` has been created. Please edit that for further changes and advanced options.\033[0m')))

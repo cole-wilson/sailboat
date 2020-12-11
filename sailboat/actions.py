@@ -3,8 +3,11 @@ import toml
 import sys
 import os
 
-with open('sailboat.toml') as file:
-	data = toml.loads(file.read())
+try:
+	data = toml.loads(open('.'+os.sep+'sailboat.toml').read())
+except toml.decoder.TomlDecodeError as e:
+	print('Config error:\n\t'+str(e))
+	exit()
 
 try:
 	import wheel

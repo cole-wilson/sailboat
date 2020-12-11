@@ -1,5 +1,5 @@
-# v0.0.5, workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
-name: Publish release files for {name}.
+# v0.0.5, workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, mac_extension: ``, windows_extension: `.exe`]
+name: Publish release files for Sailboat.
 
 on:
   push:
@@ -8,23 +8,23 @@ on:
 
 jobs:
   publish:
-    name: Publish for ${{{{ matrix.os }}}}
-    runs-on: ${{{{ matrix.os }}}}
+    name: Publish for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
           - os: ubuntu-latest
             artifact_path: ./dist/pypi/*.whl
-            asset_name: {short_name}-$tag-py3-none-any.whl
+            asset_name: sailboat-$tag-py3-none-any.whl
             glob: true
-{windows}          - os: windows-latest
-{windows}            artifact_path: .\dist\pyinstaller\{name}{win_ext}
-{windows}            asset_name: {short_name}-$tag-windows64{win_ext}
-{windows}            glob: false
-{mac}          - os: macos-latest
-{mac}            artifact_path: ./dist/pyinstaller/{name}{mac_ext}
-{mac}            asset_name: {short_name}-$tag-macos{mac_ext}
-{mac}            glob: false
+          - os: windows-latest
+            artifact_path: .\dist\pyinstaller\Sailboat.exe
+            asset_name: sailboat-$tag-windows64.exe
+            glob: false
+          - os: macos-latest
+            artifact_path: ./dist/pyinstaller/Sailboat
+            asset_name: sailboat-$tag-macos
+            glob: false
 
     steps:
     - uses: actions/checkout@v2
@@ -35,29 +35,29 @@ jobs:
       run: |
         pip install sailboat
         python -m sailboat.actions
-		- name: Check for prerelease
-			run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
+    - name: Check for prerelease
+      run: python -m sailboat.prerelease ${{ github.ref }} >> $GITHUB_ENV
 
     - name: Upload binaries to prerelease
-			if: env.prerel == 'true'
+      if: env.prerel == 'true'
       uses: svenstaro/upload-release-action@v2
       with:
-        repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
-        file: ${{{{ matrix.artifact_path }}}}
-        asset_name: ${{{{ matrix.asset_name }}}}
-        tag: ${{{{ github.ref }}}}
-        file_glob: ${{{{ matrix.glob }}}}
-				body: ${{{{ github.event.head_commit.message }}}}
-				prerelease: true
-			
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ matrix.artifact_path }}
+        asset_name: ${{ matrix.asset_name }}
+        tag: ${{ github.ref }}
+        file_glob: ${{ matrix.glob }}
+        body: ${{ github.event.head_commit.message }}
+        prerelease: true
+      
     - name: Upload binaries to production release
-			if: env.prerel != 'true'
+      if: env.prerel != 'true'
       uses: svenstaro/upload-release-action@v2
       with:
-        repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
-        file: ${{{{ matrix.artifact_path }}}}
-        asset_name: ${{{{ matrix.asset_name }}}}
-        tag: ${{{{ github.ref }}}}
-        file_glob: ${{{{ matrix.glob }}}}
-				body: ${{{{ github.event.head_commit.message }}}}
-				prerelease: false
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ matrix.artifact_path }}
+        asset_name: ${{ matrix.asset_name }}
+        tag: ${{ github.ref }}
+        file_glob: ${{ matrix.glob }}
+        body: ${{ github.event.head_commit.message }}
+        prerelease: false

@@ -2,27 +2,31 @@ name = "Sailboat"
 short_name = "sailboat"
 author = "Cole Wilson"
 email = "cole@colewilson.xyz"
-short_description = "A quick and easy way to distribute your python projects!"
+short_description = "A quick and easy way to package, freeze, and distribute your Python projects!"
 description = ""
 url = "https://github.com/cole-wilson/sailboat"
-license = "MIT"
 keywords = "ship distribute package snake python freeze shipsnake setuptools sailboat"
-data_files = [ "*.template", "*.template.*", "txt",]
-file = "__main__.py"
-modules = [ "toml",]
-fullname = "Sailboat"
-homebrew = false
+license = "MIT"
+latest_build = "0"
+
+[resources]
 icon = ""
-latest_build = "0.0.5.dev0"
+data_files = [ "*.template", "*.template*", "*.txt",]
+modules = [ "toml", "requests",]
+file = "__main__.py"
 
 [build]
 type = "1"
-bundle_id = "com.colewilson.sailboat"
-github = "cole-wilson/sailboat"
 mac = true
 windows = true
-homebrew = false
+installer = false
 actions = true
-installer = true
+bundle_id = "com.colewilson.sailboat"
+homebrew = false
 actions_built_latest = false
-release_notes = "e mabye for the day."
+
+[git]
+
+[build.commands]
+sail = "__main__.main"
+sailboat = "__main__.main"

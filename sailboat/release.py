@@ -6,8 +6,11 @@ def main(arguments,ids):
 	if not os.path.isfile('.'+os.sep+'sailboat.toml'):
 		print('Please create a config file with `sailboat wizard` first.')
 		sys.exit(0)
-	with open('.'+os.sep+'sailboat.toml') as datafile:
-		data = toml.loads(datafile.read())
+	try:
+		data = toml.loads(open('.'+os.sep+'sailboat.toml').read())
+	except toml.decoder.TomlDecodeError as e:
+		print('Config error:\n\t'+str(e))
+		exit()
 	data['build']['release_notes'] = ''
 	data['build']['release_notes'] +=input('One line release message:\n> ')
 	print('Extended desciption: (ctrl+c to finish):')
@@ -44,7 +47,7 @@ def main(arguments,ids):
 			up = 'git push origin master;'
 		else:
 			up = ''
-		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -F .release-notes-latest;git commit --amend -F .release-notes-latest;git tag v{version};git remote add origin https://github.com/{data["build"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";{up}git push origin master --tags;echo "--- done! ---"'
+		f = f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -F .release-notes-latest;git commit --amend -F .release-notes-latest;git tag v{version};git remote add origin https://github.com/{data["git"]["github"]}.git || echo;echo "\u001b[4m\u001b[1;36mGitHub Credentials: (will be cached for 1hr)\u001b[0m";{up}git push origin master --tags;echo "--- done! ---"'
 		if up!="":
 			print('\n\nPushed twice to update workflow action before tagged push.')
 		os.system(f)

@@ -4,7 +4,7 @@ def main():
 	import getopt
 	import os
 
-	he = "Provide a mode:\n\tsailboat [wizard | build | dev | release]"
+	he = "Provide a mode:\n\t"+sys.argv[0].split('/')[-1]+" [wizard | build | dev | git | release]"
 
 	try:
 		arguments, ids = getopt.getopt(sys.argv[1:], "yn", ['pypi-only','pyinstaller-only','homebrew-only','actions-only','windows-only','mac-only'])
@@ -26,7 +26,7 @@ def main():
 		version = ''
 
 	if version=='' and mode in ["build"]:
-		print("Provide a version:\n\tsailboat "+mode+" <version>")
+		print("Provide a version:\n\t"+sys.argv[0].split('/')[-1]+" "+mode+" <version>")
 		sys.exit(0)
 
 	if mode=="dev" and version=="":
@@ -39,7 +39,6 @@ def main():
 		wizard.main()
 
 	elif mode == "build":
-		print('This command will build the following:')
 		import sailboat.build as build
 		build.main(version,arguments,nointeraction=noint)
 
@@ -51,6 +50,12 @@ def main():
 	elif mode == "dev":
 		os.system('python3 ./setup.py develop')
 
+	elif mode == "git":
+		import sailboat.git as git
+		git.main()
+	else:
+		print('Invalid option')
+		print(he)
 
 	# 	elif mode == "dev":
 	# 		os.system('python3 .'+os.sep+'setup.py develop')

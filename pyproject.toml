@@ -10,6 +10,7 @@ toml = "^0.10.2"
 twine = "^3.2.0"
 dmgbuild = "^1.4.2"
 pyinstaller = "^4.1"
+wheel = "^0.36.1"
 
 [tool.poetry.dev-dependencies]
 
