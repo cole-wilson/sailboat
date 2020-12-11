@@ -19,7 +19,7 @@ except:
 
 options = {
 	"name":"sailboat",
-	"version":"0.0.6.1",
+	"version":"0.0.7",
 	"scripts":[],
 	"entry_points":{
 		'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'],
@@ -34,7 +34,7 @@ options = {
 	"install_requires":['toml', 'requests'],
 	"classifiers":["Programming Language :: Python :: 3"],
 	"python_requires":'>=3.6',
-	"package_data":{"": ['*.template', '*.template*', '*.txt'],},
+	"package_data":{"": ['resources/*', '*.template', '*.template*', '*.txt'],},
 	"license":"MIT",
 	"keywords":'ship distribute package snake python freeze shipsnake setuptools sailboat',
 }

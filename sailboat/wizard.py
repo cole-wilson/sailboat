@@ -127,7 +127,12 @@ def main():
 	else:
 		needsmac=False
 
-	if (needsmac or needswin) or data['build']['actions']:
+	try:
+		asd=data['build']['actions']
+	except:
+		asd=False
+
+	if (needsmac or needswin) or asd]:
 		if ('actions' in data['build']):
 			print(blue('Github Actions can build your app on the cloud for free.\n\033[1;31mWould you like to use that to build your apps? [y/n]: ')+str(data['build']['actions']))
 			actions = data['build']['actions']
