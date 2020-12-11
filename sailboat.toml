@@ -26,7 +26,7 @@ actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = false
 actions_built_latest = false
-release_notes = " bug / added resources/* glob"
+release_notes = ""
 
 [git]
 github = "cole-wilson/sailboat"
