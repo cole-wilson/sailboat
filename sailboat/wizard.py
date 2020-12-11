@@ -58,13 +58,21 @@ def main():
 	for key in questions:
 		if key not in data:
 			if key=='license':
+				lt = "BSD-2-Clause/BSD-3-Clause/Apache-2.0/LGPL-2.0/LGPL-2.1/LGPL-3.0/GPL-2.0/GPL-3.0/CCDL-1.0/GNU LGPL/MIT/Other SPDX License ID"
 				if licen:
 					print('\033[1;34mYou seem to have a license file in your project, but what type is it?')
-					for license in "AGPL-3.0/Apache-2.0/BSD-2-Clause/BSD-3-Clause/GPL-2.0/GPL-3.0/LGPL-2.1/LGPL-3.0/MIT/Other SPDX License ID".split(os.sep+''):
+					for license in lt.split(os.sep+''):
 						print(f'\t- {license}')
 					data[key] = input(">>>\033[0m ")
 				else:
-					data[key] = ''
+					print('\033[1;34mWhat license would you like to use?')
+					for license in (lt+"/none").split(os.sep+''):
+						print(f'\t- {license}')
+					data[key] = input(">>>\033[0m ")
+					try:
+						open('LICENSE','w+').write(open(prefix+os.sep+'licenses'+os.sep+data[key]).read().format(author=data['author']))
+					except:
+						pass
 			else:
 				data[key] = input(blue(questions[key])+": ")
 		else:
@@ -132,7 +140,7 @@ def main():
 	except:
 		asd=False
 
-	if (needsmac or needswin) or asd]:
+	if (needsmac or needswin) or asd:
 		if ('actions' in data['build']):
 			print(blue('Github Actions can build your app on the cloud for free.\n\033[1;31mWould you like to use that to build your apps? [y/n]: ')+str(data['build']['actions']))
 			actions = data['build']['actions']
