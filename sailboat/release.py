@@ -15,20 +15,21 @@ def main(arguments,ids):
 	except toml.decoder.TomlDecodeError as e:
 		print('Config error:\n\t'+str(e))
 		exit()
-	data['build']['release_notes'] = ''
-	data['build']['release_notes'] +=input('One line release message:\n> ')
-	print('Extended desciption: (ctrl+c to finish):')
+	if ('-f','') not in arguments:
+		data['build']['release_notes'] = ''
+		data['build']['release_notes'] +=input('One line release message:\n> ')
+		print('Extended desciption: (ctrl+c to finish):')
 
-	while True:
-		try:
-			data['build']['release_notes'] +='\n'+input('> ')
-		except KeyboardInterrupt:
-			print('\n\n')
-			break
-	f = open('.release-notes-latest','w+')
-	f.write(data['build']['release_notes'])
-	f.close()
-	data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')[3:]
+		while True:
+			try:
+				data['build']['release_notes'] +='\n'+input('> ')
+			except KeyboardInterrupt:
+				print('\n\n')
+				break
+		f = open('.release-notes-latest','w+')
+		f.write(data['build']['release_notes'])
+		f.close()
+		data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')[3:]
 
 	try:
 		version = data['latest_build']

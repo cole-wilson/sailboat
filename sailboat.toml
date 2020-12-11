@@ -26,7 +26,7 @@ actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = false
 actions_built_latest = false
-release_notes = " Big Update! / This fixes tons of bugs. And imporves UX a ton! /  / All that is left is fixing installers before the big test and release to general public."
+release_notes = " Version!"
 
 [git]
 github = "cole-wilson/sailboat"

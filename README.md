@@ -62,19 +62,21 @@ This command is where everything happens! There are several things that `build` 
 #### Options:
 Some valid commandline options are:
  
- - `-y`: No interaction, always accept changes.
+ - `-y`: No interaction, always accept changes. (BUILD MODE)
  
- - `--actions-only`: Only generate actions file.
+ - `--actions-only`: Only generate actions file. (BUILD MODE)
  
- - `--mac-only`: Only generate mac file.
+ - `--mac-only`: Only generate mac file. (BUILD MODE)
  
- - `--windows-only`: Only generate windows file.
+ - `--windows-only`: Only generate windows file. (BUILD MODE)
  
- - `--pypi-only`: Only generate pypi files.
+ - `--pypi-only`: Only generate pypi files. (BUILD MODE)
 
- - `--setup-only`: Only generate setup.py.
+ - `--setup-only`: Only generate setup.py. (BUILD MODE)
  
- - `--no-installer`: Overide installer config.
+ - `--no-installer`: Overide installer config. (BUILD MODE)
+
+ - `-f`: Use `.release-notes-latest` file for release notes. (RELEASE MODE)
 > *These options can be combined*
 
 
