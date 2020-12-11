@@ -16,16 +16,21 @@ modules = [ "toml", "requests",]
 file = "__main__.py"
 
 [build]
+build_script = "extra.py"
 type = "1"
 mac = true
 windows = true
-installer = false
+installer = true
 actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = false
 actions_built_latest = false
 
 [git]
+github = "cole-wilson/sailboat"
+
+[extras]
+licensed_files = [ "sailboat/prerelease.py", "sailboat/__init__.py", "sailboat/wizard.py", "sailboat/actions.py", "sailboat/release.py", "sailboat/__main__.py", "sailboat/git.py", "sailboat/build.py",]
 
 [build.commands]
 sail = "__main__.main"

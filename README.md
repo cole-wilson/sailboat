@@ -80,9 +80,42 @@ Some valid commandline options are:
 
 ### `sailboat release [pypi | github]`
 This will upload your built project to PyPi and GitHub. *(or just one of them, depending on the command options)*
+
+## Configuration
+There are several options in the configuration that are not mentioned in the wizard. This section explains what they do:
+
+### `build.build_script`:
+This option can provide a file name for custom pre and post build scripts for custom actions.
+An example value would be `build.py`. 
+Inside `build.py` you need one or two functions called `pre` and `post`.
+Each one of these must have two positional arguments: `version` and `data`.
+`version` is a string of the version triggering the build, and `data` is a `dict` containing the decoded `sailboat.toml` data.
+If `data` is returned at the end of the function, it is used instead of the normal value, and is saved at the end of the build.
+An example file might look like this:
+```python
+def pre(version,data):
+	print("Building version {}".format(version))
+def post(version,data):
+	data['test'] = version
+	return data
+```
+This file would run `pre()` at the beginning, and `post()` at the end. `data['test']` will be saved in `sailboat.toml`.
+
+### `build.bundle_id`:
+The OSX Bundle Identifier used in PyInstaller. Defaults to `com.<author>.<short_name>`.
+
+### `build.actions_built_latest`:
+Whether or not the GitHub actions file was changed at the last build, updates automatically.
+
+### `latest_build`:
+The latest built version.
+
+### `git.github`:
+The upstream URL for `sailboat git` and `sailboat release`.
+
 ## Quickstart
 Let's say that we have a file `helloworld.py`:
-```python3
+```python
 name = input("What's your name? ")
 print(f"Hello {name}!")
 ```
