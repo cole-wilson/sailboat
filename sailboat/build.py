@@ -115,7 +115,8 @@ def main(version,arguments,nointeraction=False):
 		open('setup.py','w+').write(setup)
 
 	# ============== Generate directory structure ===============================================
-	open('.'+os.sep+'.gitignore','w+').write(open(prefix+os.sep+'gitignore.template').read().replace('/',os.sep))
+	if not os.path.isfile('.gitignore'):
+		open('.'+os.sep+'.gitignore','w+').write(open(prefix+os.sep+'gitignore.template').read().replace('/',os.sep))
 	source_dir = os.getcwd()
 	target_dir = data["short_name"]+os.sep
 	types = ('*.py',*data['resources']["data_files"])
@@ -274,3 +275,4 @@ def main(version,arguments,nointeraction=False):
 	# ============== Save Version ===============================================
 	data['latest_build'] = version
 	open('sailboat.toml','w+').write(toml.dumps(data))
+	os.system('python .'+os.sep+'setup.py develop')

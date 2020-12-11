@@ -13,8 +13,7 @@ Please see the [quickstart](#quickstart) for an example.
 ## Installation
 **Install with Pip:** `pip3 install sailboat`
 ## Usage:
-> **Note:** Please use these commands in your base project directory, or they will fail.
-
+> **Note:** `sailboat` can be substituted for `sail` at any time.
 
 It is suggested that you run `sailboat wizard` to get started.
 ### `sailboat wizard`
@@ -22,6 +21,13 @@ This command runs a setup wizard that generates a `sailboat.toml` file in your c
 It will also help you set up GitHub actions and creat a git repo.
 ### `sailboat dev`
 This command lets you test your project on your own system without needing to install it every time.
+
+(running `sailboat build` also does this)
+
+### `sailboat git`
+
+Setup git and GitHub.
+
 ### `sailboat [--options] build <version>`
 This command is where everything happens! There are several things that `build` does with the given version:
 1. First, it will build a directory structure that looks something like this.
