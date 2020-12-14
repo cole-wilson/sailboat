@@ -71,6 +71,7 @@ def main(arguments,ids):
 					url = "error"
 					sha256 = "error"
 			f.write(oldFormula.format(pyhosted=url,sha256=sha256,version=versionPy))
+			f.close()
 			if 'github' in data['git']:
 				uname = data['git']['github'].split('/')[0]
 			else:
