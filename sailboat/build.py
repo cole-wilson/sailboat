@@ -240,7 +240,8 @@ def main(ids,arguments,nointeraction=False):
 		f = open('dist'+os.sep+'homebrew'+os.sep+'{name}.rb'.format(name=data['name']),'w+')
 		f.write(open(prefix+os.sep+'brew.rb').read().format(
 			**data,
-			resources2 = resources
+			resources2 = resources,
+			version = version
 		))
 		f.close()
 	# ============== Generate w/Pyinstaller ===============================================
