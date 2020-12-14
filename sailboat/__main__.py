@@ -16,8 +16,8 @@ def main():
 	if not os.path.isfile('sailboat.toml'):
 		print("Couldn't find existing sailboat.toml file")
 		os.chdir(opath)
-	else:
-		print('In directory `{}`'.format(os.getcwd()))
+	elif opath != os.getcwd():
+		print('Moved to directory `{}`'.format(os.getcwd()))
 	he = "Provide a mode:\n\t"+sys.argv[0].split('/')[-1]+" [wizard | build | dev | git | release | task]"
 
 	try:

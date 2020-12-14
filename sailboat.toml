@@ -7,7 +7,7 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = "ship distribute package snake python freeze shipsnake setuptools sailboat"
 license = "MIT"
-latest_build = "0.3.0+0f08871.3"
+latest_build = "0.2.0"
 
 [resources]
 icon = ""
@@ -26,7 +26,7 @@ actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = true
 actions_built_latest = false
-release_notes = "ed / "
+release_notes = "y changes... / ## Key Changes: / 1. Homebrew support finalized / 2. Added `sail task(s)` to manage todos / 3. Added git changlog / \t*(see below hopefully)*## CHANGELOG: / [`0f08871`](https://github.com/cole-wilson/sailboat/commits/0f08871) test... / "
 
 [git]
 github = "cole-wilson/sailboat"

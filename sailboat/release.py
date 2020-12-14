@@ -7,6 +7,7 @@ import sys
 import toml
 import shutil
 import requests
+from semver import Version
 
 def main(arguments,ids):
 	if not os.path.isfile('.'+os.sep+'sailboat.toml'):
@@ -17,14 +18,14 @@ def main(arguments,ids):
 	except toml.decoder.TomlDecodeError as e:
 		print('Config error:\n\t'+str(e))
 		exit()
-	latestag = os.popen('git tag').read().split('\n')[-2]
-	
-	CHANGELOG = os.popen('git log {}..HEAD --oneline'.format(latestag)).read()
-	chlg = "## CHANGELOG:\n"
-	for x in CHANGELOG.split('\n')[:-1]:
-		chlg+=f"[`{x[:7]}`](https://github.com/{data['git']['github']}/commits/{x[:7]}){x[7:]}\n"
-
 	if ('-f','') not in arguments:
+		latestag = os.popen('git tag').read().split('\n')[-2]
+	
+		CHANGELOG = os.popen('git log {}..HEAD --oneline'.format(latestag)).read()
+		chlg = "## CHANGELOG:\n"
+		for x in CHANGELOG.split('\n')[:-1]:
+			chlg+=f"[`{x[:7]}`](https://github.com/{data['git']['github']}/commits/{x[:7]}){x[7:]}\n"
+
 		data['build']['release_notes'] = ''
 		data['build']['release_notes'] +=input('One line release message:\n> ')
 		print('Extended desciption: (ctrl+c to finish):')
@@ -42,7 +43,8 @@ def main(arguments,ids):
 		data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')[3:]
 
 	try:
-		version = data['latest_build']
+		v = Version.parse(data['latest_build'])
+		version = str(v.replace(build=''))
 	except:
 		print('You must run `sailboat build` first.')
 		exit()
