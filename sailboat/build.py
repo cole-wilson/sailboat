@@ -194,13 +194,13 @@ def main(version,arguments,nointeraction=False):
 		resources = ''
 		for modulename in data['resources']['modules']:
 			req = requests.get('https://pypi.org/pypi/{}/json'.format(modulename)).json()
-			version = req['info']['version']
-			url = req['releases'][version][0]['url']
-			sha256 = req['releases'][version][0]['digests']['sha256']
+			versionPy = req['info']['version']
+			url = req['releases'][versionPy][0]['url']
+			sha256 = req['releases'][versionPy][0]['digests']['sha256']
 			if not (url.endswith('.tar.gz') or url.endswith('.zip')):
 				try:
-					url = req['releases'][version][1]['url']
-					sha256 = req['releases'][version][1]['digests']['sha256']
+					url = req['releases'][versionPy][1]['url']
+					sha256 = req['releases'][versionPy][1]['digests']['sha256']
 				except:
 					continue
 			resources+=retmp.format(name=modulename,url=url,sha256=sha256)

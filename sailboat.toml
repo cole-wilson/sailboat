@@ -7,7 +7,7 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = "ship distribute package snake python freeze shipsnake setuptools sailboat"
 license = "MIT"
-latest_build = "2.25.0"
+latest_build = "0.1.3"
 
 [resources]
 icon = ""
@@ -26,7 +26,7 @@ actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = true
 actions_built_latest = false
-release_notes = "asdf"
+release_notes = " anither bug / "
 
 [git]
 github = "cole-wilson/sailboat"
