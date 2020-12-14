@@ -21,7 +21,7 @@ def main():
 	he = "Provide a mode:\n\t"+sys.argv[0].split('/')[-1]+" [wizard | build | dev | git | release | task]"
 
 	try:
-		arguments, ids = getopt.getopt(sys.argv[1:], "fyn", ['pypi-only','pyinstaller-only','homebrew-only','actions-only','windows-only','mac-only'])
+		arguments, ids = getopt.getopt(sys.argv[1:], "dfyn", ['pypi-only','pyinstaller-only','homebrew-only','actions-only','windows-only','mac-only'])
 	except:
 		print(he)
 		sys.exit(0)

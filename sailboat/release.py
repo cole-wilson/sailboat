@@ -8,6 +8,7 @@ import toml
 import shutil
 import requests
 from semver import Version
+import time
 
 def main(arguments,ids):
 	if not os.path.isfile('.'+os.sep+'sailboat.toml'):
@@ -59,6 +60,8 @@ def main(arguments,ids):
 		del twine
 		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
 		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c "'+data['build']['release_notes']+'"')
+		print('waiting...')
+		time.sleep(4)
 	if "brew" in ids or len(ids)==1:
 		try:
 			shutil.rmtree('homebrew-taps')
@@ -82,6 +85,8 @@ def main(arguments,ids):
 					sha256 = "error"
 			f.write(oldFormula.format(pyhosted=url,sha256=sha256,version=versionPy))
 			f.close()
+			if ('-d','') in arguments:
+				input('waithing for user input...')
 			if 'github' in data['git']:
 				uname = data['git']['github'].split('/')[0]
 			else:
@@ -98,6 +103,8 @@ def main(arguments,ids):
 			else:
 				print('Cloning existing repo')
 				os.system(f'git clone https://github.com/{uname}/homebrew-taps.git')
+			if ('-d','') in arguments:
+				input('waithing for user input...')
 			shutil.copy('dist'+os.sep+'homebrew'+os.sep+data['name']+'.rb','homebrew-taps'+os.sep+data['name']+'.rb')
 			os.system(f'cd homebrew-taps;git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -F ..{os.sep}.release-notes-latest;git commit --amend -F ..{os.sep}.release-notes-latest;git tag v{version};git push origin master --tags;cd ..')
 			data['git']['brew'] = uname+"/homebrew-taps"
