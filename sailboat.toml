@@ -26,7 +26,7 @@ actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = true
 actions_built_latest = false
-release_notes = "ebrew!!! / added homebrew compatibility"
+release_notes = " bug / fixed bug where the formula.rb file was empty at upload / added f.close()"
 
 [git]
 github = "cole-wilson/sailboat"
