@@ -59,10 +59,12 @@ def main(arguments,ids):
 			import twine
 		del twine
 		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
-		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c "'+data['build']['release_notes']+'"')
+		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*')
 		print('waiting...')
-		time.sleep(4)
 	if "brew" in ids or len(ids)==1:
+		if "pypi" in ids or len(ids)==1:
+			print('Must wait 20 seconds for pypi files to upload')
+			time.sleep(20)
 		try:
 			shutil.rmtree('homebrew-taps')
 		except:

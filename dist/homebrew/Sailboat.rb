@@ -1,14 +1,14 @@
 # Created with sailboat, the Python releaser
 
-# v0.3.0
+# v0.3.1
 
 class Sailboat < Formula
   include Language::Python::Virtualenv
 
   desc "A quick and easy way to package, freeze, and distribute your Python projects!"
   homepage "https://github.com/cole-wilson/sailboat"
-  url "https://files.pythonhosted.org/packages/c2/1c/abead8226bf7dc4157b3183043e0ddfb39709c1cd816e1cc024f31110b00/sailboat-0.2.0.tar.gz" # These lines must be configured during release, not build.
-  sha256 "1ddcf6d2069270b2a6f7d155d8543efdc493a53e8482428dcfba22c1f78aa4f3" # ^^^
+  url "https://files.pythonhosted.org/packages/29/b1/897b4f1385aa11bf6236dcc697f36b13593b7b9519bf5a86cda4c2681212/sailboat-0.3.1.tar.gz" # These lines must be configured during release, not build.
+  sha256 "142a1163c668854fdd7cca46db92f422d00ef2eeebcd08e4d9f72274d30e22e6" # ^^^
   license "MIT"
 
   livecheck do
