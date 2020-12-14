@@ -12,6 +12,9 @@ In addition to this, it can build your Mac and Windows apps in the cloud using G
 Please see the [quickstart](#quickstart) for an example.
 ## Installation
 **Install with Pip:** `pip3 install sailboat`
+**Download Binary:** Download from [latest release](https://github.com/cole-wilson/sailboat/releases/latest).
+**Homebrew:** `brew install cole-wilson/taps/Sailboat`
+
 ## Usage:
 > **Note:** `sailboat` can be substituted for `sail` at any time.
 
@@ -118,6 +121,14 @@ Modules found in `*.py` files that do *NOT* need to be required.
 
 ### `git.github`:
 The upstream URL for `sailboat git` and `sailboat release`.
+
+### `setup_data`:
+This is a dictionary for custom `setup.py` values. For example:
+```toml
+[setup_data]
+test = "test_value"
+```
+add the key `test` to `setup.py` with the value `"test_value"`;
 
 ## Quickstart
 Let's say that we have a file `helloworld.py`:

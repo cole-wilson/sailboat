@@ -9,11 +9,13 @@ import glob
 import shutil
 import re
 import requests
+from semver import Version
+from semver import compare
 
 prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 
 
-def main(version,arguments,nointeraction=False):
+def main(ids,arguments,nointeraction=False):
 	# ============== Get Data ===============================================
 	if not os.path.isfile('.'+os.sep+'sailboat.toml'):
 		print('Please create a config file with `sailboat wizard` first.')
@@ -23,6 +25,36 @@ def main(version,arguments,nointeraction=False):
 	except toml.decoder.TomlDecodeError as e:
 		print('Config error:\n\t'+str(e))
 		exit()
+	# ============== Get Version ===============================================
+	if len(ids) >= 2: #Something provided
+		if Version.isvalid(ids[1]):
+			version = ids[1]
+		elif ids[1].startswith('maj'):
+			version = str(Version.parse(data['latest_build']).bump_major())
+		elif ids[1].startswith('min'):
+			version = str(Version.parse(data['latest_build']).bump_minor())
+		elif ids[1].startswith('pat'):
+			version = str(Version.parse(data['latest_build']).bump_patch())
+		elif ids[1].startswith('pre') or ids[1].startswith('dev'):
+			version = str(Version.parse(data['latest_build']).bump_prerelease())
+		else:
+			print('Unknown version `{}`'.format(ids[1]))
+			sys.exit(0)
+	else:
+		try:
+			latestcommit = os.popen('git rev-parse --short HEAD').read().replace('\n','')
+		except KeyboardInterrupt:
+			latestcommit = "build"
+		if latestcommit in data['latest_build']:
+			version = str(Version.parse(data['latest_build']).bump_build())
+		else:
+			version = str(Version.parse(data['latest_build']).replace(build=latestcommit+".1"))
+	if compare(version,data['latest_build']):
+		if input('\u001b[31mYou are building a version that comes before the previously built version. Do you wish to continue? [y/n] \u001b[0m')['y']=='n':
+			print()
+			sys.exit(0)
+	print('\nPreparing to build version {}\n'.format(version))
+
 	# ============== Pre-build script ===============================================
 	if 'build_script' in data['build']:
 		try:
@@ -190,7 +222,7 @@ def main(version,arguments,nointeraction=False):
 
 	# ============== Generate homebrew file ===============================================
 	if dobrew:
-		retmp = '\tresource "{name}" do\n\t\turl "{url}"\n\t\tsha256 "{sha256}"\n\tend\n'
+		retmp = '   resource "{name}" do\n      url "{url}"\n      sha256 "{sha256}"\n   end\n'
 		resources = ''
 		for modulename in data['resources']['modules']:
 			req = requests.get('https://pypi.org/pypi/{}/json'.format(modulename)).json()

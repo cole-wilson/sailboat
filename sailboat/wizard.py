@@ -95,8 +95,10 @@ def main():
 		data['build']={}
 	questions = {
 		"type":"Please choose one of the following options for your project:\n\t1. My project only deals with text (not graphical).\n\t2. My project is a graphical app.\n>>>",
+		"homebrew":"Would you like to distribute a Homebrew app for your project? [y/n]",
 		"mac":"Would you like to distribute a Mac app for your project? [y/n]",
 		"windows":"Would you like to distribute a Windows app for your project? [y/n]",
+		
 	}
 	for key in questions:
 		if key in data['build']:

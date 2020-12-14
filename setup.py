@@ -19,7 +19,7 @@ except:
 
 options = {
 	"name":"sailboat",
-	"version":"0.1.3",
+	"version":"0.2.0",
 	"scripts":[],
 	"entry_points":{
 		'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'],
@@ -31,7 +31,7 @@ options = {
 	"long_description_content_type":"text/markdown",
 	"url":"https://github.com/cole-wilson/sailboat",
 	"packages":setuptools.find_packages(),
-	"install_requires":['toml', 'requests'],
+	"install_requires":['toml', 'requests', 'semver'],
 	"classifiers":["Programming Language :: Python :: 3"],
 	"python_requires":'>=3.6',
 	"package_data":{"": ['resources/*', '*.template', '*.template*', '*.txt'],},

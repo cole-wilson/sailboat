@@ -8,7 +8,17 @@ def main():
 	import getopt
 	import os
 
-	he = "Provide a mode:\n\t"+sys.argv[0].split('/')[-1]+" [wizard | build | dev | git | release]"
+	opath = os.getcwd()
+
+	while not os.path.isfile('sailboat.toml') and os.getcwd().count(os.sep)>2:
+		os.chdir('..')
+
+	if not os.path.isfile('sailboat.toml'):
+		print("Couldn't find existing sailboat.toml file")
+		os.chdir(opath)
+	else:
+		print('In directory `{}`'.format(os.getcwd()))
+	he = "Provide a mode:\n\t"+sys.argv[0].split('/')[-1]+" [wizard | build | dev | git | release | task]"
 
 	try:
 		arguments, ids = getopt.getopt(sys.argv[1:], "fyn", ['pypi-only','pyinstaller-only','homebrew-only','actions-only','windows-only','mac-only'])
@@ -24,27 +34,19 @@ def main():
 		print(he)
 		sys.exit(0)
 
-	try:
-		version = ids[1]
-	except:
-		version = ''
-
-	if version=='' and mode in ["build"]:
-		print("Provide a version:\n\t"+sys.argv[0].split('/')[-1]+" "+mode+" <version>")
-		sys.exit(0)
-
-	if mode=="dev" and version=="":
-		version = "dev_build"
 
 	# ================================================================
 
 	if mode == "wizard":
 		import sailboat.wizard as wizard
 		wizard.main()
+	elif mode.startswith('task'):
+		import sailboat.task as task
+		task.main(ids)
 
 	elif mode == "build":
 		import sailboat.build as build
-		build.main(version,arguments,nointeraction=noint)
+		build.main(ids,arguments,nointeraction=noint)
 
 	elif mode == "release":
 		import sailboat.release as release
