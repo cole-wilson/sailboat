@@ -49,8 +49,8 @@ def main(ids,arguments,nointeraction=False):
 			version = str(Version.parse(data['latest_build']).bump_build())
 		else:
 			version = str(Version.parse(data['latest_build']).replace(build=latestcommit+".1"))
-	if compare(version,data['latest_build']):
-		if input('\u001b[31mYou are building a version that comes before the previously built version. Do you wish to continue? [y/n] \u001b[0m')['y']=='n':
+	if compare(version,data['latest_build']) == -1:
+		if input('\u001b[31mYou are building a version that comes before the previously built version. Do you wish to continue? [y/n] \u001b[0m')[0]=='n' or nointeraction:
 			print()
 			sys.exit(0)
 	print('\nPreparing to build version {}\n'.format(version))
@@ -134,7 +134,7 @@ def main(ids,arguments,nointeraction=False):
 	mods = []
 	for x in glob.glob(data['short_name']+os.sep+'*.py'):
 		f = open(x)
-		mods += re.findall('(?m)(?:from[ ]+(\S+)[ ]+)?import[ ]+(\S+)(?:[ ]+as[ ]+\S+)?[ ]*$',f.read())
+		mods += re.findall('(?m)(?:from[ ]+(\S+)[ ]+)?import[ ]+\S+?:[ ]+as[ ]+\S+?[ ]*$',f.read())
 		f.close()
 	modules = []
 	for x in mods:

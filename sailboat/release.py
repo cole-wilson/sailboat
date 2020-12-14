@@ -17,6 +17,13 @@ def main(arguments,ids):
 	except toml.decoder.TomlDecodeError as e:
 		print('Config error:\n\t'+str(e))
 		exit()
+	latestag = os.popen('git tag').read().split('\n')[-2]
+	
+	CHANGELOG = os.popen('git log {}..HEAD --oneline'.format(latestag)).read()
+	chlg = "## CHANGELOG:\n"
+	for x in CHANGELOG.split('\n')[:-1]:
+		chlg+=f"[`{x[:7]}`](https://github.com/{data['git']['github']}/commits/{x[:7]}){x[7:]}\n"
+
 	if ('-f','') not in arguments:
 		data['build']['release_notes'] = ''
 		data['build']['release_notes'] +=input('One line release message:\n> ')
@@ -28,6 +35,7 @@ def main(arguments,ids):
 			except KeyboardInterrupt:
 				print('\n\n')
 				break
+		data['build']['release_notes']+=chlg
 		f = open('.release-notes-latest','w+')
 		f.write(data['build']['release_notes'])
 		f.close()
