@@ -74,7 +74,7 @@ def main(version,arguments,nointeraction=False):
 	if dopypi:
 		print('\t- A distributable Python module.')
 	if dobrew:
-		print('\t- A Homebrew package.')
+		print('\t- A Homebrew formula.')
 	if dowin:
 		installer = " with a .msi installer." if doinstall else "."
 		print('\t- A Windows app'+installer)
@@ -172,8 +172,6 @@ def main(version,arguments,nointeraction=False):
 			open(data['short_name']+os.sep+data['resources']['file'],'w+').write('# Please edit __main__.py for the main code. Thanks!\n(you can delete this file.)')
 		except FileNotFoundError:
 			pass
-
-
 	# ============== Generate pypi files ===============================================
 	if dopypi:
 		try:
@@ -185,11 +183,34 @@ def main(version,arguments,nointeraction=False):
 			shutil.rmtree('build')
 		except:
 			pass
-		for x in glob.glob('*.egg-info'):
-			shutil.rmtree(x)
 		for x in glob.glob('dist'+os.sep+'*.whl'):
 			os.rename(x,x.replace('dist'+os.sep,'dist'+os.sep+'pypi'+os.sep))
+		for x in glob.glob('*.egg-info'):
+			shutil.rmtree(x)
 
+	# ============== Generate homebrew file ===============================================
+	if dobrew:
+		retmp = '\tresource "{name}" do\n\t\turl "{url}"\n\t\tsha256 "{sha256}"\n\tend\n'
+		resources = ''
+		for modulename in data['resources']['modules']:
+			req = requests.get('https://pypi.org/pypi/{}/json'.format(modulename)).json()
+			version = req['info']['version']
+			url = req['releases'][version][0]['url']
+			sha256 = req['releases'][version][0]['digests']['sha256']
+			if not (url.endswith('.tar.gz') or url.endswith('.zip')):
+				try:
+					url = req['releases'][version][1]['url']
+					sha256 = req['releases'][version][1]['digests']['sha256']
+				except:
+					continue
+			resources+=retmp.format(name=modulename,url=url,sha256=sha256)
+		os.mkdir('dist'+os.sep+'homebrew')
+		f = open('dist'+os.sep+'homebrew'+os.sep+'{name}.rb'.format(name=data['name']),'w+')
+		f.write(open(prefix+os.sep+'brew.rb').read().format(
+			**data,
+			resources2 = resources
+		))
+		f.close()
 	# ============== Generate w/Pyinstaller ===============================================
 	if dowin or domac:
 		try:

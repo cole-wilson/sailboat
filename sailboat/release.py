@@ -5,6 +5,8 @@
 import os
 import sys
 import toml
+import shutil
+import requests
 
 def main(arguments,ids):
 	if not os.path.isfile('.'+os.sep+'sailboat.toml'):
@@ -47,6 +49,47 @@ def main(arguments,ids):
 		del twine
 		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
 		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*'+' -c "'+data['build']['release_notes']+'"')
+	if "brew" in ids or len(ids)==1:
+		try:
+			shutil.rmtree('homebrew-taps')
+		except:
+			pass
+		if data['build']['homebrew']:
+			f = open('dist'+os.sep+'homebrew'+os.sep+data['name']+'.rb')
+			oldFormula = f.read()
+			f.close()
+			f = open('dist'+os.sep+'homebrew'+os.sep+data['name']+'.rb','w+')
+			req = requests.get('https://pypi.org/pypi/{}/json'.format(data['short_name'])).json()
+			versionPy = req['info']['version']
+			url = req['releases'][versionPy][0]['url']
+			sha256 = req['releases'][versionPy][0]['digests']['sha256']
+			if not (url.endswith('.tar.gz') or url.endswith('.zip')):
+				try:
+					url = req['releases'][versionPy][1]['url']
+					sha256 = req['releases'][versionPy][1]['digests']['sha256']
+				except:
+					url = "error"
+					sha256 = "error"
+			f.write(oldFormula.format(pyhosted=url,sha256=sha256,version=versionPy))
+			if 'github' in data['git']:
+				uname = data['git']['github'].split('/')[0]
+			else:
+				uname = input('Your GitHub username: ')
+			print('\u001b[4m\u001b[1;36mHomebrew Release:\u001b[0m')
+			if 'brew' not in data['git'] and len(os.popen(f'git ls-remote https://github.com/{uname}/homebrew-taps').read())<4:
+				print('Creating new repo')
+				print('To create a homebrew formula, you must first setup a GitHub repository called "homebrew-taps".\n\nPlease go to https://github.com/new and create a repo called `homebrew-taps`.')
+				input('Press enter when done.')
+				os.mkdir('homebrew-taps')
+				os.chdir('homebrew-taps')
+				os.system(f'git init;echo "# homebrew-taps" >> README.md;git remote add origin https://github.com/{uname}/homebrew-taps.git')
+				os.chdir('..')
+			else:
+				print('Cloning existing repo')
+				os.system(f'git clone https://github.com/{uname}/homebrew-taps.git')
+			shutil.copy('dist'+os.sep+'homebrew'+os.sep+data['name']+'.rb','homebrew-taps'+os.sep+data['name']+'.rb')
+			os.system(f'cd homebrew-taps;git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -F ..{os.sep}.release-notes-latest;git commit --amend -F ..{os.sep}.release-notes-latest;git tag v{version};git push origin master --tags;cd ..')
+		shutil.rmtree('homebrew-taps')
 	if "github" in ids or len(ids)==1:
 		if data['build']['actions_built_latest']:
 			up = 'git push origin master;'

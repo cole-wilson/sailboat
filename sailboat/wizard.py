@@ -41,6 +41,7 @@ def main():
 
 	# GENERAL ================================================
 	print(section('General Configuration:'))
+	lt = "BSD-2-Clause/BSD-3-Clause/Apache-2.0/LGPL-2.0/LGPL-2.1/LGPL-3.0/GPL-2.0/GPL-3.0/CCDL-1.0/GNU LGPL/MIT/Other SPDX License ID"
 	questions = {
 		"name":"Full name of project",
 		"short_name":"Short name of project (unique)",
@@ -50,7 +51,7 @@ def main():
 		"description":"Full description of your project",
 		"url":"Main project URL",
 		"keywords":"Keywords seperated with a space",
-		'license':''
+		'license':"You seem to have a license file in your project, but what type is it?\n\t- "+(f"\n\t- ".join(lt.split('/'))+"\n>>>")
 	}
 
 	licen = len(glob.glob('.'+os.sep+'LICENS*'))>0
@@ -58,21 +59,11 @@ def main():
 	for key in questions:
 		if key not in data:
 			if key=='license':
-				lt = "BSD-2-Clause/BSD-3-Clause/Apache-2.0/LGPL-2.0/LGPL-2.1/LGPL-3.0/GPL-2.0/GPL-3.0/CCDL-1.0/GNU LGPL/MIT/Other SPDX License ID"
 				if licen:
 					print('\033[1;34mYou seem to have a license file in your project, but what type is it?')
 					for license in lt.split(os.sep+''):
 						print(f'\t- {license}')
 					data[key] = input(">>>\033[0m ")
-				else:
-					print('\033[1;34mWhat license would you like to use?')
-					for license in (lt+"/none").split(os.sep+''):
-						print(f'\t- {license}')
-					data[key] = input(">>>\033[0m ")
-					try:
-						open('LICENSE','w+').write(open(prefix+os.sep+'licenses'+os.sep+data[key]).read().format(author=data['author']))
-					except:
-						pass
 			else:
 				data[key] = input(blue(questions[key])+": ")
 		else:
