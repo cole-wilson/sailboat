@@ -26,7 +26,7 @@ actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = true
 actions_built_latest = false
-release_notes = " bug / fixed bug where the formula.rb file was empty at upload / added f.close()"
+release_notes = "asdf"
 
 [git]
 github = "cole-wilson/sailboat"

@@ -90,7 +90,11 @@ def main(arguments,ids):
 				os.system(f'git clone https://github.com/{uname}/homebrew-taps.git')
 			shutil.copy('dist'+os.sep+'homebrew'+os.sep+data['name']+'.rb','homebrew-taps'+os.sep+data['name']+'.rb')
 			os.system(f'cd homebrew-taps;git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{data["author"]}";git config user.email "{data["email"]}";git commit -F ..{os.sep}.release-notes-latest;git commit --amend -F ..{os.sep}.release-notes-latest;git tag v{version};git push origin master --tags;cd ..')
-		shutil.rmtree('homebrew-taps')
+			data['git']['brew'] = uname+"/homebrew-taps"
+		try:
+			shutil.rmtree('homebrew-taps')
+		except:
+			pass
 	if "github" in ids or len(ids)==1:
 		if data['build']['actions_built_latest']:
 			up = 'git push origin master;'
