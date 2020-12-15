@@ -180,13 +180,17 @@ def main(ids,arguments,nointeraction=False):
 				modname = ".".join(data['build']['commands'][commandname].split('.')[:-1])
 				funcname = data['build']['commands'][commandname].split('.')[-1]
 				entries.append(commandname+"="+data["short_name"]+"."+modname+":"+funcname)
+		try:
+			pyv = version.split('+')[0]
+		except:
+			pyv = version
 
 		setup = template.format(
 			**data,
 			**data['resources'],
 			cu=cu,
 			bins=bins,
-			version = version,
+			version = pyv,
 			entry_points = entries
 			
 		)

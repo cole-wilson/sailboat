@@ -45,7 +45,7 @@ def main(arguments,ids):
 		data['build']['release_notes'] = data['build']['release_notes'].replace('\n',' / ').replace('"','`')[3:]
 
 	try:
-		version = data['latest_build'].split('+')[0]
+		version = data['latest_build'] = data['latest_build'].split('+')[0]
 	except:
 		print('You must run `sailboat build` first.')
 		exit()
