@@ -16,8 +16,6 @@ prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 
 
 def main(ids,arguments,nointeraction=False):
-	if os.sep == r"\\":
-		os.sep = "\\"
 	# ============== Get Data ===============================================
 	if not os.path.isfile('.'+os.sep+'sailboat.toml'):
 		print('Please create a config file with `sailboat wizard` first.')
@@ -239,7 +237,7 @@ def main(ids,arguments,nointeraction=False):
 				except:
 					continue
 			resources+=retmp.format(name=modulename,url=url,sha256=sha256)
-		os.mkdir('dist'+os.sep+'homebrew')
+		os.makedirs('dist'+os.sep+'homebrew')
 		f = open('dist'+os.sep+'homebrew'+os.sep+'{name}.rb'.format(name=data['name']),'w+')
 		f.write(open(prefix+os.sep+'brew.rb').read().format(
 			**data,

@@ -36,7 +36,7 @@ def main(arguments,ids):
 			except KeyboardInterrupt:
 				print('\n\n')
 				break
-		data['build']['release_notes']+=chlg if len(chlg.split('\n'))>2 else ''
+		data['build']['release_notes']+=chlg if len(chlg.split('\n'))>4 else ''
 		f = open('.release-notes-latest','w+')
 		f.write(data['build']['release_notes'])
 		f.close()
