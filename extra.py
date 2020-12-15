@@ -16,7 +16,7 @@ def pre(version,data):
 	if 'licensed_files' not in data['extras']:
 		data['extras']['licensed_files'] = []
 	for x in glob.glob(os.path.join('sailboat','*.py')):
-		if x not in data['extras']['licensed_files']:
+		if x.replace('/',os.sep).replace(r'\',os.sep) not in data['extras']['licensed_files']:
 			data['extras']['licensed_files'].append(x)
 			try:
 				f = open(x,'r')

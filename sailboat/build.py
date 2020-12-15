@@ -16,6 +16,8 @@ prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 
 
 def main(ids,arguments,nointeraction=False):
+	if os.sep == r"\\":
+		os.sep = "\\"
 	# ============== Get Data ===============================================
 	if not os.path.isfile('.'+os.sep+'sailboat.toml'):
 		print('Please create a config file with `sailboat wizard` first.')
