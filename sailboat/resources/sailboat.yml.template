@@ -22,8 +22,8 @@ jobs:
 {windows}            asset_name: {short_name}-$tag-windows64{win_ext}
 {windows}            glob: false
 {mac}          - os: macos-latest
-{mac}            artifact_path: ./dist/pyinstaller/{name}{mac_ext}
-{mac}            asset_name: {short_name}-$tag-macos{mac_ext}
+{mac}            artifact_path: ./{name}.dmg
+{mac}            asset_name: {short_name}-$tag-macos.dmg
 {mac}            glob: false
 
     steps:

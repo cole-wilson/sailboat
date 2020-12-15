@@ -49,8 +49,8 @@ def main(ids,arguments,nointeraction=False):
 			version = str(Version.parse(data['latest_build']).bump_build())
 		else:
 			version = str(Version.parse(data['latest_build']).replace(build=latestcommit+".1"))
-	if compare(version,data['latest_build']) == -1:
-		if input('\u001b[31mYou are building a version that comes before the previously built version. Do you wish to continue? [y/n] \u001b[0m')[0]=='n' or nointeraction:
+	if compare(version,data['latest_build']) == -1 and not (ids[1].startswith('pre') or ids[1].startswith('dev')):
+		if input(f'\u001b[31mYou are building a version ({version}) that comes before the previously built version ({data["latest_build"]}). Do you wish to continue? [y/n] \u001b[0m')[0]=='n' or nointeraction:
 			print()
 			sys.exit(0)
 	print('\nPreparing to build version {}\n'.format(version))
@@ -204,6 +204,7 @@ def main(ids,arguments,nointeraction=False):
 			open(data['short_name']+os.sep+data['resources']['file'],'w+').write('# Please edit __main__.py for the main code. Thanks!\n(you can delete this file.)')
 		except FileNotFoundError:
 			pass
+	
 	# ============== Generate pypi files ===============================================
 	if dopypi:
 		try:
@@ -245,6 +246,7 @@ def main(ids,arguments,nointeraction=False):
 		))
 		f.close()
 	# ============== Generate w/Pyinstaller ===============================================
+	# domac = True
 	if dowin or domac:
 		try:
 			import PyInstaller.__main__
@@ -288,6 +290,31 @@ def main(ids,arguments,nointeraction=False):
 		except:
 			print('removing app.spec...')
 			os.remove("app.spec")			
+	# ============== Mac .app Bundle ===============================================
+	if domac:
+		os.chdir('dist')
+
+		os.mkdir(data['name'])
+		os.chdir(data['name'])
+
+		os.mkdir('Contents')
+		os.chdir('Contents')
+
+		os.mkdir('MacOS')
+		os.mkdir('Resources')
+
+		infoPlist = open('Info.plist','w+')
+		infoPlist.write(open(prefix+'/info.plist.xml').read().format(
+			**data,
+			**data['build'],
+			version = version
+		))
+		infoPlist.close()
+
+		shutil.copy('./../../pyinstaller/'+data['name'],'MacOS')
+		os.chdir('./../../..')
+
+		os.rename('./dist/'+data['name'],'./dist/'+data['name']+".app")
 	# ============== Generate Installer Package ===============================================
 
 	if not doinstall and False:
@@ -320,7 +347,7 @@ def main(ids,arguments,nointeraction=False):
 			icns=data['icon'],
 			keywo=", ".join(data['keywords'])
 		))
-		os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{data["name"]}" ./dist/pyinstaller/{data["name"]}.dmg')
+		os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{data["name"]} Installer" ./{data["name"]}.dmg')
 
 	else:
 		print(f'Installer creation not yet supported for {sys.platform}!')

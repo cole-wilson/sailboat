@@ -22,8 +22,8 @@ jobs:
             asset_name: sailboat-$tag-windows64.exe
             glob: false
           - os: macos-latest
-            artifact_path: ./dist/pyinstaller/Sailboat
-            asset_name: sailboat-$tag-macos
+            artifact_path: ./Sailboat.dmg
+            asset_name: sailboat-$tag-macos.dmg
             glob: false
 
     steps:
