@@ -9,6 +9,8 @@ __pycache__/
 # Sailboat
 .release-notes-latest
 
+.env
+
 # Distribution / packaging
 .Python
 build/

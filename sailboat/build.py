@@ -344,7 +344,7 @@ def main(ids,arguments,nointeraction=False):
 		open('build'+os.sep+'settings.py','w+').write(open(prefix+os.sep+'settings.py.template').read().format(
 			**data,
 			version=version,
-			icns=data['icon'],
+			icns=data['resources']['icon'],
 			keywo=", ".join(data['keywords'])
 		))
 		os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{data["name"]} Installer" ./{data["name"]}.dmg')
