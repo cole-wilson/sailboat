@@ -61,7 +61,7 @@ def main(arguments,ids):
 		print('waiting...')
 	if "brew" in ids or len(ids)==1:
 		if "pypi" in ids or len(ids)==1:
-			print('Must wait 20 seconds for pypi files to upload...\n')
+			print('Must wait 20 seconds for pypi files to upload before creting homebrew formula...\n')
 			for i in range(0, 20):
 					time.sleep(1)
 					sys.stdout.write(u"\u001b[1000D" + str(20-(i + 1)).zfill(2) + " seconds left.\t")
@@ -131,10 +131,10 @@ def main(arguments,ids):
 		f.close()
 
 	print('\n\n\u001b[4m\u001b[1;36mRelease Overview:\u001b[0m')
-	print('Succesfully release version \u001b[34m'+version+'\u001b[0m!')
-	print('View the latest stable releases at:')
+	print('\nSuccesfully release version \u001b[34m'+version+'\u001b[0m!')
+	print('\nView the latest stable releases at:')
 	print('PyPi:   				https://pypi.org/project/'+data['short_name'])
 	print('GitHub: 				https://github.com/'+data['git']['github'])
-	print('GitHub(brew): 	https://github.com/'+data['git']['brew'])
+	print('GitHub(brew):	https://github.com/'+data['git']['brew'])
 	
 	

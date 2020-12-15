@@ -13,7 +13,7 @@ elif "alpha" in sys.argv[1]:
 	print('prerel=true')
 elif "test" in sys.argv[1]:
 	print('prerel=true')
-elif VersionInfo(sys.argv[1]).prerelease != None:
+elif VersionInfo(sys.argv[1].split('/')[-1]).prerelease != None:
 	print('prerel=true')
 else:
 	print('prerel=false')
