@@ -18,12 +18,7 @@ try:
 except:
 	os.system('pip install wheel')
 
-if sys.platform.startswith('win'):
-	sailboat.build.main(data['latest_build'],[],nointeraction=True)
-
-
-elif sys.platform.startswith('darwin') or True:
-	sailboat.build.main(data['latest_build'],[],nointeraction=True)
-
+if sys.platform.startswith('dar') or sys.platform.startswith('win'):
+	sailboat.build.main(['build',data['latest_build']],[],nointeraction=True)
 else:
-	print('This is not being run on Mac and Windows.')
+	print('This is not being run on Mac or Windows.')

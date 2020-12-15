@@ -36,7 +36,7 @@ def main(arguments,ids):
 			except KeyboardInterrupt:
 				print('\n\n')
 				break
-		data['build']['release_notes']+=chlg
+		data['build']['release_notes']+=chlg if len(chlg.split('\n'))>2 else ''
 		f = open('.release-notes-latest','w+')
 		f.write(data['build']['release_notes'])
 		f.close()
@@ -61,8 +61,12 @@ def main(arguments,ids):
 		print('waiting...')
 	if "brew" in ids or len(ids)==1:
 		if "pypi" in ids or len(ids)==1:
-			print('Must wait 20 seconds for pypi files to upload')
-			time.sleep(20)
+			print('Must wait 20 seconds for pypi files to upload...\n')
+			for i in range(0, 20):
+					time.sleep(1)
+					sys.stdout.write(u"\u001b[1000D" + str(20-(i + 1)).zfill(2) + " seconds left.\t")
+					sys.stdout.flush()
+			print()
 		try:
 			shutil.rmtree('homebrew-taps')
 		except:
