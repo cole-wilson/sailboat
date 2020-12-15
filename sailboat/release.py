@@ -131,4 +131,10 @@ def main(arguments,ids):
 		f.close()
 
 	print('\n\n\u001b[4m\u001b[1;36mRelease Overview:\u001b[0m')
-	print('Succesfully release version \u001b[34m'+version+'\u001b[0m')
+	print('Succesfully release version \u001b[34m'+version+'\u001b[0m!')
+	print('View the latest stable releases at:')
+	print('PyPi:   				https://pypi.org/project/'+data['short_name'])
+	print('GitHub: 				https://github.com/'+data['git']['github'])
+	print('GitHub(brew): 	https://github.com/'+data['git']['brew'])
+	
+	

@@ -19,7 +19,7 @@ except:
 
 options = {
 	"name":"sailboat",
-	"version":"0.3.3-rc.1",
+	"version":"0.3.3-rc.2",
 	"scripts":[],
 	"entry_points":{
 		'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'],
