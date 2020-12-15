@@ -9,7 +9,7 @@ import glob
 import shutil
 import re
 import requests
-from semver import Version
+from semver import VersionInfo
 from semver import compare
 
 prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
@@ -25,18 +25,18 @@ def main(ids,arguments,nointeraction=False):
 	except toml.decoder.TomlDecodeError as e:
 		print('Config error:\n\t'+str(e))
 		exit()
-	# ============== Get Version ===============================================
+	# ============== Get VersionInfo ===============================================
 	if len(ids) >= 2: #Something provided
-		if Version.isvalid(ids[1]):
+		if VersionInfo.isvalid(ids[1]):
 			version = ids[1]
 		elif ids[1].startswith('maj'):
-			version = str(Version.parse(data['latest_build']).bump_major())
+			version = str(VersionInfo.parse(data['latest_build']).bump_major())
 		elif ids[1].startswith('min'):
-			version = str(Version.parse(data['latest_build']).bump_minor())
+			version = str(VersionInfo.parse(data['latest_build']).bump_minor())
 		elif ids[1].startswith('pat'):
-			version = str(Version.parse(data['latest_build']).bump_patch())
+			version = str(VersionInfo.parse(data['latest_build']).bump_patch())
 		elif ids[1].startswith('pre') or ids[1].startswith('dev'):
-			version = str(Version.parse(data['latest_build']).bump_prerelease())
+			version = str(VersionInfo.parse(data['latest_build']).bump_prerelease())
 		else:
 			print('Unknown version `{}`'.format(ids[1]))
 			sys.exit(0)
@@ -46,9 +46,9 @@ def main(ids,arguments,nointeraction=False):
 		except KeyboardInterrupt:
 			latestcommit = "build"
 		if latestcommit in data['latest_build']:
-			version = str(Version.parse(data['latest_build']).bump_build())
+			version = str(VersionInfo.parse(data['latest_build']).bump_build())
 		else:
-			version = str(Version.parse(data['latest_build']).replace(build=latestcommit+".1"))
+			version = str(VersionInfo.parse(data['latest_build']).replace(build=latestcommit+".1"))
 	if compare(version,data['latest_build']) == -1 and not (ids[1].startswith('pre') or ids[1].startswith('dev')):
 		if input(f'\u001b[31mYou are building a version ({version}) that comes before the previously built version ({data["latest_build"]}). Do you wish to continue? [y/n] \u001b[0m')[0]=='n' or nointeraction:
 			print()
@@ -383,7 +383,7 @@ def main(ids,arguments,nointeraction=False):
 			data = newdata
 	except:
 		pass
-	# ============== Save Version ===============================================
+	# ============== Save VersionInfo ===============================================
 	data['latest_build'] = version
 	open('sailboat.toml','w+').write(toml.dumps(data))
 	os.system('python .'+os.sep+'setup.py develop')
