@@ -325,7 +325,7 @@ def main(ids,arguments,nointeraction=False):
 		d = open(prefix+os.sep+'wixpy.template.json').read().format(
 			**data,
 			version=version,
-			icns=data['icon'],
+			icns=data['resources']['icon'],
 			keywo=", ".join(data['keywords'])
 		)
 		open('wixpy.json','w+').write(d)
