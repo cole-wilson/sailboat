@@ -26,6 +26,8 @@ def main(ids,arguments,nointeraction=False):
 		print('Config error:\n\t'+str(e))
 		exit()
 	# ============== Get VersionInfo ===============================================
+	if 'latest_build' not in data:
+		data['latest_build'] = '0.0.1'
 	if len(ids) >= 2: #Something provided
 		if VersionInfo.isvalid(ids[1]):
 			version = ids[1]
@@ -91,14 +93,25 @@ def main(ids,arguments,nointeraction=False):
 			doact = True
 		elif ('--setup-only','') in arguments:
 			doset = True
+		elif ('--unix-only','') in arguments:
+			donix = True
 		
+	elif 'actions_only' in data['build'] and data['build']['actions_only'] and not ('CI' in os.environ and os.environ['CI']=="TRUE"):
+		dopypi = True
+		dobrew = True
+		dowin = False
+		domac = False
+		donix = False
+		doact = True
+		doset = True
 	else:
 		dopypi = True
 		dobrew = data['build']['homebrew']
 		dowin = data['build']['windows'] and sys.platform.startswith('win')
 		domac = data['build']['mac'] and sys.platform.startswith('darwin')
-		doact= data['build']['actions']
-		doset=True
+		donix = data['build']['unix'] and sys.platform.startswith('l')
+		doact = data['build']['actions']
+		doset =True
 	if ('--no-installer','') in arguments:
 		doinstall=False
 	else:
@@ -113,6 +126,9 @@ def main(ids,arguments,nointeraction=False):
 	if domac:
 		installer = " with a .dmg installer." if doinstall else "."
 		print('\t- A Mac app'+installer)
+	if donix:
+		print('\t- A Unix executable')
+	
 	if doact:
 		print('\t- A GitHub Actions file for building Mac and Windows apps and publishing a Github release.')
 	if not nointeraction:
@@ -128,7 +144,6 @@ def main(ids,arguments,nointeraction=False):
 			open("bin"+os.sep+commandname,'w+').write(f"#!"+os.sep+"usr"+os.sep+"bin"+os.sep+f"env bash\npython3 -m {data['short_name']} $@")
 			bins.append('bin'+os.sep+commandname)
 	# ============== Get module names ===============================================
-
 	if 'no_import' not in data['resources']:
 		data['resources']['no_import'] = []
 	mods = []
@@ -149,6 +164,8 @@ def main(ids,arguments,nointeraction=False):
 				data['resources']['no_import'].append(module)
 
 	# ============== Generate setup.py ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating setup.py\u001b[0m')
+
 	if doset:
 		if 'custom_setup' in data:
 			cu=str(data['custom_setup'])
@@ -176,6 +193,8 @@ def main(ids,arguments,nointeraction=False):
 		open('setup.py','w+').write(setup)
 
 	# ============== Generate directory structure ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating Directory Structure\u001b[0m')
+
 	if not os.path.isfile('.gitignore'):
 		open('.'+os.sep+'.gitignore','w+').write(open(prefix+os.sep+'gitignore.template').read().replace('/',os.sep))
 	source_dir = os.getcwd()
@@ -206,6 +225,8 @@ def main(ids,arguments,nointeraction=False):
 			pass
 	
 	# ============== Generate pypi files ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating PyPi files...\u001b[0m')
+
 	if dopypi:
 		try:
 			shutil.rmtree('dist')
@@ -222,6 +243,8 @@ def main(ids,arguments,nointeraction=False):
 			shutil.rmtree(x)
 
 	# ============== Generate homebrew file ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating Homebrew file...\u001b[0m')
+
 	if dobrew:
 		retmp = '   resource "{name}" do\n      url "{url}"\n      sha256 "{sha256}"\n   end\n'
 		resources = ''
@@ -246,8 +269,10 @@ def main(ids,arguments,nointeraction=False):
 		))
 		f.close()
 	# ============== Generate w/Pyinstaller ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating Pyinstaller files...\u001b[0m')
+
 	# domac = True
-	if dowin or domac:
+	if dowin or domac or donix:
 		try:
 			import PyInstaller.__main__
 		except:
@@ -291,6 +316,7 @@ def main(ids,arguments,nointeraction=False):
 			print('removing app.spec...')
 			os.remove("app.spec")			
 	# ============== Mac .app Bundle ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating Mac .app bundle...\u001b[0m')
 	if domac:
 		os.chdir('dist')
 
@@ -315,11 +341,12 @@ def main(ids,arguments,nointeraction=False):
 		os.chdir('./../../..')
 
 		os.rename('./dist/'+data['name'],'./dist/'+data['name']+".app")
+	else:
+		print('not generating mac .app bundle because on {} not mac.'.format(sys.platform))
 	# ============== Generate Installer Package ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating Installer Package...\u001b[0m')
 
-	if not doinstall and False:
-		pass
-	elif sys.platform.startswith('win') and False:#WINDOWS
+	if sys.platform.startswith('win') and doinstall and False:#WINDOWS
 		os.system('pip install distro')
 		os.system('pip install git+https://github.com/x24git/wixpy')
 		d = open(prefix+os.sep+'wixpy.template.json').read().format(
@@ -352,6 +379,7 @@ def main(ids,arguments,nointeraction=False):
 	else:
 		print(f'Installer creation not yet supported for {sys.platform}!')
 	# ============== Generate Github Actions Workflow ===============================================
+	print('\n\n\u001b[4m\u001b[1;36mGenerating GitHub Actions File...\u001b[0m')
 	if doact:
 		try:
 			oldact = open('.github'+os.sep+'workflows'+os.sep+'sailboat.yml').read().split('\n')[0]
@@ -367,7 +395,8 @@ def main(ids,arguments,nointeraction=False):
 			mac=""if data['build']['mac']else"#",
 			windows=""if data['build']['windows']else"#",
 			win_ext=".exe"if data['build']['installer']else".exe",
-			mac_ext=".dmg"if data['build']['installer']else"",
+			mac_ext=".dmg"if not data['build']['unix']else"",
+			u=""if data['build']['unix']else"#"
 		).replace('\t','  ')
 		f.write(newdata)
 

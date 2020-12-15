@@ -19,8 +19,10 @@ def main(arguments,ids):
 		print('Config error:\n\t'+str(e))
 		exit()
 	if ('-f','') not in arguments:
-		latestag = os.popen('git tag').read().split('\n')[-2]
-	
+		try:
+			latestag = os.popen('git tag').read().split('\n')[-2]
+		except:
+			latestag = ""
 		CHANGELOG = os.popen('git log {}..HEAD --oneline'.format(latestag)).read()
 		chlg = "\n## CHANGELOG:\n"
 		for x in CHANGELOG.split('\n')[:-1]:
@@ -117,6 +119,9 @@ def main(arguments,ids):
 		except:
 			pass
 	if "github" in ids or len(ids)==1:
+		if 'github' not in data["git"]:
+			import sailboat.git
+			sailboat.git.main()
 		if data['build']['actions_built_latest']:
 			up = 'git push origin master;'
 		else:

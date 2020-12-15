@@ -64,6 +64,8 @@ def main():
 					for license in lt.split(os.sep+''):
 						print(f'\t- {license}')
 					data[key] = input(">>>\033[0m ")
+				else:
+					data[key] = 'None'
 			else:
 				data[key] = input(blue(questions[key])+": ")
 		else:
@@ -96,6 +98,7 @@ def main():
 	questions = {
 		"type":"Please choose one of the following options for your project:\n\t1. My project only deals with text (not graphical).\n\t2. My project is a graphical app.\n>>>",
 		"homebrew":"Would you like to distribute a Homebrew app for your project? [y/n]",
+		"unix":"Would you like to distribute a Unix executable for your project? [y/n]",
 		"mac":"Would you like to distribute a Mac app for your project? [y/n]",
 		"windows":"Would you like to distribute a Windows app for your project? [y/n]",
 		
@@ -112,9 +115,9 @@ def main():
 		print(red('Be sure to add some user input in your script, or else the window will close too quickly!'))
 	if (data['build']['mac'] or data['build']['windows']):
 		if 'installer' in data['build']:
-			print(blue("Would you like to provide an installer for the app(s)? (recomended) [y/n]: ")+str(data['build']['installer']))
+			print(blue("Would you like to provide an installer for the Windows app? (recomended) [y/n]: ")+str(data['build']['installer']))
 		else:
-			data['build']['installer'] = input(blue("Would you like to provide an installer for the app(s)? (recomended) [y/n]: "))[0]=="y"
+			data['build']['installer'] = input(blue("Would you like to provide an installer for the Windows app? (recomended) [y/n]: "))[0]=="y"
 	if (not data['build']['mac'] and not data['build']['windows']):
 		data['build']['installer'] = False
 	if not sys.platform.startswith('win') and data['build']['windows']:
