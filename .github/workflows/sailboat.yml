@@ -1,4 +1,4 @@
-# v0.1.1, workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, unix_comment: ``, mac_extension: ``, windows_extension: `.exe`]
+# v0.1.2, workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, unix_comment: ``, mac_extension: ``, windows_extension: `.exe`]
 name: Publish release files for Sailboat.
 
 on:
@@ -23,9 +23,9 @@ jobs:
             asset_name: sailboat-$tag-windows64.exe
             glob: false
           - os: macos-latest
-            artifact_path: ./dist/pyinstaller/*
+            artifact_path: ./Sailboat.dmg
             asset_name: sailboat-$tag-macos.dmg
-            glob: true
+            glob: false
 
     steps:
     - uses: actions/checkout@v2

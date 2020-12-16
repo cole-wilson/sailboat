@@ -1,4 +1,4 @@
-# v0.1.1, workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, unix_comment: `{u}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
+# v0.1.2, workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, unix_comment: `{u}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
 name: Publish release files for {name}.
 
 on:
@@ -23,9 +23,9 @@ jobs:
 {windows}            asset_name: {short_name}-$tag-windows64{win_ext}
 {windows}            glob: false
 {mac}          - os: macos-latest
-{mac}            artifact_path: ./dist/pyinstaller/*{mac_ext}
+{mac}            artifact_path: ./{name}.dmg
 {mac}            asset_name: {short_name}-$tag-macos.dmg
-{mac}            glob: true
+{mac}            glob: false
 
     steps:
     - uses: actions/checkout@v2
