@@ -372,6 +372,8 @@ def main(ids,arguments,nointeraction=False):
 			os.system('pip3 install dmgbuild')
 			import dmgbuild
 		del dmgbuild
+		if not os.path.isfile('build'+os.sep+'settings.py'):
+			os.mkdir('build')
 		open('build'+os.sep+'settings.py','w+').write(open(prefix+os.sep+'settings.py.template').read().format(
 			**data,
 			version=version,
