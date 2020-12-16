@@ -4,6 +4,11 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import sys
 from semver import VersionInfo
+
+try:
+	rl = VersionInfo(sys.argv[1].split('/')[-1]).prerelease.replace('v','') != None
+except:
+	rl = False
 # Prerelease checker given GitHub tag.
 if "dev" in sys.argv[1]:
 	print('prerel=true')
@@ -13,7 +18,7 @@ elif "alpha" in sys.argv[1]:
 	print('prerel=true')
 elif "test" in sys.argv[1]:
 	print('prerel=true')
-elif VersionInfo(sys.argv[1].split('/')[-1]).prerelease != None:
+elif rl:
 	print('prerel=true')
 else:
 	print('prerel=false')
