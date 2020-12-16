@@ -1,6 +1,6 @@
 # Created with sailboat, the Python releaser
 
-# v0.4.4
+# v0.4.4-rc.2
 
 class Sailboat < Formula
   include Language::Python::Virtualenv

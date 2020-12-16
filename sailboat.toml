@@ -7,7 +7,7 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = "ship distribute package snake python freeze shipsnake setuptools sailboat"
 license = "MIT"
-latest_build = "0.4.4"
+latest_build = "0.4.4-rc.2"
 
 [resources]
 icon = ""
@@ -18,7 +18,7 @@ no_import = [ "getopt", "glob", "re", "shutil", "os", "wheel", "PyInstaller", "t
 
 [build]
 build_script = "extra.py"
-actions_only = true
+#actions_only = true
 type = "1"
 mac = true
 unix = true
@@ -27,8 +27,8 @@ installer = false
 actions = true
 bundle_id = "com.colewilson.sailboat"
 homebrew = true
-actions_built_latest = true
-release_notes = " non-existent build/ dir"
+actions_built_latest = false
+release_notes = ""
 
 [git]
 github = "cole-wilson/sailboat"
