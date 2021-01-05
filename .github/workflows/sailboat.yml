@@ -14,18 +14,19 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact_path: ./dist/pypi/*.whl
-            asset_name: sailboat-$tag-py3-none-any.whl
+            artifact_path: ./dist/*/*
+            asset_name: .
             glob: true
 
           - os: windows-latest
-            artifact_path: .\dist\pyinstaller\Sailboat.exe
-            asset_name: sailboat-$tag-windows64.exe
-            glob: false
+            artifact_path: .\dist\*\*
+            asset_name: ,
+            glob: true
+
           - os: macos-latest
-            artifact_path: ./Sailboat.dmg
-            asset_name: sailboat-$tag-macos.dmg
-            glob: false
+            artifact_path: ./dist/*/*
+            asset_name: .
+            glob: true
 
     steps:
     - uses: actions/checkout@v2

@@ -21,9 +21,7 @@ options = {{
 	"name":"{short_name}",
 	"version":"{version}",
 	"scripts":{bins},
-	"entry_points":{{
-		'console_scripts': {entry_points},
-	}},
+	"entry_points":{entry_points},
 	"author":"{author}",
 	"author_email":"{email}",
 	"description":"{short_description}",

@@ -1,16 +1,17 @@
 [tool.poetry]
-name = "wholeroundcomputation"
+name = "sailboat"
 version = "0.1.0"
 description = ""
-authors = ["repl.it user <replituser@example.com>"]
+authors = ["Cole Wilson <cole@colewilson.xyz>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-toml = "^0.10.2"
-twine = "^3.2.0"
-dmgbuild = "^1.4.2"
 pyinstaller = "^4.1"
-wheel = "^0.36.1"
+semver = "^2.13.0"
+toml = "^0.10.2"
+twine = "^3.3.0"
+wheel = "^0.36.2"
+dmgbuild = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 

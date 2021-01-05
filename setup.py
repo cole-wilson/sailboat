@@ -15,28 +15,26 @@ try:
   with open("README.md", "r") as fh:
 	  long_description = fh.read()
 except:
-	long_description = "# Sailboat\nA quick and easy way to package, freeze, and distribute your Python projects!\n### Contributors\n- Cole Wilson\n### Contact\n<cole@colewilson.xyz> "
+	long_description = "# Sailboat\n🐍 A quick and easy way to distribute your Python projects!\n### Contributors\n- Cole Wilson\n### Contact\n<cole@colewilson.xyz> "
 
 options = {
 	"name":"sailboat",
-	"version":"0.4.5",
+	"version":"0.10.4",
 	"scripts":[],
-	"entry_points":{
-		'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'],
-	},
+	"entry_points":{'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'], 'sailboat_plugins': ['pypi=sailboat.builders:PyPi', 'homebrew=sailboat.builders:Homebrew', 'echo=sailboat.__main__:echo', 'pyinstaller=sailboat.builders:PyInstaller', 'dev=sailboat.core:Develop', 'release=sailboat.core:Release', 'build=sailboat.build:Build', 'wizard=sailboat.core:Wizard', 'remove=sailboat.core:Remove', 'add=sailboat.core:Add', 'plugins=sailboat.core:ManagePlugins', 'test=sailboat.tests:Test', 'git=sailboat.core:Git']},
 	"author":"Cole Wilson",
 	"author_email":"cole@colewilson.xyz",
-	"description":"A quick and easy way to package, freeze, and distribute your Python projects!",
+	"description":"🐍 A quick and easy way to distribute your Python projects!",
 	"long_description":long_description,
 	"long_description_content_type":"text/markdown",
 	"url":"https://github.com/cole-wilson/sailboat",
 	"packages":setuptools.find_packages(),
-	"install_requires":['toml', 'requests', 'semver'],
+	"install_requires":['toml', 'semver', 'requests', 'setuptools', 'pathlib'],
 	"classifiers":["Programming Language :: Python :: 3"],
 	"python_requires":'>=3.6',
-	"package_data":{"": ['resources/*', '*.template', '*.template*', '*.txt'],},
+	"package_data":{"": ['resources/*'],},
 	"license":"MIT",
-	"keywords":'ship distribute package snake python freeze shipsnake setuptools sailboat',
+	"keywords":'',
 }
 
 custom_options = {}

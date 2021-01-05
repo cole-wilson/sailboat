@@ -1,41 +1,79 @@
+#	  _____       _ _ _                 _     
+#	 / ____|     (_) | |               | |  _ 
+#	| (___   __ _ _| | |__   ___   __ _| |_(_)
+#	 \___ \ / _` | | | '_ \ / _ \ / _` | __|  
+#	 ____) | (_| | | | |_) | (_) | (_| | |_ _ 
+#	|_____/ \__,_|_|_|_.__/ \___/ \__,_|\__(_)
+                                          
+# Basic Setup:
 name = "Sailboat"
 short_name = "sailboat"
-author = "Cole Wilson"
 email = "cole@colewilson.xyz"
-short_description = "A quick and easy way to package, freeze, and distribute your Python projects!"
+short_description = "🐍 A quick and easy way to distribute your Python projects!"
 description = ""
 url = "https://github.com/cole-wilson/sailboat"
-keywords = "ship distribute package snake python freeze shipsnake setuptools sailboat"
+keywords = ""
 license = "MIT"
-latest_build = "0.4.5"
+latest_build = "0.10.4+7149e7d.1"
+author = "Cole Wilson"
+latest_release = "0.10.4"
+release-notes = "a"
 
+
+# Resource Setup:
 [resources]
 icon = ""
-data_files = [ "resources/*", "*.template", "*.template*", "*.txt",]
-modules = [ "toml", "requests", "semver",]
+data_files = [ "resources/*",]
+modules = [ "toml", "semver", "requests", "setuptools", "pathlib",]
 file = "__main__.py"
-no_import = [ "getopt", "glob", "re", "shutil", "os", "wheel", "PyInstaller", "twine", "dmgbuild",]
+no_import = [ "shutil", "re", "os", "glob", "pkg_resources", "traceback", "json",]
 
-[build]
-build_script = "extra.py"
-type = "1"
+
+# Plugin Commands:
+
+
+# Build Routines:
+[build.homebrew]
+
+[build.pyinstaller]
+_run = false
+type = 1
 mac = true
-unix = true
 windows = true
-installer = false
-actions = true
-bundle_id = "com.colewilson.sailboat"
-homebrew = true
-actions_built_latest = false
-release_notes = ""
+unix = true
+bundle_id = "xyz.colewilson.sailboat"
 
-[git]
-github = "cole-wilson/sailboat"
-brew = "cole-wilson/homebrew-taps"
+[build.test]
 
-[extras]
-licensed_files = [ "sailboat/prerelease.py", "sailboat/__init__.py", "sailboat/wizard.py", "sailboat/actions.py", "sailboat/release.py", "sailboat/__main__.py", "sailboat/git.py", "sailboat/build.py", "sailboat/task.py",]
-
-[build.commands]
+[build.pypi.commands]
 sail = "__main__.main"
 sailboat = "__main__.main"
+
+[build.pypi.entry_points.sailboat_plugins]
+pypi = "sailboat.builders:PyPi"
+homebrew = "sailboat.builders:Homebrew"
+echo = "sailboat.__main__:echo"
+pyinstaller = "sailboat.builders:PyInstaller"
+dev = "sailboat.core:Develop"
+release = "sailboat.core:Release"
+build = "sailboat.build:Build"
+wizard = "sailboat.core:Wizard"
+remove = "sailboat.core:Remove"
+add = "sailboat.core:Add"
+plugins = "sailboat.core:ManagePlugins"
+test = "sailboat.tests:Test"
+git = "sailboat.core:Git"
+
+
+# Release Routines:
+[release.echo]
+int = 1
+
+
+# Other:
+[git]
+brew = "cole-wilson/homebrew-taps"
+github = "cole-wilson/sailboat"
+
+
+# Thank you for using Sailboat!

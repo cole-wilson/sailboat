@@ -1,14 +1,14 @@
 # Created with sailboat, the Python releaser
 
-# v0.4.5
+# v0.10.4+7149e7d.1
 
 class Sailboat < Formula
   include Language::Python::Virtualenv
 
-  desc "A quick and easy way to package, freeze, and distribute your Python projects!"
+  desc "🐍 A quick and easy way to distribute your Python projects!"
   homepage "https://github.com/cole-wilson/sailboat"
-  url "https://files.pythonhosted.org/packages/4f/05/34302bb127d4f4867bcd62abaa720b4d21f0e516f0688faf2805bbff4e35/sailboat-0.4.5.tar.gz" # These lines must be configured during release, not build.
-  sha256 "1a6d2b0025ca16ba4b2fa2c206149446793e0210c36ba16b034edb4992669e21" # ^^^
+  url "{pyhosted}" # These lines must be configured during release, not build.
+  sha256 "{sha256}" # ^^^
   license "MIT"
 
   livecheck do
@@ -21,13 +21,21 @@ class Sailboat < Formula
       url "https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz"
       sha256 "b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"
    end
-   resource "requests" do
-      url "https://files.pythonhosted.org/packages/9f/14/4a6542a078773957aa83101336375c9597e6fe5889d20abda9c38f9f3ff2/requests-2.25.0.tar.gz"
-      sha256 "7f1a0b932f4a60a1a65caa4263921bb7d9ee911957e0ae4a23a6dd08185ad5f8"
-   end
    resource "semver" do
       url "https://files.pythonhosted.org/packages/31/a9/b61190916030ee9af83de342e101f192bbb436c59be20a4cb0cdb7256ece/semver-2.13.0.tar.gz"
       sha256 "fa0fe2722ee1c3f57eac478820c3a5ae2f624af8264cbdf9000c980ff7f75e3f"
+   end
+   resource "requests" do
+      url "https://files.pythonhosted.org/packages/6b/47/c14abc08432ab22dc18b9892252efaf005ab44066de871e72a38d6af464b/requests-2.25.1.tar.gz"
+      sha256 "27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804"
+   end
+   resource "setuptools" do
+      url "https://files.pythonhosted.org/packages/94/23/e9e3d96500c063129a19feb854efbb01e6ffe7d913f1da8176692418ab8e/setuptools-51.1.1.tar.gz"
+      sha256 "0b43d1e0e0ac1467185581c2ceaf86b5c1a1bc408f8f6407687b0856302d1850"
+   end
+   resource "pathlib" do
+      url "https://files.pythonhosted.org/packages/ac/aa/9b065a76b9af472437a0059f77e8f962fe350438b927cb80184c32f075eb/pathlib-1.0.1.tar.gz"
+      sha256 "6940718dfc3eff4258203ad5021090933e5c04707d5ca8cc9e73c94a7894ea9f"
    end
 
 
