@@ -1,0 +1,19 @@
+[console_scripts]
+sail = sailboat.__main__:main
+sailboat = sailboat.__main__:main
+
+[sailboat_plugins]
+add = sailboat.core:Add
+build = sailboat.build:Build
+dev = sailboat.core:Develop
+echo = sailboat.__main__:echo
+git = sailboat.core:Git
+homebrew = sailboat.builders:Homebrew
+plugins = sailboat.core:ManagePlugins
+pyinstaller = sailboat.builders:PyInstaller
+pypi = sailboat.builders:PyPi
+release = sailboat.core:Release
+remove = sailboat.core:Remove
+test = sailboat.tests:Test
+wizard = sailboat.core:Wizard
+

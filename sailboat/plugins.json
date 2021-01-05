@@ -1,0 +1,100 @@
+{
+  "build": {
+    "homebrew": {
+      "description": "<no description provided>",
+      "dist": "sailboat",
+      "release": true,
+      "show": true,
+      "type": "build"
+    },
+    "pyinstaller": {
+      "description": "<no description provided>",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "build"
+    },
+    "pypi": {
+      "description": "<no description provided>",
+      "dist": "sailboat",
+      "release": true,
+      "show": true,
+      "type": "build"
+    },
+    "test": {
+      "description": "<no description provided>",
+      "dist": "sailboat",
+      "release": true,
+      "show": true,
+      "type": "build"
+    }
+  },
+  "command": {},
+  "core": {
+    "add": {
+      "description": "add a plugin to your project.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "build": {
+      "description": "build your project for release.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "dev": {
+      "description": "run your project without building it.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "git": {
+      "description": "Manage Git for your project.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "plugins": {
+      "description": "global plugin manager.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "release": {
+      "description": "Release your project.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "remove": {
+      "description": "remove a plugin from you project.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "wizard": {
+      "description": "configure you project or a plugin.",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "core"
+    }
+  },
+  "release": {
+    "echo": {
+      "description": "say argv!",
+      "dist": "sailboat",
+      "release": false,
+      "show": true,
+      "type": "release"
+    }
+  }
+}
