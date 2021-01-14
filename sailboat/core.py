@@ -165,7 +165,7 @@ class Git(Plugin):
 			else:
 				print('Go to https://github.com/new and create a repo.')
 				self.data['git']['github'] = uname+'/'+input('GitHub repo name: ')
-				os.system(f"""git init;
+			os.system(f"""git init;
 git add .;
 git commit -m "Initial Commit :rocket:";
 git remote add origin https://github.com/{self.data['git']['github']}.git;
