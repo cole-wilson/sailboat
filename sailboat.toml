@@ -14,10 +14,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.11.1+0075630.1"
+latest_build = "0.12.0"
 author = "Cole Wilson"
-latest_release = "0.11.0"
-release-notes = "v0.11.0"
+latest_release = "0.12.0"
+release-notes = "Testing "
 
 
 # Resource Setup:
