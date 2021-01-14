@@ -8,10 +8,11 @@ import sailboat.core
 from sailboat.build import Build
 from pathlib import Path
 
-
-path = Path(__file__)
-prefix = os.path.abspath(path.parent)+os.sep
-
+try:
+	path = Path(__file__)
+	prefix = os.path.abspath(path.parent)+os.sep
+except:
+	prefix = os.path.dirname(os.path.abspath(__file__))+os.sep
 # print(prefix)
 
 # =============================================================================
