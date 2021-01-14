@@ -19,7 +19,7 @@ except:
 
 options = {
 	"name":"sailboat",
-	"version":"0.12.3",
+	"version":"0.12.3-rc.1",
 	"scripts":[],
 	"entry_points":{'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'], 'sailboat_plugins': ['pypi=sailboat.builders:PyPi', 'homebrew=sailboat.builders:Homebrew', 'echo=sailboat.__main__:echo', 'pyinstaller=sailboat.builders:PyInstaller', 'dev=sailboat.core:Develop', 'release=sailboat.core:Release', 'build=sailboat.build:Build', 'wizard=sailboat.core:Wizard', 'remove=sailboat.core:Remove', 'add=sailboat.core:Add', 'plugins=sailboat.core:ManagePlugins', 'test=sailboat.tests:Test', 'git=sailboat.core:Git', 'tasks=sailboat.other:Tasks', 'workflow=sailboat.core:Actions', 'github=sailboat.core:GitHub']},
 	"author":"Cole Wilson",
@@ -32,7 +32,7 @@ options = {
 	"install_requires":['toml', 'semver', 'requests', 'setuptools', 'pathlib'],
 	"classifiers":["Programming Language :: Python :: 3"],
 	"python_requires":'>=3.6',
-	"package_data":{"": ['resources/*'],},
+	"package_data":{"": ['resources/*', 'plugins.json'],},
 	"license":"MIT",
 	"keywords":'',
 }
