@@ -235,7 +235,10 @@ class Release(Plugin):
 				version=version
 			)
 			temp.release()
-			self.data[temp._type][release_plugin] = temp.data[temp._type][release_plugin]
+			if temp._type == "core":
+				self.data = temp.data
+			else:
+				self.data[temp._type][release_plugin] = temp.data[temp._type][release_plugin]
 			dones.append(release_plugin)
 			lorder = order
 		print()
