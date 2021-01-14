@@ -33,7 +33,8 @@ def refreshEntries():
 			"dist" : str(entry_point.dist).split(' ')[0],
 			"description" : temp.description,
 			"type" : temp._type,
-			'release' : temp._release
+			'release' : temp._release,
+			"order" : temp._order
 		}
 	f = open(os.path.abspath(path.parent)+os.sep+'plugins.json','w+')
 	f.write(json.dumps(plugins, indent=2, sort_keys=True))

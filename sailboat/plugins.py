@@ -15,7 +15,7 @@ class Plugin:
 	_type = "build"
 	_show = True
 	_release = False
-
+	_order = 0
 	def release(self):
 		pass
 

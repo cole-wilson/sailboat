@@ -19,7 +19,8 @@ def refreshEntries():
 			"dist" : str(entry_point.dist).split(' ')[0],
 			"description" : temp.description,
 			"type" : temp._type,
-			"release" : temp._release
+			"release" : temp._release,
+			"order" : temp._order
 		}
 	path = Path(__file__)
 	f = open(os.path.abspath(path.parent)+os.sep+'plugins.json','w+')
@@ -164,6 +165,7 @@ git push -u origin master;
 """)
 		print('Your GitHub repo is setup. To update your repo, type:\n\n\tgit add .;git commit -a -m "Your message here";git push;\n\nin your terminal, or `sail git push`')
 
+
 class Release(Plugin):
 	_type = "core"
 	description = "Release your project."
@@ -171,27 +173,28 @@ class Release(Plugin):
 		self.data['release-notes'] = input('Release Notes: ')
 		version = VersionInfo.parse(self.data['latest_build'])
 		version = str(VersionInfo(major=version.major,minor=version.minor,patch=version.patch,prerelease=version.prerelease))
-		runs = []
+		runs = {}
 		if self.options == []:
 			for x in self.data['release']:
 				if x in plugins['release']:
-					runs.append(x)
+					runs[x] = plugins['release'][x]['order']
 			for x in self.data['build']:
 				if x in plugins['build']:
 					if plugins['build'][x]['release']:
-						runs.append(x)
+						runs[x] = plugins['build'][x]['order']
 		else:
 			for x in self.options:
 				if x in self.data['release'] and x in plugins['release']:
-					runs.append(x)
+					runs[x] = plugins['release'][x]['order']
 				elif x in self.data['build']:
 					if plugins['build'][x]['release']:
-						runs.append(x)
+						runs[x] = plugins['build'][x]['order']
 				else:
 					print('sailboat: error: {} is not a valid release plugin.'.format(x))
 					return
-		runs = [*runs]
+		print(dict(sorted(runs.items(), key=lambda item: item[1])))
 		input(f'Press enter to release version {version} the following ways:\n\t- '+'\n\t- '.join(runs)+'\n\n>>>')
+		dones = []
 		for release_plugin in runs:
 			print(self.section(release_plugin+":"))
 			if release_plugin in self.data['release']:
