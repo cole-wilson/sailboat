@@ -196,13 +196,21 @@ class Release(Plugin):
 		print(dict(sorted(runs.items(), key=lambda item: item[1])))
 		input(f'Press enter to release version {version} the following ways:\n\t- '+'\n\t- '.join(runs)+'\n\n>>>')
 		dones = []
+		lorder = 0
 		for release_plugin in runs:
+			if release_plugin in dones:
+				continue
 			print(self.section(release_plugin+":"))
 			if release_plugin in self.data['release']:
 				dist = plugins['release'][release_plugin]['dist']
+				order = plugins['release'][release_plugin]['order']
 			else:
 				dist = plugins['build'][release_plugin]['dist']
-				
+				order = plugins['build'][release_plugin]['order']
+			if order > lorder:
+				input('UH OH')
+				runs.append(release_plugin)
+			
 			temp = pkg_resources.load_entry_point(dist,'sailboat_plugins',release_plugin)
 			temp = temp(
 				data=self.data,
@@ -212,6 +220,8 @@ class Release(Plugin):
 			)
 			temp.release()
 			self.data[temp._type][release_plugin] = temp.data[temp._type][release_plugin]
+			dones.append(release_plugin)
+			lorder = order
 		print()
 		self.data['latest_release'] = version
 
