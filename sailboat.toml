@@ -14,7 +14,7 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.12.0"
+latest_build = "0.12.1"
 author = "Cole Wilson"
 latest_release = "0.12.0"
 release-notes = "Testing "
@@ -68,12 +68,15 @@ plugins = "sailboat.core:ManagePlugins"
 test = "sailboat.tests:Test"
 git = "sailboat.core:Git"
 tasks = "sailboat.other:Tasks"
-wprkflow = "sailboat.core:Actions"
+workflow = "sailboat.core:Actions"
+github = "sailboat.core:GitHub"
 
 
 # Release Routines:
 [release.echo]
 int = 1
+
+[release.github]
 
 
 # Other:

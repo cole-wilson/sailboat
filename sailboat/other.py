@@ -24,7 +24,6 @@ class Tasks(Plugin):# todo: test this
 	_type = "command"
 	_show = True
 	def run(self):
-		print(self.data2);return;
 		prefix = os.path.dirname(os.path.abspath(__file__))+os.sep+'resources'
 		if sys.platform.startswith('win'):
 			print('windows not yet supported for tasks. if you want, you can help make this possible at github.com/cole-wilson/sailboat')

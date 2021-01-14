@@ -15,18 +15,18 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_path: ./dist/*/*
-						builds: {linux}
+            builds: {linux}
             asset_name: default
             glob: true
 
           - os: windows-latest
-					  builds: {windows}
+            builds: {windows}
             artifact_path: .\dist\*\*
             asset_name: default
             glob: true
 
           - os: macos-latest
-					  builds: {mac}
+            builds: {mac}
             artifact_path: ./dist/*/*
             asset_name: default
             glob: true
@@ -41,12 +41,12 @@ jobs:
       run: |
         pip install sailboat
         python -m sailboat.__main__ build + ${{{{ matrix.builds }}}}
-				
-		- name: Check for prerelease
-			run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
+        
+    - name: Check for prerelease
+      run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
 
     - name: Upload binaries to prerelease
-			if: env.prerel == 'true'
+      if: env.prerel == 'true'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
@@ -54,11 +54,11 @@ jobs:
         asset_name: ${{{{ matrix.asset_name }}}}
         tag: ${{{{ github.ref }}}}
         file_glob: ${{{{ matrix.glob }}}}
-				body: ${{{{ github.event.head_commit.message }}}}
-				prerelease: true
-			
+        body: ${{{{ github.event.head_commit.message }}}}
+        prerelease: true
+      
     - name: Upload binaries to production release
-			if: env.prerel != 'true'
+      if: env.prerel != 'true'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
@@ -66,5 +66,5 @@ jobs:
         asset_name: ${{{{ matrix.asset_name }}}}
         tag: ${{{{ github.ref }}}}
         file_glob: ${{{{ matrix.glob }}}}
-				body: ${{{{ github.event.head_commit.message }}}}
-				prerelease: false
+        body: ${{{{ github.event.head_commit.message }}}}
+        prerelease: false

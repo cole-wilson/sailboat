@@ -121,7 +121,7 @@
       "show": true,
       "type": "core"
     },
-    "wprkflow": {
+    "workflow": {
       "default_os": "linux",
       "description": "Generate a GH Actions workflow file.",
       "dist": "sailboat",
@@ -135,6 +135,15 @@
     "echo": {
       "default_os": "linux",
       "description": "say argv!",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": true,
+      "type": "release"
+    },
+    "github": {
+      "default_os": "linux",
+      "description": "Tagged GH release.",
       "dist": "sailboat",
       "order": 0,
       "release": false,

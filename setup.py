@@ -19,9 +19,9 @@ except:
 
 options = {
 	"name":"sailboat",
-	"version":"0.12.0",
+	"version":"0.12.1",
 	"scripts":[],
-	"entry_points":{'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'], 'sailboat_plugins': ['pypi=sailboat.builders:PyPi', 'homebrew=sailboat.builders:Homebrew', 'echo=sailboat.__main__:echo', 'pyinstaller=sailboat.builders:PyInstaller', 'dev=sailboat.core:Develop', 'release=sailboat.core:Release', 'build=sailboat.build:Build', 'wizard=sailboat.core:Wizard', 'remove=sailboat.core:Remove', 'add=sailboat.core:Add', 'plugins=sailboat.core:ManagePlugins', 'test=sailboat.tests:Test', 'git=sailboat.core:Git', 'tasks=sailboat.other:Tasks', 'wprkflow=sailboat.core:Actions']},
+	"entry_points":{'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'], 'sailboat_plugins': ['pypi=sailboat.builders:PyPi', 'homebrew=sailboat.builders:Homebrew', 'echo=sailboat.__main__:echo', 'pyinstaller=sailboat.builders:PyInstaller', 'dev=sailboat.core:Develop', 'release=sailboat.core:Release', 'build=sailboat.build:Build', 'wizard=sailboat.core:Wizard', 'remove=sailboat.core:Remove', 'add=sailboat.core:Add', 'plugins=sailboat.core:ManagePlugins', 'test=sailboat.tests:Test', 'git=sailboat.core:Git', 'tasks=sailboat.other:Tasks', 'workflow=sailboat.core:Actions', 'github=sailboat.core:GitHub']},
 	"author":"Cole Wilson",
 	"author_email":"cole@colewilson.xyz",
 	"description":"🐍 A quick and easy way to distribute your Python projects!",

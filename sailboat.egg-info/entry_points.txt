@@ -8,6 +8,7 @@ build = sailboat.build:Build
 dev = sailboat.core:Develop
 echo = sailboat.__main__:echo
 git = sailboat.core:Git
+github = sailboat.core:GitHub
 homebrew = sailboat.builders:Homebrew
 plugins = sailboat.core:ManagePlugins
 pyinstaller = sailboat.builders:PyInstaller
@@ -17,5 +18,5 @@ remove = sailboat.core:Remove
 tasks = sailboat.other:Tasks
 test = sailboat.tests:Test
 wizard = sailboat.core:Wizard
-wprkflow = sailboat.core:Actions
+workflow = sailboat.core:Actions
 
