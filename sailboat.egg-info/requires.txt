@@ -2,4 +2,3 @@ toml
 semver
 requests
 setuptools
-pathlib

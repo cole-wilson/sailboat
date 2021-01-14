@@ -14,19 +14,19 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.12.7"
+latest_build = "0.12.9"
 author = "Cole Wilson"
-latest_release = "0.12.6"
-release-notes = "a"
+latest_release = "0.12.7"
+release-notes = "Fixed space in project name"
 
 
 # Resource Setup:
 [resources]
 icon = ""
 data_files = [ "resources/*", "plugins.json",]
-modules = [ "toml", "semver", "requests", "setuptools", "pathlib",]
+modules = [ "toml", "semver", "requests", "setuptools",]
 file = "__main__.py"
-no_import = [ "shutil", "re", "os", "glob", "pkg_resources", "traceback", "json",]
+no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceback", "json",]
 
 
 # Plugin Commands:
@@ -69,7 +69,7 @@ test = "sailboat.tests:Test"
 git = "sailboat.core:Git"
 tasks = "sailboat.other:Tasks"
 workflow = "sailboat.core:Actions"
-github = "sailboat.core:GitHub"
+github = "sailboat.core:Git"
 
 
 # Release Routines:
