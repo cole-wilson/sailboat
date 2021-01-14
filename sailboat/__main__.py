@@ -192,7 +192,7 @@ def main():
 # Thank you for using Sailboat!"""
 		out = out.format(o[0],o[1],o[2],o[3],o[4],o[5])
 		f.write(out)
-
+	os.system('ls ./dist/*/*')
 
 if __name__ == "__main__":
 	main()
