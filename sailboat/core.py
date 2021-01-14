@@ -23,10 +23,15 @@ def refreshEntries():
 			"order" : temp._order,
 			"default_os": temp._os
 		}
-	path = Path(__file__)
-	f = open(os.path.abspath(path.parent)+os.sep+'plugins.json','w+')
+	try:
+		path = Path(__file__)
+		prefix = os.path.abspath(path.parent)
+	except:
+		prefix = os.path.dirname(os.path.abspath(__file__))+os.sep
+	f = open(prefix+os.sep+'plugins.json','w+')
 	f.write(json.dumps(plugins, indent=2, sort_keys=True))
 	f.close()
+
 	del f
 
 class ManagePlugins(Plugin):

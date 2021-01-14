@@ -14,10 +14,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.12.3-rc.1"
+latest_build = "0.12.3-rc.2"
 author = "Cole Wilson"
-latest_release = "0.12.3"
-release-notes = "fixed abspath error"
+latest_release = "0.12.3-rc.1"
+release-notes = "testing "
 
 
 # Resource Setup:
