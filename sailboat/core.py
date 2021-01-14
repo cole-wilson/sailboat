@@ -99,6 +99,9 @@ class Wizard(Plugin):
 					self.data['resources'][key] = input(self.blue(questions[key])+": ").split()
 				else:
 					self.data['resources'][key] = input(self.blue(questions[key])+": ")
+		self.data['name'] = self.data['name'].replace(' ','_')
+		self.data['short_name'] = self.data['short_name'].replace(' ','_')
+		
 		print(self.red('Be sure to prefix any paths to any resources with \u001b[4m`os.path.dirname(os.path.abspath(__file__))+os.sep`\u001b[0m\033[1;31m to make sure that they use the correct path and not the current directory.'))
 	def run(self,plugins={}):
 		if self.options == []:
