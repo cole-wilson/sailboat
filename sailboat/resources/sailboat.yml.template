@@ -13,23 +13,23 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            artifact_path: ./dist/*/*
-            builds: {linux}
-            asset_name: default
-            glob: true
+{l}          - os: ubuntu-latest
+{l}            artifact_path: ./dist/*/*
+{l}            builds: {linux}
+{l}            asset_name: default
+{l}            glob: true
 
-          - os: windows-latest
-            builds: {windows}
-            artifact_path: .\dist\*\*
-            asset_name: default
-            glob: true
+{w}          - os: windows-latest
+{w}            builds: {windows}
+{w}            artifact_path: .\dist\*\*
+{w}            asset_name: default
+{w}            glob: true
 
-          - os: macos-latest
-            builds: {mac}
-            artifact_path: ./dist/*/*
-            asset_name: default
-            glob: true
+{m}          - os: macos-latest
+{m}            builds: {mac}
+{m}            artifact_path: ./dist/*/*
+{m}            asset_name: default
+{m}            glob: true
 
 # ===================== EDIT AT YOUR OWN RISK ============================================
     steps:

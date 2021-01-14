@@ -301,6 +301,9 @@ class Actions(Plugin):
 				linux=linux,
 				mac=mac,
 				windows=windows,
+				l="#" if linux == "" else "",
+				m="#" if mac == "" else "",
+				w="#" if windows == "" else "",
 				**self.data
 			)
 			f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')

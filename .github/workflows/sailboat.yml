@@ -19,17 +19,17 @@ jobs:
             asset_name: default
             glob: true
 
-          - os: windows-latest
-            builds: 
-            artifact_path: .\dist\*\*
-            asset_name: default
-            glob: true
+#          - os: windows-latest
+#            builds: 
+#            artifact_path: .\dist\*\*
+#            asset_name: default
+#            glob: true
 
-          - os: macos-latest
-            builds: 
-            artifact_path: ./dist/*/*
-            asset_name: default
-            glob: true
+#          - os: macos-latest
+#            builds: 
+#            artifact_path: ./dist/*/*
+#            asset_name: default
+#            glob: true
 
 # ===================== EDIT AT YOUR OWN RISK ============================================
     steps:
