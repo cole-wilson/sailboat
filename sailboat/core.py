@@ -193,7 +193,14 @@ class Release(Plugin):
 				else:
 					print('sailboat: error: {} is not a valid release plugin.'.format(x))
 					return
-		print(dict(sorted(runs.items(), key=lambda item: item[1])))
+		runstemp = []
+		for x in runs:
+			runstemp.append(f"{runs[x]}::{x}")
+		runstemp.sort()
+		runs = []
+		for x in runstemp:
+			order,name = x.split('::')
+			runs.append(name)
 		input(f'Press enter to release version {version} the following ways:\n\t- '+'\n\t- '.join(runs)+'\n\n>>>')
 		dones = []
 		lorder = 0
@@ -203,14 +210,8 @@ class Release(Plugin):
 			print(self.section(release_plugin+":"))
 			if release_plugin in self.data['release']:
 				dist = plugins['release'][release_plugin]['dist']
-				order = plugins['release'][release_plugin]['order']
 			else:
 				dist = plugins['build'][release_plugin]['dist']
-				order = plugins['build'][release_plugin]['order']
-			if order > lorder:
-				input('UH OH')
-				runs.append(release_plugin)
-			
 			temp = pkg_resources.load_entry_point(dist,'sailboat_plugins',release_plugin)
 			temp = temp(
 				data=self.data,

@@ -135,6 +135,7 @@ class Homebrew(Plugin):
 	_order = 200
 
 	def release(self):
+		print(self.options)
 		if "pypi" in self.options or len(self.options)==0:
 			print('Must wait 20 seconds for pypi files to upload before creting homebrew formula...\n')
 			for i in range(0, 20):
