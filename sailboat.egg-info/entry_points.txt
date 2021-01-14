@@ -14,6 +14,8 @@ pyinstaller = sailboat.builders:PyInstaller
 pypi = sailboat.builders:PyPi
 release = sailboat.core:Release
 remove = sailboat.core:Remove
+tasks = sailboat.other:Tasks
 test = sailboat.tests:Test
 wizard = sailboat.core:Wizard
+wprkflow = sailboat.core:Actions
 

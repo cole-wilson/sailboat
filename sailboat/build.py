@@ -19,7 +19,7 @@ class Build(Plugin):
 		if len(self.options)>0 and self.options[0] == 'help':
 			print("usage: sail build [version (increment)]\n\tThis command builds your project using the sailboat.toml file.\n\tValid options for version:\n\t\t- Valid semver.org string: set that as version\n\t\t- `major`: increments the major version by one.\n\t\t- `minor`: increments the minor version by one.\n\t\t- `patch`: increments the patch version by one.\n\t\t- `pre`: increments the prerelease version by one.\n\t\t- None: increments build version by one.")
 			return
-#=====================================================================================
+  #=====================================================================================
 		if 'latest_build' not in self.data:
 			self.data['latest_build'] = '0.0.1'
 		if len(self.options) >= 1: #Something provided
@@ -33,6 +33,8 @@ class Build(Plugin):
 				version = str(VersionInfo.parse(self.data['latest_build']).bump_patch())
 			elif self.options[0].startswith('pre') or self.options[0].startswith('dev'):
 				version = str(VersionInfo.parse(self.data['latest_build']).bump_prerelease())
+			elif self.options[0].startswith('+') or self.options[0].startswith('build'):
+				version = str(VersionInfo.parse(self.data['latest_build']).bump_build())
 			else:
 				print('Unknown version `{}`'.format(self.options[0]))
 				return
@@ -51,7 +53,7 @@ class Build(Plugin):
 				return
 		print('\nPreparing to build version {}\n'.format(version))
 		self.data['latest_build'] = version
-#=====================================================================================
+ #=====================================================================================
 		print('\n\n\u001b[4m\u001b[1;36mGenerating Directory Structure\u001b[0m')
 		print('This step will generate a correct directory structure for your project.')
 		if not os.path.isfile('.gitignore'):
@@ -78,7 +80,7 @@ class Build(Plugin):
 				open(self.data['short_name']+os.sep+self.data['resources']['file'],'w+').write('# Please edit __main__.py for the main code. Thanks!\n(you can delete this file.)')
 			except FileNotFoundError:
 				pass
-#=====================================================================================
+ #=====================================================================================
 		print('\n\n\u001b[4m\u001b[1;36mFetching Modules:\u001b[0m')
 		print('Scanning module imports...')
 		if 'no_import' not in self.data['resources']:
@@ -101,17 +103,22 @@ class Build(Plugin):
 					self.data['resources']['modules'].append(module)
 				else:
 					self.data['resources']['no_import'].append(module)
-#=====================================================================================
+  #=====================================================================================
 		try:
 			shutil.rmtree('dist')
 		except FileNotFoundError:
 			pass
 		dones = []
-		notdones = [*self.data['build'].keys()]
+		if len(self.options[1:]) == 0:
+			notdones = [*self.data['build'].keys()]
+		else:
+			notdones = self.options[1:]
 		for build_plugin in notdones:
-			if '_run' in self.data['build'][build_plugin] and not self.data['build'][build_plugin]['_run']:
+			if build_plugin not in self.options and ('_run' in self.data['build'][build_plugin] and not self.data['build'][build_plugin]['_run']):
 				continue
 			if build_plugin in dones:
+				continue
+			if build_plugin not in self.data['build'].keys():
 				continue
 			elif '_needs' in self.data['build'][build_plugin]:
 				if isinstance(self.data['build'][build_plugin]['_needs'],str):

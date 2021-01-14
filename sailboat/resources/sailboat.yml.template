@@ -1,4 +1,4 @@
-# v0.1.2, workflow subs: [name: `{name}`, short_name: `{short_name}`, mac_comment: `{mac}`, windows_comment: `{windows}`, unix_comment: `{u}`, mac_extension: `{mac_ext}`, windows_extension: `{win_ext}`]
+# Workflow version v0.1.2, workflow subs: [name: `{name}`, short_name: `{short_name}`]
 name: Publish release files for {name}.
 
 on:
@@ -14,30 +14,37 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact_path: ./dist/pypi/*.whl
-            asset_name: {short_name}-$tag-py3-none-any.whl
+            artifact_path: ./dist/*/*
+						builds: {linux}
+            asset_name: default
             glob: true
 
-{windows}          - os: windows-latest
-{windows}            artifact_path: .\dist\pyinstaller\{name}{win_ext}
-{windows}            asset_name: {short_name}-$tag-windows64{win_ext}
-{windows}            glob: false
-{mac}          - os: macos-latest
-{mac}            artifact_path: ./{name}.dmg
-{mac}            asset_name: {short_name}-$tag-macos.dmg
-{mac}            glob: false
+          - os: windows-latest
+					  builds: {windows}
+            artifact_path: .\dist\*\*
+            asset_name: default
+            glob: true
 
+          - os: macos-latest
+					  builds: {mac}
+            artifact_path: ./dist/*/*
+            asset_name: default
+            glob: true
+
+# ===================== EDIT AT YOUR OWN RISK ============================================
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+        python-version: '3.x'
     - name: Install Dependencies and Build
       run: |
         pip install sailboat
-        python -m sailboat.actions
+        python -m sailboat.__main__ build + ${{{{ matrix.builds }}}}
+				
 		- name: Check for prerelease
 			run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
+
     - name: Upload binaries to prerelease
 			if: env.prerel == 'true'
       uses: svenstaro/upload-release-action@v2

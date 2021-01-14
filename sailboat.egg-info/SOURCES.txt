@@ -6,8 +6,9 @@ sailboat/__main__.py
 sailboat/build.py
 sailboat/builders.py
 sailboat/core.py
-sailboat/extra.py
+sailboat/other.py
 sailboat/plugins.py
+sailboat/prerelease.py
 sailboat/tests.py
 sailboat.egg-info/PKG-INFO
 sailboat.egg-info/SOURCES.txt
@@ -20,9 +21,7 @@ sailboat/core2/__main__.py
 sailboat/core2/actions.py
 sailboat/core2/build.py
 sailboat/core2/git.py
-sailboat/core2/prerelease.py
 sailboat/core2/release.py
-sailboat/core2/task.py
 sailboat/core2/wizard.py
 sailboat/resources/brew.rb
 sailboat/resources/gitignore.template

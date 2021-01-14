@@ -16,9 +16,10 @@ class Plugin:
 	_show = True
 	_release = False
 	_order = 0
+	_os = 'linux'
+
 	def release(self):
 		pass
-
 	def add(self):
 		print('Installing...')
 	def log(self,message):
@@ -27,10 +28,8 @@ class Plugin:
 		print('\u001b[33m[WARNING]: '+message+'\u001b[0m')
 	def error(self,message):
 		print('\u001b[31m[LOG]: '+message+'\u001b[0m')
-
 	def __repr__(self):
 		return "<sailboat plugin: "+self.name+">"
-
 	def __init__(self,data=None,options=None,name=None,version=None):
 		if options!=None:
 			self.options = options
@@ -39,7 +38,6 @@ class Plugin:
 		if data!=None:
 			self.data = data
 		self.name = name	
-
 	def storeData(self,key,value):
 		if self._type == "core":
 			self.data[key] = value
@@ -62,6 +60,9 @@ class Plugin:
 			return string
 		else:
 			return "\n\u001b[4m\u001b[1;36m"+str(string)+"\u001b[0m"
+	@property
+	def data2(self):
+		return self.data[self._type][self.name] 
 	def getData(self,key=None):
 		try:
 			if key==None:
@@ -96,7 +97,11 @@ class Plugin:
 					except ValueError:
 						print('Please provide an integer.')
 			elif t=="bool":
-				self.storeData(key,input("\u001b[34m"+setup_dict[key+"::"+t]+" [y/n] \u001b[0m")[0]=='y')
+				try:
+					self.storeData(key,input("\u001b[34m"+setup_dict[key+"::"+t]+" [y/n] \u001b[0m")[0]=='y')
+				except:
+					print('error: you did not supply a value!')
+					self.storeData(key,input("\u001b[34m"+setup_dict[key+"::"+t]+" [y/n] \u001b[0m")[0]=='y')
 			else:
 				self.storeData(key,input("\u001b[34m"+setup_dict[key+"::"+t]+" \u001b[0m"))
 		return self.data
@@ -110,7 +115,6 @@ class Plugin:
 			return files
 		else:
 			return list(glob.glob(extension))
-
 	def run(self,**kwargs):
 		print('This plugin has not been set up correctly.\nIf you are the developer, please add a run(self,**kwargs) function to your class.')
 		return

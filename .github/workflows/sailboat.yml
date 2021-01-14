@@ -1,4 +1,4 @@
-# v0.1.2, workflow subs: [name: `Sailboat`, short_name: `sailboat`, mac_comment: ``, windows_comment: ``, unix_comment: ``, mac_extension: ``, windows_extension: `.exe`]
+# Workflow version v0.1.2, workflow subs: [name: `Sailboat`, short_name: `sailboat`]
 name: Publish release files for Sailboat.
 
 on:
@@ -15,32 +15,38 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_path: ./dist/*/*
-            asset_name: .
+						builds:  homebrew pyinstaller pypi test
+            asset_name: default
             glob: true
 
           - os: windows-latest
+					  builds: 
             artifact_path: .\dist\*\*
-            asset_name: ,
+            asset_name: default
             glob: true
 
           - os: macos-latest
+					  builds: 
             artifact_path: ./dist/*/*
-            asset_name: .
+            asset_name: default
             glob: true
 
+# ===================== EDIT AT YOUR OWN RISK ============================================
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+        python-version: '3.x'
     - name: Install Dependencies and Build
       run: |
         pip install sailboat
-        python -m sailboat.actions
-    - name: Check for prerelease
-      run: python -m sailboat.prerelease ${{ github.ref }} >> $GITHUB_ENV
+        python -m sailboat.__main__ build + ${{ matrix.builds }}
+				
+		- name: Check for prerelease
+			run: python -m sailboat.prerelease ${{ github.ref }} >> $GITHUB_ENV
+
     - name: Upload binaries to prerelease
-      if: env.prerel == 'true'
+			if: env.prerel == 'true'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -48,11 +54,11 @@ jobs:
         asset_name: ${{ matrix.asset_name }}
         tag: ${{ github.ref }}
         file_glob: ${{ matrix.glob }}
-        body: ${{ github.event.head_commit.message }}
-        prerelease: true
-      
+				body: ${{ github.event.head_commit.message }}
+				prerelease: true
+			
     - name: Upload binaries to production release
-      if: env.prerel != 'true'
+			if: env.prerel != 'true'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,5 +66,5 @@ jobs:
         asset_name: ${{ matrix.asset_name }}
         tag: ${{ github.ref }}
         file_glob: ${{ matrix.glob }}
-        body: ${{ github.event.head_commit.message }}
-        prerelease: false
+				body: ${{ github.event.head_commit.message }}
+				prerelease: false

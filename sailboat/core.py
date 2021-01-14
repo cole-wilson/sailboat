@@ -20,7 +20,8 @@ def refreshEntries():
 			"description" : temp.description,
 			"type" : temp._type,
 			"release" : temp._release,
-			"order" : temp._order
+			"order" : temp._order,
+			"default_os": temp._os
 		}
 	path = Path(__file__)
 	f = open(os.path.abspath(path.parent)+os.sep+'plugins.json','w+')
@@ -278,3 +279,32 @@ class Add(Plugin):
 				print('error: could not find {}, please make sure you have downloaded it.'.format(x))
 		refreshEntries()
 		return self.data
+
+class Actions(Plugin):
+	description = "Generate a GH Actions workflow file."
+	_type = "core"
+	
+	def run(self,plugins,**kwargs):
+		linux = ""
+		mac = ""
+		windows = ""
+		for x in plugins['build']:
+			if 'windows' in plugins['build'][x]['default_os']:
+				windows = windows + " " + x
+			elif 'linux' in plugins['build'][x]['default_os']:
+				linux = linux + " " + x
+			elif 'mac' in plugins['build'][x]['default_os']:
+				mac = mac + " " + x
+
+		with self.getResource(f'resources{os.sep}sailboat.yml.template') as temp:
+			new = temp.read().format(
+				linux=linux,
+				mac=mac,
+				windows=windows,
+				**self.data
+			)
+			f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
+			f.write(new)
+			f.close()
+		
+		print('Workflow generated. Remember to push twice in order for new workflow to take effect.')

@@ -1,6 +1,7 @@
 {
   "build": {
     "homebrew": {
+      "default_os": "linux",
       "description": "<no description provided>",
       "dist": "sailboat",
       "order": 200,
@@ -9,6 +10,7 @@
       "type": "build"
     },
     "pyinstaller": {
+      "default_os": "linux",
       "description": "<no description provided>",
       "dist": "sailboat",
       "order": 0,
@@ -17,6 +19,7 @@
       "type": "build"
     },
     "pypi": {
+      "default_os": "linux",
       "description": "<no description provided>",
       "dist": "sailboat",
       "order": 0,
@@ -25,6 +28,7 @@
       "type": "build"
     },
     "test": {
+      "default_os": "linux",
       "description": "<no description provided>",
       "dist": "sailboat",
       "order": 0,
@@ -33,9 +37,20 @@
       "type": "build"
     }
   },
-  "command": {},
+  "command": {
+    "tasks": {
+      "default_os": "linux",
+      "description": "Manage 'TODO:' comments",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": true,
+      "type": "command"
+    }
+  },
   "core": {
     "add": {
+      "default_os": "linux",
       "description": "add a plugin to your project.",
       "dist": "sailboat",
       "order": 0,
@@ -44,6 +59,7 @@
       "type": "core"
     },
     "build": {
+      "default_os": "linux",
       "description": "build your project for release.",
       "dist": "sailboat",
       "order": 0,
@@ -52,6 +68,7 @@
       "type": "core"
     },
     "dev": {
+      "default_os": "linux",
       "description": "run your project without building it.",
       "dist": "sailboat",
       "order": 0,
@@ -60,6 +77,7 @@
       "type": "core"
     },
     "git": {
+      "default_os": "linux",
       "description": "Manage Git for your project.",
       "dist": "sailboat",
       "order": 0,
@@ -68,6 +86,7 @@
       "type": "core"
     },
     "plugins": {
+      "default_os": "linux",
       "description": "global plugin manager.",
       "dist": "sailboat",
       "order": 0,
@@ -76,6 +95,7 @@
       "type": "core"
     },
     "release": {
+      "default_os": "linux",
       "description": "Release your project.",
       "dist": "sailboat",
       "order": 0,
@@ -84,6 +104,7 @@
       "type": "core"
     },
     "remove": {
+      "default_os": "linux",
       "description": "remove a plugin from you project.",
       "dist": "sailboat",
       "order": 0,
@@ -92,7 +113,17 @@
       "type": "core"
     },
     "wizard": {
+      "default_os": "linux",
       "description": "configure you project or a plugin.",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "wprkflow": {
+      "default_os": "linux",
+      "description": "Generate a GH Actions workflow file.",
       "dist": "sailboat",
       "order": 0,
       "release": false,
@@ -102,6 +133,7 @@
   },
   "release": {
     "echo": {
+      "default_os": "linux",
       "description": "say argv!",
       "dist": "sailboat",
       "order": 0,
