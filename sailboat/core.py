@@ -306,12 +306,12 @@ class Actions(Plugin):
 		linux = ""
 		mac = ""
 		windows = ""
-		for x in plugins['build']:
-			if 'windows' in plugins['build'][x]['default_os']:
+		for x in self.data['build']:
+			if 'windows' in self.data['build'][x]['default_os']:
 				windows = windows + " " + x
-			elif 'linux' in plugins['build'][x]['default_os']:
+			elif 'linux' in self.data['build'][x]['default_os']:
 				linux = linux + " " + x
-			elif 'mac' in plugins['build'][x]['default_os']:
+			elif 'mac' in self.data['build'][x]['default_os']:
 				mac = mac + " " + x
 
 		with self.getResource(f'resources{os.sep}sailboat.yml.template') as temp:
