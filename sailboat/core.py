@@ -80,6 +80,8 @@ class Wizard(Plugin):
 				self.data['license'] = input(">>>\033[0m ")
 			else:
 				print('\u001b[34mLicense:\u001b[0m {}'.format(self.data['license']))
+		else:
+			license = "none"
 		print(self.section('Resource Settings:'))
 		if 'resources' not in self.data:
 			self.data['resources']={}
@@ -322,7 +324,12 @@ class Actions(Plugin):
 				w="#" if windows == "" else "",
 				**self.data
 			)
-			f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
+			try:
+				f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
+			except:
+				os.mkdir('.github')
+				os.mkdir(f'.github{os.sep}workflows')
+				f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
 			f.write(new)
 			f.close()
 		
