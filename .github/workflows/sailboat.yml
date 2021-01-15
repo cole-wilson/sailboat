@@ -15,15 +15,15 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_path: ./dist/*/*
-            builds:  homebrew pyinstaller pypi test
+            builds:  homebrew pypi
             asset_name: default
             glob: true
 
-#          - os: windows-latest
-#            builds: 
-#            artifact_path: .\dist\*\*
-#            asset_name: default
-#            glob: true
+          - os: windows-latest
+            builds:  pyinstaller
+            artifact_path: .\dist\*\*
+            asset_name: default
+            glob: true
 
 #          - os: macos-latest
 #            builds: 

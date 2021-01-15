@@ -19,7 +19,7 @@ licensetext = """# Copyright 2020 Cole Wilson and other contributors
 """
 
 
-class Tasks(Plugin):# todo: test this
+class Tasks(Plugin):
 	description = "Manage 'TODO:' comments"
 	_type = "command"
 	_show = True
@@ -77,8 +77,8 @@ class Tasks(Plugin):# todo: test this
 				except KeyboardInterrupt:
 					print()
 					return
-				except KeyboardInterrupt:
+				except:
 					print('')
-			except KeyboardInterrupt:
+			except:
 				print('')
 				break	

@@ -37,6 +37,8 @@ def refreshEntries():
 class ManagePlugins(Plugin):
 	_type = "core"
 	description = "global plugin manager."
+	def autocomplete(self):
+		return ['a','b']
 	def run(self,plugins={},**kwargs):
 		if self.options == []:
 			print("usage: sail plugins [refresh]\n\n\trefresh: reload previously installed plugins.")
@@ -115,6 +117,7 @@ class Wizard(Plugin):
 							data=self.data,
 							options=[],
 						name=x,
+						prefix=self.prefix,
 							version=None
 					)
 					try:
@@ -143,6 +146,7 @@ class Wizard(Plugin):
 					data=self.data,
 					options=[],
 					name=x,
+					prefix=self.prefix,
 					version=None
 				)
 				try:
@@ -155,9 +159,19 @@ class Wizard(Plugin):
 
 class Git(Plugin):
 	_type = "core"
+	_release = True
 	description = "Manage Git for your project."
 	def release(self):
-		os.system(f'git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{self.data["author"]}";git config user.email "{self.data["email"]}";git commit -m "{self.data["release-notes"]}";git commit --amend -m "{self.data["release-notes"]}";git tag v{self.version};git push origin master --tags;cd ..')
+		os.system(f"""git init;
+git add .;
+git config --global credential.helper "cache --timeout=3600";
+git config user.name "{self.data["author"]}";
+git config user.email "{self.data["email"]}";
+git commit -m "{self.data['release-notes']}";
+git tag v{self.version};
+git remote add origin https://github.com/{self.data['git']['github']}.git||echo origin already added;
+git push -u origin master --tags;
+""")
 	def run(self,plugins={},**kwargs):
 		if self.options == ['push']:
 			a = input("Message: ").replace('"',r'"')
@@ -198,6 +212,11 @@ class Release(Plugin):
 				if x in plugins['build']:
 					if plugins['build'][x]['release']:
 						runs[x] = plugins['build'][x]['order']
+			for x in self.data:
+				if x in plugins['core']:
+					if plugins['core'][x]['release']:
+						runs[x] = plugins['core'][x]['order']
+			
 		else:
 			for x in self.options:
 				if x in self.data['release'] and x in plugins['release']:
@@ -205,6 +224,10 @@ class Release(Plugin):
 				elif x in self.data['build']:
 					if plugins['build'][x]['release']:
 						runs[x] = plugins['build'][x]['order']
+				elif x in self.data:
+					if plugins['core'][x]['release']:
+						runs[x] = plugins['core'][x]['order']
+				
 				else:
 					print('sailboat: error: {} is not a valid release plugin.'.format(x))
 					return
@@ -225,18 +248,21 @@ class Release(Plugin):
 			print(self.section(release_plugin+":"))
 			if release_plugin in self.data['release']:
 				dist = plugins['release'][release_plugin]['dist']
-			else:
+			elif release_plugin in self.data['build']:
 				dist = plugins['build'][release_plugin]['dist']
+			else:
+				dist = plugins['core'][release_plugin]['dist']
 			temp = pkg_resources.load_entry_point(dist,'sailboat_plugins',release_plugin)
 			temp = temp(
 				data=self.data,
 				options=[self.options],
 				name=release_plugin,
+				prefix = self.prefix,
 				version=version
 			)
 			temp.release()
-			if temp._type == "core":
-				self.data = temp.data
+			if temp._type == 'core':
+				self.dat = temp.data
 			else:
 				self.data[temp._type][release_plugin] = temp.data[temp._type][release_plugin]
 			dones.append(release_plugin)
@@ -289,13 +315,16 @@ class Add(Plugin):
 			if point.name in self.options:
 				done.append(point.name)
 				temp = point.load()
-				run = temp(data=self.data,options=[],name=point.name)
+				run = temp(data=self.data,options=[],name=point.name,prefix=self.prefix)
 				print(f'{point.name} is a {run._type} plugin.')
 				if point.name not in self.data[run._type]:
 					self.data[run._type][point.name] = {}
+				if run._type == 'core':
+					print('BE WARNED: THIS PLUGIN TYPE IS REGISTERED AS "core", which means it has unfiltered access to your project`s data. Please be 100% sure you want to do this.')
 				run.data = self.data
 				try:
 					run.wizard()
+					run.add()
 				except KeyboardInterrupt:
 					print('Aborted by user')
 				except BaseException as e:
@@ -345,4 +374,3 @@ class Actions(Plugin):
 			f.close()
 		
 		print('Workflow generated. Remember to push twice in order for new workflow to take effect.')
-	

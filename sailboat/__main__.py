@@ -45,6 +45,8 @@ def refreshEntries():
 	return plugins
 
 def main():
+	# if 'ux' in sys.platform:
+	# 	os.system('source '+prefix+'auto.bash')
 	global __doc__
 	opath = os.getcwd()
 	while not os.path.isfile('sailboat.toml') and os.getcwd().count(os.sep)>2:
@@ -72,10 +74,11 @@ def main():
 
 # =============================================================================
 	plugins = json.loads(open(prefix+'plugins.json').read())
-
+	
 	if plugins=={} or (len(plugins.keys())!=4):
 		plugins = refreshEntries()
 
+	a_commands = []
 
 	if len(plugins['core'].keys())!=0:
 		__doc__+="\n\tcore commands:"
@@ -83,6 +86,7 @@ def main():
 	for command in plugins['core'].keys():
 		if plugins['core'][command]['show']:
 			__doc__+="\n\t\t- \u001b[36;1m"+command+"\u001b[0m: "+plugins['core'][command]['description'].capitalize()
+			a_commands.append(command)
 
 	__doc__+="\n\t\t- \u001b[36;1mhelp\u001b[0m: display this message."
 
@@ -92,6 +96,7 @@ def main():
 	for command in plugins['command'].keys():
 		if plugins['command'][command]['show'] and command in data['command']:
 			__doc__+="\n\t\t- \u001b[36;1m"+command+"\u001b[0m: "+plugins['command'][command]['description'].capitalize()
+			a_commands.append(command)
 
 	__doc__+="\n"
 
@@ -104,6 +109,7 @@ def main():
 		command = 'wizard'
 	else:
 		command = sys.argv[1]
+	autocomplete = False
 	if command == 'help':
 		print(__doc__)
 		return
@@ -113,7 +119,8 @@ def main():
 	elif command in plugins['command']:
 		t = 'command'
 	else:
-		print('sailboat: error: {} is not a valid command. Please make sure you have installed it.'.format(command))
+		if not autocomplete:
+			print('sailboat: error: {} is not a valid command. Please make sure you have installed it.'.format(command))
 		return	
 
 	if t!='core' and command not in data['build'] and command not in data['release'] and command not in data['command']:
@@ -126,8 +133,11 @@ def main():
 		data=data,
 		options=sys.argv[2:],
 		name=command,
+		prefix=prefix
 	)
-	if t == "core":
+	if autocomplete:
+		print(" ".join(temp.autocomplete()))
+	elif t == "core":
 		temp.run(plugins=plugins)
 	else:
 		temp.run()

@@ -10,7 +10,7 @@
       "type": "build"
     },
     "pyinstaller": {
-      "default_os": "linux",
+      "default_os": "windows mac linux",
       "description": "<no description provided>",
       "dist": "sailboat",
       "order": 0,
@@ -81,7 +81,16 @@
       "description": "Manage Git for your project.",
       "dist": "sailboat",
       "order": 0,
-      "release": false,
+      "release": true,
+      "show": true,
+      "type": "core"
+    },
+    "github": {
+      "default_os": "linux",
+      "description": "Manage Git for your project.",
+      "dist": "sailboat",
+      "order": 0,
+      "release": true,
       "show": true,
       "type": "core"
     },
@@ -135,15 +144,6 @@
     "echo": {
       "default_os": "linux",
       "description": "say argv!",
-      "dist": "sailboat",
-      "order": 0,
-      "release": false,
-      "show": true,
-      "type": "release"
-    },
-    "github": {
-      "default_os": "linux",
-      "description": "Tagged GH release.",
       "dist": "sailboat",
       "order": 0,
       "release": false,

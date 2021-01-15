@@ -1,0 +1,6 @@
+# This file contains all autocomplete features in command::suggestions format
+# Bottom rules take precedence
+
+sail::add build dev git github plugins release remove wizard workflow help tasks
+sail build::+ prerelease development build minor major patch
+sail plugins::refresh

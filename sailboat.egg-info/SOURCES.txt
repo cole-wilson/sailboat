@@ -3,6 +3,9 @@ pyproject.toml
 setup.py
 sailboat/__init__.py
 sailboat/__main__.py
+sailboat/auto.bash
+sailboat/autocomplete
+sailboat/autocomplete.py
 sailboat/build.py
 sailboat/builders.py
 sailboat/core.py

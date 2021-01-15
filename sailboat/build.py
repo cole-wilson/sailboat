@@ -135,6 +135,7 @@ class Build(Plugin):
 					data=self.data,
 					options=[],
 					name=build_plugin,
+					prefix=self.prefix,
 					version=version
 				)
 			except KeyError as plugin:

@@ -17,10 +17,18 @@ class Plugin:
 	_release = False
 	_order = 0
 	_os = 'linux'
+	autocompletion = {}
 
+	def registerAutocompletion(self):
+		import __main__
+		prefix = self.prefix
+		f = open(prefix+"autocomplete",'a')
+		for x in self.autocompletion.keys():
+			f.write(x+"::"+self.autocompletion[x]+"\n")
 	def release(self):
 		pass
 	def add(self):
+		self.registerAutocompletion()
 		print('Installing...')
 	def log(self,message):
 		print('\u001b[37m[LOG]: '+message+'\u001b[0m')
@@ -30,7 +38,7 @@ class Plugin:
 		print('\u001b[31m[LOG]: '+message+'\u001b[0m')
 	def __repr__(self):
 		return "<sailboat plugin: "+self.name+">"
-	def __init__(self,data=None,options=None,name=None,version=None):
+	def __init__(self,data=None,options=None,prefix=__file__,name=None,version=None):
 		if options!=None:
 			self.options = options
 		if version!=None:
@@ -38,6 +46,7 @@ class Plugin:
 		if data!=None:
 			self.data = data
 		self.name = name	
+		self.prefix=prefix
 	def storeData(self,key,value):
 		if self._type == "core":
 			self.data[key] = value
