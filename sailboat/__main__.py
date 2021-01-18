@@ -19,9 +19,8 @@ except:
 __doc__ = "usage: sail [command]\n"
 # =============================================================================
 class echo(sailboat.plugins.Plugin):
-	_type = "release"
+	_type = "command"
 	description = "say argv!"
-	setup = {"int::int":"Integer test: "}
 	def run(self):
 		print(" ".join(self.options))
 

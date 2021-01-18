@@ -1,7 +1,5 @@
 # sailboat
 
-![Publish system files for Sailboat.](https://github.com/cole-wilson/sailboat/workflows/Publish%20system%20files%20for%20Sailboat./badge.svg)
-
 A quick and easy way to distribute your python projects!
 
 sailboat will let you go from hello world to a published app in about 5 minutes!

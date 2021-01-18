@@ -25,7 +25,7 @@ def refreshEntries():
 		}
 	try:
 		path = Path(__file__)
-		prefix = os.path.abspath(path.parent)
+		prefix = os.wwpath.abspath(path.parent)
 	except:
 		prefix = os.path.dirname(os.path.abspath(__file__))+os.sep
 	f = open(prefix+os.sep+'plugins.json','w+')
@@ -36,7 +36,7 @@ def refreshEntries():
 
 class ManagePlugins(Plugin):
 	_type = "core"
-	description = "global plugin manager."
+	description = "plugin manager."
 	def autocomplete(self):
 		return ['a','b']
 	def run(self,plugins={},**kwargs):
@@ -45,6 +45,17 @@ class ManagePlugins(Plugin):
 		elif self.options == ['refresh']:
 			refreshEntries();
 			print('Done!')
+		elif self.options == ['list']:
+			print('Build:')
+			for x in self.data['build']:
+				print('\t- '+x)
+			print('Release:')
+			for x in self.data['release']:
+				print('\t- '+x)
+			print('Command:')
+			for x in self.data['command']:
+				print('\t- '+x)
+			
 		else:
 			print('sailboat: error: invalid option `{}`.'.format(self.options[0]))
 
@@ -349,9 +360,9 @@ class Actions(Plugin):
 		for x in self.data['build']:
 			if 'windows' in plugins['build'][x]['default_os']:
 				windows = windows + " " + x
-			elif 'linux' in plugins['build'][x]['default_os']:
+			if 'linux' in plugins['build'][x]['default_os']:
 				linux = linux + " " + x
-			elif 'mac' in plugins['build'][x]['default_os']:
+			if 'mac' in plugins['build'][x]['default_os']:
 				mac = mac + " " + x
 
 		with self.getResource(f'resources{os.sep}sailboat.yml.template') as temp:

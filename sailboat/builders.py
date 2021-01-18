@@ -182,7 +182,7 @@ class Homebrew(Plugin):
 			os.system(f'git clone https://github.com/{uname}/homebrew-taps.git')
 		shutil.copy('dist'+os.sep+'homebrew'+os.sep+self.data['name']+'.rb','homebrew-taps'+os.sep+self.data['name']+'.rb')
 		# input()
-		os.system(f'cd homebrew-taps;git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{self.data["author"]}";git config user.email "{self.data["email"]}";git commit -m "{self.data["release-notes"]}";git commit --amend -m "{self.data["release-notes"]}";git tag v{self.version};git push origin master --tags;cd ..')
+		os.system(f'cd homebrew-taps;git add .;git config --global credential.helper "cache --timeout=3600";git config user.name "{self.data["author"]}";git config user.email "{self.data["email"]}";git commit -m "{self.data["release-notes"]}";git commit --amend -m "{self.data["release-notes"]}";echo git tag v{self.version};git push origin master --tags;cd ..')
 		self.data['git']['brew'] = uname+"/homebrew-taps"
 		try:
 			shutil.rmtree('homebrew-taps')

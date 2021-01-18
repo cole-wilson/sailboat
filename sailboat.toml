@@ -14,10 +14,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.14.1"
+latest_build = "0.17.1"
 author = "Cole Wilson"
-latest_release = "0.12.10"
-release-notes = "a"
+latest_release = "0.14.1"
+release-notes = "patch"
 
 
 # Resource Setup:
@@ -30,12 +30,6 @@ no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceba
 
 
 # Plugin Commands:
-[command.tasks]
-
-[command.actions]
-mac = true
-windows = true
-linux = true
 
 
 # Build Routines:
@@ -47,7 +41,7 @@ type = 1
 mac = true
 windows = true
 unix = true
-bundle_id = "xyz.colewilson.sailboat"
+bundle_id = "com.colewilson.sailboat"
 
 [build.pypi.commands]
 sail = "__main__.main"
@@ -73,10 +67,6 @@ github = "sailboat.core:Git"
 
 
 # Release Routines:
-[release.github]
-
-[release.echo]
-int = 1
 
 
 # Other:

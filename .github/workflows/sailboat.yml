@@ -15,7 +15,7 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_path: ./dist/*/*
-            builds:  homebrew pypi
+            builds:  homebrew pyinstaller pypi
             asset_name: default
             glob: true
 
@@ -25,11 +25,11 @@ jobs:
             asset_name: default
             glob: true
 
-#          - os: macos-latest
-#            builds: 
-#            artifact_path: ./dist/*/*
-#            asset_name: default
-#            glob: true
+          - os: macos-latest
+            builds:  pyinstaller
+            artifact_path: ./dist/*/*
+            asset_name: default
+            glob: true
 
 # ===================== EDIT AT YOUR OWN RISK ============================================
     steps:

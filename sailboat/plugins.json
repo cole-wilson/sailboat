@@ -38,6 +38,15 @@
     }
   },
   "command": {
+    "echo": {
+      "default_os": "linux",
+      "description": "say argv!",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": true,
+      "type": "command"
+    },
     "tasks": {
       "default_os": "linux",
       "description": "Manage 'TODO:' comments",
@@ -96,7 +105,7 @@
     },
     "plugins": {
       "default_os": "linux",
-      "description": "global plugin manager.",
+      "description": "plugin manager.",
       "dist": "sailboat",
       "order": 0,
       "release": false,
@@ -140,15 +149,5 @@
       "type": "core"
     }
   },
-  "release": {
-    "echo": {
-      "default_os": "linux",
-      "description": "say argv!",
-      "dist": "sailboat",
-      "order": 0,
-      "release": false,
-      "show": true,
-      "type": "release"
-    }
-  }
+  "release": {}
 }
