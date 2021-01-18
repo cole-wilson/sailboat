@@ -67,7 +67,7 @@ class Build(Plugin):
 		if not os.path.isdir(target_dir):
 			os.mkdir(target_dir)
 		for file_name in file_names:
-			if file_name in ("setup.py","sailboat.toml"):
+			if file_name in ("setup.py","sailboat.toml",self.data['resources']['file']):
 				continue
 			shutil.move(os.path.join(source_dir, file_name), target_dir+os.sep+file_name)
 		for filename in glob.glob(target_dir+os.sep+'LICE*'):
