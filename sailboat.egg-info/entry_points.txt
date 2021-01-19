@@ -9,6 +9,7 @@ dev = sailboat.core:Develop
 echo = sailboat.__main__:echo
 git = sailboat.core:Git
 github = sailboat.core:Git
+github_release = sailboat.core:GithubRelease
 homebrew = sailboat.builders:Homebrew
 plugins = sailboat.core:ManagePlugins
 pyinstaller = sailboat.builders:PyInstaller

@@ -87,7 +87,7 @@ def main():
 			__doc__+="\n\t\t- \u001b[36;1m"+command+"\u001b[0m: "+plugins['core'][command]['description'].capitalize()
 			a_commands.append(command)
 
-	__doc__+="\n\t\t- \u001b[36;1mhelp\u001b[0m: display this message."
+	__doc__+="\n\t\t- \u001b[36;1mhelp\u001b[0m: Display this message."
 
 	if len(plugins['command'].keys())!=0:
 		__doc__+="\n\n\tother commands:"

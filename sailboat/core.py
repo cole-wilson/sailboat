@@ -170,19 +170,8 @@ class Wizard(Plugin):
 
 class Git(Plugin):
 	_type = "core"
-	_release = True
 	description = "Manage Git for your project."
-	def release(self):
-		os.system(f"""git init;
-git add .;
-git config --global credential.helper "cache --timeout=3600";
-git config user.name "{self.data["author"]}";
-git config user.email "{self.data["email"]}";
-git commit -m "{self.data['release-notes']}";
-git tag v{self.version};
-git remote add origin https://github.com/{self.data['git']['github']}.git||echo origin already added;
-git push -u origin master --tags;
-""")
+
 	def run(self,plugins={},**kwargs):
 		if self.options == ['push']:
 			a = input("Message: ").replace('"',r'"')
@@ -206,6 +195,20 @@ git push -u origin master;
 """)
 		print('Your GitHub repo is setup. To update your repo, type:\n\n\tgit add .;git commit -a -m "Your message here";git push;\n\nin your terminal, or `sail git push`')
 
+class GithubRelease(Plugin):
+	_type = "release"
+	description = "GitHub Tagged Release"
+	def release(self):
+		os.system(f"""git init;
+git add .;
+git config --global credential.helper "cache --timeout=3600";
+git config user.name "{self.data["author"]}";
+git config user.email "{self.data["email"]}";
+git commit -m "{self.data['release-notes']}";
+git tag v{self.version};
+git remote add origin https://github.com/{self.data['git']['github']}.git||echo origin already added;
+git push -u origin master --tags;
+""")
 
 class Release(Plugin):
 	_type = "core"

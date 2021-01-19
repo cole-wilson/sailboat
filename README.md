@@ -1,7 +1,10 @@
-# sailboat
+
+
+<h1 align="center"><img src="https://www.pinclipart.com/picdir/big/383-3832964_im-on-a-boat-stamp-sailboat-stencil-clipart.png" width="70px">
+<br>
+sailboat</h1>
 
 A quick and easy way to distribute your python projects!
-
 sailboat will let you go from hello world to a published app in about 5 minutes!
 It generates a setup.py and correct directory structure for you in seconds, all with a simple config file.
 

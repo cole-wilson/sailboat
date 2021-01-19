@@ -90,7 +90,7 @@
       "description": "Manage Git for your project.",
       "dist": "sailboat",
       "order": 0,
-      "release": true,
+      "release": false,
       "show": true,
       "type": "core"
     },
@@ -99,7 +99,7 @@
       "description": "Manage Git for your project.",
       "dist": "sailboat",
       "order": 0,
-      "release": true,
+      "release": false,
       "show": true,
       "type": "core"
     },
@@ -149,5 +149,15 @@
       "type": "core"
     }
   },
-  "release": {}
+  "release": {
+    "github_release": {
+      "default_os": "linux",
+      "description": "GitHub Tagged Release",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": true,
+      "type": "release"
+    }
+  }
 }
