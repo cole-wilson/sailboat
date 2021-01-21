@@ -14,7 +14,7 @@ try:
 except:
 	prefix = os.path.dirname(os.path.abspath(__file__))+os.sep
 
-__doc__ = "usage: sail [command]\n"
+__doc__ = "usage: sail [options ...] [command]\n"
 
 def refreshEntries():
 	plugins={"core":{},"build":{},"release":{},"command":{}}
@@ -60,12 +60,24 @@ def main():
 	if 'git' not in data:
 		data['git'] = {}
 	
+	switches = []
+	startindex = 0
+	for index,value in enumerate(sys.argv[1:]):
+		if value.startswith('--'):
+			switches.append(value[2:])
+		elif value.startswith('-'):
+			switches.extend(value[1:])
+		else:
+			startindex = index
+			break		
+	options = [sys.argv[0],*sys.argv[1:][startindex:]]
 
 # =============================================================================
 	plugins = json.loads(open(prefix+'plugins.json').read())
 	
-	if plugins=={} or (len(plugins.keys())!=4):
+	if 'refresh' in switches or 'r' in switches or plugins=={} or (len(plugins.keys())!=4):
 		plugins = refreshEntries()
+		print('reloaded plugins')
 
 	a_commands = []
 
@@ -91,15 +103,15 @@ def main():
 
 # =============================================================================
 
-	if len(sys.argv) < 2:
+	if len(options) < 2:
 		print(__doc__)
 		return
 	if needswizard:
 		command = 'wizard'
 	else:
-		command = sys.argv[1]
+		command = options[1]
 	autocomplete = False
-	if command == 'help':
+	if command == 'help' or 'help' in switches or 'h' in switches:
 		print(__doc__)
 		return
 
@@ -120,7 +132,7 @@ def main():
 	temp = pkg_resources.load_entry_point(dist,'sailboat_plugins',command)
 	temp = temp(
 		data=data,
-		options=sys.argv[2:],
+		options=options[2:],
 		name=command,
 		prefix=prefix
 	)
@@ -189,6 +201,9 @@ def main():
 {}
 
 # Thank you for using Sailboat!"""
+		if '_comments' in data and not data['_comments']:
+			print()
+			out = "{}\n{}\n{}\n{}\n{}\n{}\n"
 		out = out.format(o[0],o[1],o[2],o[3],o[4],o[5])
 		f.write(out)
 
