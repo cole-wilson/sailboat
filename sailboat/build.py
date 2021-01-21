@@ -151,4 +151,4 @@ class Build(Plugin):
 			self.data[job._type][build_plugin] = job.data[job._type][build_plugin]
 			dones.append(build_plugin)
 		print(self.section('Finishing up...'))
-		os.system('python setup.py develop')
+		os.system('python3 setup.py develop')
