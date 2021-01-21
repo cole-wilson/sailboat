@@ -26,27 +26,9 @@
       "release": true,
       "show": true,
       "type": "build"
-    },
-    "test": {
-      "default_os": "linux",
-      "description": "<no description provided>",
-      "dist": "sailboat",
-      "order": 0,
-      "release": true,
-      "show": true,
-      "type": "build"
     }
   },
   "command": {
-    "echo": {
-      "default_os": "linux",
-      "description": "say argv!",
-      "dist": "sailboat",
-      "order": 0,
-      "release": false,
-      "show": true,
-      "type": "command"
-    },
     "tasks": {
       "default_os": "linux",
       "description": "Manage 'TODO:' comments",
@@ -106,6 +88,15 @@
     "plugins": {
       "default_os": "linux",
       "description": "plugin manager.",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": true,
+      "type": "core"
+    },
+    "quickstart": {
+      "default_os": "linux",
+      "description": "Get your project up and running.",
       "dist": "sailboat",
       "order": 0,
       "release": false,

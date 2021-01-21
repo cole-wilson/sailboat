@@ -146,7 +146,7 @@ class Build(Plugin):
 				print('\n\nUser has aborted at step {}.\n\n'.format(build_plugin))
 				return
 			except BaseException as error:
-				print('\n\nError at step {}:\n\t{}\n{}'.format(build_plugin,traceback.print_exception(*sys.exc_info()),error))
+				print('\n\nError at step {}:\n\n\t{}\n\n'.format(build_plugin,self.red(error)))
 				return
 			self.data[job._type][build_plugin] = job.data[job._type][build_plugin]
 			dones.append(build_plugin)

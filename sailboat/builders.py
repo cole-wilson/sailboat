@@ -215,13 +215,14 @@ class Homebrew(Plugin):
 
 class PyInstaller(Plugin):
 	_type = "build"
-	_os = "windows mac linux"
 	setup = {
 		"type::int":"Select one of the following:\n\t1. My app needs a console window to display input and output.\n\t2. My app should provide it's own windows.\n>>> ",
 		"mac::bool":"Would you like to generate a Mac app for your project? ",
 		"windows::bool":"Would you like to generate a Windows app for your project? ",
 		"unix::bool":"Would you like to generate a Unix executable for your project? ",
 	}
+	_os = "windows mac linux"
+
 	def wizard(self):
 		super().wizard()
 		if 'bundle_id' not in self.getData():

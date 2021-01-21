@@ -2,6 +2,7 @@ import os
 import glob
 import sys
 
+
 class Plugin:
 	"""
 	The basic sailboat Plugin class
@@ -27,6 +28,8 @@ class Plugin:
 			f.write(x+"::"+self.autocompletion[x]+"\n")
 	def release(self):
 		pass
+	def init(self):
+		pass
 	def add(self):
 		self.registerAutocompletion()
 		print('Installing...')
@@ -47,6 +50,7 @@ class Plugin:
 			self.data = data
 		self.name = name	
 		self.prefix=prefix
+		self.init()
 	def storeData(self,key,value):
 		if self._type == "core":
 			self.data[key] = value

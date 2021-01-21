@@ -13,16 +13,8 @@ try:
 	prefix = os.path.abspath(path.parent)+os.sep
 except:
 	prefix = os.path.dirname(os.path.abspath(__file__))+os.sep
-# print(prefix)
 
-# =============================================================================
 __doc__ = "usage: sail [command]\n"
-# =============================================================================
-class echo(sailboat.plugins.Plugin):
-	_type = "command"
-	description = "say argv!"
-	def run(self):
-		print(" ".join(self.options))
 
 def refreshEntries():
 	plugins={"core":{},"build":{},"release":{},"command":{}}
@@ -35,7 +27,7 @@ def refreshEntries():
 			"type" : temp._type,
 			'release' : temp._release,
 			"order" : temp._order,
-			"default_os":temp._os
+			"default_os":str(temp._os)
 		}
 	f = open(os.path.abspath(path.parent)+os.sep+'plugins.json','w+')
 	f.write(json.dumps(plugins, indent=2, sort_keys=True))
@@ -44,8 +36,6 @@ def refreshEntries():
 	return plugins
 
 def main():
-	# if 'ux' in sys.platform:
-	# 	os.system('source '+prefix+'auto.bash')
 	global __doc__
 	opath = os.getcwd()
 	while not os.path.isfile('sailboat.toml') and os.getcwd().count(os.sep)>2:
@@ -60,7 +50,7 @@ def main():
 			data = toml.loads(file.read())
 			if data == {}:
 				needswizard = True
-	
+	needswizard =False
 	if 'command' not in data:
 		data['command'] = {}
 	if 'build' not in data:

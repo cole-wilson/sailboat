@@ -14,10 +14,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.17.4"
+latest_build = "0.18.0"
 author = "Cole Wilson"
-latest_release = "0.17.3"
-release-notes = "a"
+latest_release = "0.17.4"
+release-notes = "fixed gh_release plugin"
 
 
 # Resource Setup:
@@ -41,16 +41,16 @@ type = 1
 mac = true
 windows = true
 unix = true
-bundle_id = "com.colewilson.sailboat"
+bundle_id = "xyz.colewilson.sailboat"
 
 [build.pypi.commands]
 sail = "__main__.main"
 sailboat = "__main__.main"
 
 [build.pypi.entry_points.sailboat_plugins]
+quickstart = "sailboat.core:QuickStart"
 pypi = "sailboat.builders:PyPi"
 homebrew = "sailboat.builders:Homebrew"
-echo = "sailboat.__main__:echo"
 pyinstaller = "sailboat.builders:PyInstaller"
 dev = "sailboat.core:Develop"
 release = "sailboat.core:Release"
@@ -59,7 +59,6 @@ wizard = "sailboat.core:Wizard"
 remove = "sailboat.core:Remove"
 add = "sailboat.core:Add"
 plugins = "sailboat.core:ManagePlugins"
-test = "sailboat.tests:Test"
 git = "sailboat.core:Git"
 tasks = "sailboat.other:Tasks"
 workflow = "sailboat.core:Actions"

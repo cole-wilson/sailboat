@@ -13,7 +13,6 @@ sailboat/other.py
 sailboat/plugins.json
 sailboat/plugins.py
 sailboat/prerelease.py
-sailboat/tests.py
 sailboat.egg-info/PKG-INFO
 sailboat.egg-info/SOURCES.txt
 sailboat.egg-info/dependency_links.txt

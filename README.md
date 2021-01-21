@@ -2,13 +2,22 @@
 
 <h1 align="center"><img src="https://www.pinclipart.com/picdir/big/383-3832964_im-on-a-boat-stamp-sailboat-stencil-clipart.png" width="70px">
 <br>
-sailboat</h1>
+sailboat
+<br>
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/cole-wilson/sailboat?style=social">
+<a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fsole-wilson%2Fsailboat"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fsole-wilson%2Fsailboat"></a>
+<br>
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/cole-wilson/sailboat">
+<img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/cole-wilson/sailboat?label=latest%20release">
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/cole-wilson/sailboat/Publish%20release%20files%20for%20Sailboat.">
+<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/cole-wilson/sailboat">
+<img alt="GitHub release (latest SemVer including pre-releases)" src="https://img.shields.io/github/v/release/cole-wilson/sailboat?include_prereleases">
+<img alt="GitHub" src="https://img.shields.io/github/license/cole-wilson/sailboat">
+<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/sailboat">
 
-A quick and easy way to distribute your python projects!
-sailboat will let you go from hello world to a published app in about 5 minutes!
-It generates a setup.py and correct directory structure for you in seconds, all with a simple config file.
+</h1>
 
-In addition to this, it can build your Mac and Windows apps in the cloud using GitHub actions, so you don't need to have both a Mac and Windows computer to create apps. To use this feature, activate it with the wizard. 
+Sailboat is a tool that drastically speeds up your Python development. It suports a countless number of plugins — you can even [make your own](#plugins).
 
 Please see the [quickstart](#quickstart) for an example.
 ## Installation

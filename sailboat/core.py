@@ -21,7 +21,7 @@ def refreshEntries():
 			"type" : temp._type,
 			"release" : temp._release,
 			"order" : temp._order,
-			"default_os": temp._os
+			"default_os": str(temp._os)
 		}
 	try:
 		path = Path(__file__)
@@ -34,6 +34,39 @@ def refreshEntries():
 
 	del f
 
+class QuickStart(Plugin):
+	_type = "core"
+	description = "Get your project up and running."
+
+	def runPlugin(self,plug,plugins,opts=[]):
+		b = pkg_resources.load_entry_point('sailboat','sailboat_plugins',plug)
+		temp = b(
+			data=self.data,
+			options=opts,
+			name=plug,
+			prefix=self.prefix,
+			version=None
+		)
+		temp.run(plugins = plugins)
+		return temp.data
+
+	def run(self,plugins={},**kwargs):
+		input('This quickstart command will get you started on your project.\nFirst, it will set up the config file and your GitHub settings. Then it will add suggested plugins for your project!\n\nPress enter to continue, and ctrl+c to skip a step.')
+		for plug in ['wizard', 'git']:
+			print("\n\n"+self.red(plug)+"\n"+(len(plug)*"-")+"\n")
+			self.data = self.runPlugin(plug,plugins)
+		print()
+		print("\n\n"+self.red('plugins')+"\n"+(len('plugins')*"-")+"\n")
+		pypi = "pypi" if input('Would you like to generate pypi files for your project? [Y/n]')+"y"[0] == 'y' else ""
+		pyinstaller = "pyinstaller" if input('Would you like to generate pyinstaller files for your project? [Y/n]')+"y"[0] == 'y' else ""
+		homebrew = "homebrew" if input('Would you like to generate homebrew files for your project? [Y/n]')+"y"[0] == 'y' else ""
+		combined = f"{pypi} {pyinstaller} {homebrew}"
+		if len(combined) > 0:
+			print()
+			self.runPlugin('add',plugins,opts=[*combined.split()])
+
+		print('Your project is set up, run `sail build` to build, or `sail add <plugin>` to add a new plugin.')
+
 class ManagePlugins(Plugin):
 	_type = "core"
 	description = "plugin manager."
@@ -42,7 +75,7 @@ class ManagePlugins(Plugin):
 	def run(self,plugins={},**kwargs):
 		if self.options == []:
 			print("usage: sail plugins [refresh]\n\n\trefresh: reload previously installed plugins.")
-		elif self.options == ['refresh']:
+		elif self.options == ['refresh'] or self.options == ['-r']:
 			refreshEntries();
 			print('Done!')
 		elif self.options == ['list']:
@@ -78,7 +111,7 @@ class Wizard(Plugin):
 		"short_description::str":"Short description of your project: ",
 		"description::str":"Long description of your project: ",
 		"url::str":"Home URL of your project",
-		"keywords::str":"Your project's keywords, seperated witha a space.",
+		"keywords::str":"Your project's keywords, seperated with a a space.",
 	}
 
 	def wizard(self):
@@ -330,7 +363,7 @@ class Add(Plugin):
 				done.append(point.name)
 				temp = point.load()
 				run = temp(data=self.data,options=[],name=point.name,prefix=self.prefix)
-				print(f'{point.name} is a {run._type} plugin.')
+				print(self.section(f'{point.name} [{run._type}]:{run.description}.'))
 				if point.name not in self.data[run._type]:
 					self.data[run._type][point.name] = {}
 				if run._type == 'core':
