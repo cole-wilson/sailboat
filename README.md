@@ -91,9 +91,9 @@ class Echo(Plugin):
 	setup = {"string_to_echo":"What string should I echo? "}  # Used by wizard
     
 	def run(self):
-    	string = self.getData('string_to_echo')  # Get string to echo.
-        print(string)
-        return
+		string = self.getData('string_to_echo')  # Get string to echo.
+		print(string)
+		return
 ```
 Plugins store their data in the `sailboat.toml` file, under their type namespace. For example, the above example will store it's data like so:
 ```toml

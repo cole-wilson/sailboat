@@ -1,5 +1,14 @@
 {
   "build": {
+    "build_docs_readme": {
+      "default_os": "linux",
+      "description": "<no description provided>",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": false,
+      "type": "build"
+    },
     "homebrew": {
       "default_os": "linux",
       "description": "<no description provided>",

@@ -5,6 +5,7 @@ sailboat = sailboat.__main__:main
 [sailboat_plugins]
 add = sailboat.core:Add
 build = sailboat.build:Build
+build_docs_readme = sailboat.other:BuildDocs
 dev = sailboat.core:Develop
 git = sailboat.core:Git
 github = sailboat.core:Git

@@ -1,4 +1,10 @@
-_comments = false
+#            _  _  _                _   
+#  ___ __ _ (_)| || |__  ___  __ _ | |_ 
+# (_-</ _` || || || '_ \/ _ \/ _` ||  _|
+# /__/\__,_||_||_||_.__/\___/\__,_| \__|
+                                      
+# Basic Setup:
+_comments = true
 name = "Sailboat"
 short_name = "sailboat"
 email = "cole@colewilson.xyz"
@@ -7,11 +13,13 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.20.0"
+latest_build = "0.20.0+91237e3.1"
 author = "Cole Wilson"
 latest_release = "0.19.3"
 release-notes = "a"
 
+
+# Resource Setup:
 [resources]
 icon = ""
 data_files = [ "resources/*", "plugins.json", "autocomplete", "auto.bash",]
@@ -20,6 +28,10 @@ file = "__main__.py"
 no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceback", "json",]
 
 
+# Plugin Commands:
+
+
+# Build Routines:
 [build.homebrew]
 
 [build.pyinstaller]
@@ -29,6 +41,8 @@ mac = true
 windows = true
 unix = true
 bundle_id = "xyz.colewilson.sailboat"
+
+[build.build_docs_readme]
 
 [build.pypi.commands]
 sail = "__main__.main"
@@ -51,10 +65,17 @@ tasks = "sailboat.other:Tasks"
 workflow = "sailboat.core:Actions"
 github = "sailboat.core:Git"
 github_release = "sailboat.core:GithubRelease"
+build_docs_readme = "sailboat.other:BuildDocs"
 
+
+# Release Routines:
 [release.github_release]
 
+
+# Other:
 [git]
 brew = "cole-wilson/homebrew-taps"
 github = "cole-wilson/sailboat"
 
+
+# Thank you for using Sailboat!

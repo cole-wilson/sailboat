@@ -9,6 +9,7 @@ import re
 import sys
 from sailboat.plugins import Plugin
 import glob
+import shutil
 
 licensetext = """# Copyright 2020 Cole Wilson and other contributors
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -18,7 +19,16 @@ licensetext = """# Copyright 2020 Cole Wilson and other contributors
 
 """
 
-
+class BuildDocs(Plugin):
+	_type = "build"
+	_show = False
+	def run(self):
+		try:
+			os.remove('docs/README.md')
+		except:
+			pass
+		shutil.copy('README.md','docs/README.md')
+		
 class Tasks(Plugin):
 	description = "Manage 'TODO:' comments"
 	_type = "command"
