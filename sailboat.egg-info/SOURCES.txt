@@ -9,7 +9,6 @@ sailboat/autocomplete.py
 sailboat/build.py
 sailboat/builders.py
 sailboat/core.py
-sailboat/mkdoc.py
 sailboat/other.py
 sailboat/plugins.json
 sailboat/plugins.py

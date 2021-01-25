@@ -20,8 +20,10 @@ class PyPi(Plugin):
 		except:
 			input('Press enter to continue installing `twine`. Press ctrl+c to exit.')
 			os.system('python3 -m pip install --user --upgrade twine || python3 -m pip install --upgrade twine')
-			import twine
-		del twine
+			try:
+				import twine
+			except:
+				os.system('pip3 install --user --upgrade twine || pip3 install --upgrade twine')
 		print('\u001b[4m\u001b[1;36mPyPi Credentials:\u001b[0m')
 		os.system('python3 -m twine upload dist'+os.sep+'pypi'+os.sep+'*')
 

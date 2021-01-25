@@ -1,6 +1,6 @@
 # Created with sailboat, the Python releaser
 
-# v0.21.3
+# v0.22.0
 
 class Sailboat < Formula
   include Language::Python::Virtualenv
@@ -32,6 +32,10 @@ class Sailboat < Formula
    resource "setuptools" do
       url "https://files.pythonhosted.org/packages/84/48/5c99d8770fd0a9eb0f82654c3294aad6d0ba9f8600638c2e2ad74f2c5d52/setuptools-52.0.0.tar.gz"
       sha256 "fb3a1ee622509550dbf1d419f241296169d7f09cb1eb5b1736f2f10965932b96"
+   end
+   resource "twine" do
+      url "https://files.pythonhosted.org/packages/f9/43/51c3139667e90399a4d7886013631ad020ad102db5c2907cb240ce56f3c1/twine-3.3.0.tar.gz"
+      sha256 "fcffa8fc37e8083a5be0728371f299598870ee1eccc94e9a25cef7b1dcfa8297"
    end
 
 
