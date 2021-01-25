@@ -102,7 +102,7 @@ class Develop(Plugin):
 			self.info("Can't find setup.py. Create one using sail build.")
 class Wizard(Plugin):
 	_type = "core"
-	description = "configure you project or a plugin."
+	description = "configure your project or a plugin."
 	setup = { # Top Level Setup
 		"name::str":"Full name of your project: ",
 		"short_name::str":"Short name of your project: ",
