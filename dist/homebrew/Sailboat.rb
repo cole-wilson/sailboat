@@ -1,6 +1,6 @@
 # Created with sailboat, the Python releaser
 
-# v0.19.3
+# v0.20.0
 
 class Sailboat < Formula
   include Language::Python::Virtualenv
@@ -30,8 +30,8 @@ class Sailboat < Formula
       sha256 "27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804"
    end
    resource "setuptools" do
-      url "https://files.pythonhosted.org/packages/96/66/1138b7ec901e86139c07900ce906c2f1e5c3400ee1cfd1e7ab3c776248c9/setuptools-51.3.3.tar.gz"
-      sha256 "127ec775c4772bfaf2050557b00c4be6e019e52dc2e171a3fb1cd474783a2497"
+      url "https://files.pythonhosted.org/packages/84/48/5c99d8770fd0a9eb0f82654c3294aad6d0ba9f8600638c2e2ad74f2c5d52/setuptools-52.0.0.tar.gz"
+      sha256 "fb3a1ee622509550dbf1d419f241296169d7f09cb1eb5b1736f2f10965932b96"
    end
 
 
