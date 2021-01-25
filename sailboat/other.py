@@ -27,9 +27,9 @@ class BuildDocs(Plugin):
 			os.remove('docs/README.md')
 		except:
 			pass
-		shutil.copy('README.md','docs/README.md')
-		o = open('docs/README.md').read()
-		a = open('docs/README.md','w+')
+		shutil.copy('README.md','docs/index.md')
+		o = open('docs/index.md').read()
+		a = open('docs/index.md','w+')
 		a.write("""---
 layout: default
 title: Home
