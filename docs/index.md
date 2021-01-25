@@ -5,6 +5,9 @@ nav_order: 1
 description: "Sailboat is a Python developer's best friend. It's a Python build tool that can do anything you need it to! It suports a countless number of plugins — you can even [make your own](#plugins). Sailboat is made for anyone, whether you are a beginner on your very first project, or a senior software engineer with years of experience. "
 ---
 
+<!-- Included twice for docs theme. This file is built, do not edit. Instead edit README.md -->
+
+
 
 <h1 align="center"><img src="https://www.pinclipart.com/picdir/big/383-3832964_im-on-a-boat-stamp-sailboat-stencil-clipart.png" width="70px">
 <br>

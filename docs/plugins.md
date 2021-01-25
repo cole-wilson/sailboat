@@ -1,5 +1,5 @@
 ---
-name: Plugins
+title: Plugins
 layout: default
 ---
 Sailboat uses a plugin based architecture. Every single command or subcommand is a plugin, even the core features. Plugins are registered using the [Python entry points system](https://amir.rachum.com/blog/2017/07/28/python-entry-points/), using the group name `sailboat_plugins`. There are four types of plugins:

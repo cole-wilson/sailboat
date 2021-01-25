@@ -30,7 +30,6 @@ sailboat/core2/wizard.py
 sailboat/resources/brew.rb
 sailboat/resources/gitignore.template
 sailboat/resources/info.plist.xml
-sailboat/resources/readme.template.md
 sailboat/resources/sailboat.yml.template
 sailboat/resources/settings.py.template
 sailboat/resources/setup.py.template

@@ -1,5 +1,5 @@
 ---
-name: Availible Plugins
+title: Availible Plugins
 layout: default
 ---
 A non-comprehensive list of availible Plugins, and their types.
