@@ -8,6 +8,7 @@ Want to add your plugin? Submit an issue.
 Install plugins with `sail add <plugin_name_1> <plugin_name_2> ...`
 
 ## Build Plugins:
+
 |name|description|included with sailboat?|
 |----|-----------|-----------------------|
 |homebrew|Make homebrew formulae for your projects|yep|
@@ -15,12 +16,14 @@ Install plugins with `sail add <plugin_name_1> <plugin_name_2> ...`
 |pyinstaller|Make your projects into apps|yep|
 
 ## Release Plugins:
+
 |name|description|included with sailboat?|
 |----|-----------|-----------------------|
 |homebrew|Make homebrew formulae for your projects|yep|
 |pypi|Make PyPi files and setup.py|yep|
 
 ## Command Plugins:
+
 |name|description|included with sailboat?|
 |----|-----------|-----------------------|
 |tasks|Manage todo: comments in your python code|yep|
