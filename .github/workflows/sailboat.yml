@@ -15,7 +15,7 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_path: ./dist/*/*
-            builds:  homebrew pyinstaller pypi
+            builds:  homebrew pyinstaller build_docs_readme pypi
             asset_name: default
             glob: true
 

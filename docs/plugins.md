@@ -35,6 +35,14 @@ string_to_echo = "Testing..."
 ```
 A plugin should ***NEVER*** edit the `sailboat.toml` file on it's own. Instead plugins should use the provided functions OR edit `self.data`, a dictionary of the file. Only data stored in the plugins namespace will be preserved. However, a plugin can read from the top level data.
 
+## Registering Your Plugin:
+All you have to do to register your plugin is add an entry point for it in `sailboat_plugins`. If you are using sailboat to build your project, this is easy, just edit `sailboat.toml`:
+```toml
+...
+[build.pypi.entry_points.sailboat_plugins]
+build = "sailboat.build:Build"  # name = your_module.your_file:Your_Class
+...
+```
 ## Variables:
 The following top level variables are used in a plugin class. They can be accessed with `self.variable_name`.
 
@@ -59,6 +67,9 @@ This contains a dictionary with the contents of the `sailboat.toml` file. It is 
 
 ### `name`
 The name that called the plugin.
+
+### `description`
+A description of the plugin. Default: `<no description provided>`
 
 ### `options`
 A sys.argv like list of command line arguments. These are the arguments only for that plugin.
