@@ -17,6 +17,8 @@ sailboat
 
 </h1>
 
+<a style="display:inline-block;" align="center" href="//sailboat.colewilson.xyz">View Documentation Site</a>
+
 ## About
 Sailboat is a Python developer's best friend. It's a Python build tool that can do anything you need it to! It suports a countless number of plugins — you can even [make your own](#plugins). Sailboat is made for anyone, whether you are a beginner on your very first project, or a senior software engineer with years of experience. 
 

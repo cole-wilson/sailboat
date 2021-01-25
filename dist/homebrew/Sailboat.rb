@@ -1,11 +1,11 @@
 # Created with sailboat, the Python releaser
 
-# v0.20.0+aa630a9.1
+# v0.20.0+ecae366.3
 
 class Sailboat < Formula
   include Language::Python::Virtualenv
 
-  desc "🐍 A quick and easy way to distribute your Python projects!"
+  desc "A quick and easy way to distribute your Python projects!"
   homepage "https://github.com/cole-wilson/sailboat"
   url "{pyhosted}" # These lines must be configured during release, not build.
   sha256 "{sha256}" # ^^^

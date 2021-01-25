@@ -1,1 +1,7 @@
 remote_theme: pmarsceill/just-the-docs
+logo: "https://www.pinclipart.com/picdir/big/383-3832964_im-on-a-boat-stamp-sailboat-stencil-clipart.png"
+aux_links:
+  "View on GitHub":
+    - "//github.com/cole-wilson/sailboat"
+color_scheme: dark
+ga_tracking: UA-5555555-55
