@@ -2,6 +2,7 @@
 title: Available Plugins
 layout: default
 ---
+# Available Plugins
 A non-comprehensive list of availible Plugins, and their types.
 Want to add your plugin? Submit an issue.
 
