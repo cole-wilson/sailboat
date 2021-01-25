@@ -38,6 +38,9 @@ title: Home
 nav_order: 1
 description: "Sailboat is a Python developer's best friend. It's a Python build tool that can do anything you need it to! It suports a countless number of plugins — you can even [make your own](#plugins). Sailboat is made for anyone, whether you are a beginner on your very first project, or a senior software engineer with years of experience. "
 ---
+
+<!-- Included twice for docs theme. This file is built, do not edit. Instead edit README.md -->
+
 {}""".format(o).replace('<a style="display:inline-block;" align="center" href="//sailboat.colewilson.xyz">View Documentation Site</a>\n',''))
 
 
