@@ -9,7 +9,9 @@ import re
 import sys
 from sailboat.plugins import Plugin
 import glob
+import json
 import shutil
+import subprocess
 
 licensetext = """# Copyright 2020 Cole Wilson and other contributors
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -37,7 +39,8 @@ nav_order: 1
 description: "Sailboat is a Python developer's best friend. It's a Python build tool that can do anything you need it to! It suports a countless number of plugins — you can even [make your own](#plugins). Sailboat is made for anyone, whether you are a beginner on your very first project, or a senior software engineer with years of experience. "
 ---
 {}""".format(o).replace('<a style="display:inline-block;" align="center" href="//sailboat.colewilson.xyz">View Documentation Site</a>\n',''))
-		
+
+
 class Tasks(Plugin):
 	description = "Manage 'TODO:' comments"
 	_type = "command"

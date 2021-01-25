@@ -55,7 +55,6 @@ To get a list of the availible subcommands type `sail help`.
 To refresh the plugin list, type `sail -r`.
 
 There are countless subcommands, but these are the core ones:
-> Click on a subcommand name to view the docs for it.
 
 |subcommand|description|
 |----------|-----------|
@@ -106,7 +105,7 @@ string_to_echo = "Testing..."
 ```
 A plugin should ***NEVER*** edit the `sailboat.toml` file on it's own. Instead plugins should use the provided functions OR edit `self.data`, a dictionary of the file. Only data stored in the plugins namespace will be preserved. However, a plugin can read from the top level data.
 
-Plugins can get very complex, and therefore useful, but it is too long to put here. Please look at the [`docs/plugins.md`](docs/plugins.md) file for details.
+Plugins can get very complex, and therefore useful, but it is too long to put here. Please look at the [`sailboat.colewilson.xyz/plugins.md`](//sailboat.colewilson.xyz/plugins.md) file for details.
 
 ## Acknowledgements:
 Thanks to all the people at PyInstaller, dmgbuild, twine, and GitHub actions who provided ways for me to create this. 
