@@ -7,10 +7,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.19.0+35e02bd.1"
+latest_build = "0.19.3"
 author = "Cole Wilson"
-latest_release = "0.19.0"
-release-notes = "ADDED SWITCHES\t"
+latest_release = "0.19.3"
+release-notes = "a"
 
 [resources]
 icon = ""

@@ -1,5 +1,4 @@
 README.md
-pyproject.toml
 setup.py
 sailboat/__init__.py
 sailboat/__main__.py

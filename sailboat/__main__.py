@@ -59,7 +59,7 @@ def main():
 		data['release'] = {}
 	if 'git' not in data:
 		data['git'] = {}
-	
+
 	switches = []
 	startindex = 0
 	for index,value in enumerate(sys.argv[1:]):
@@ -69,12 +69,12 @@ def main():
 			switches.extend(value[1:])
 		else:
 			startindex = index
-			break		
+			break
 	options = [sys.argv[0],*sys.argv[1:][startindex:]]
 
 # =============================================================================
 	plugins = json.loads(open(prefix+'plugins.json').read())
-	
+
 	if 'refresh' in switches or 'r' in switches or plugins=={} or (len(plugins.keys())!=4):
 		plugins = refreshEntries()
 		print('reloaded plugins')
@@ -122,7 +122,7 @@ def main():
 	else:
 		if not autocomplete:
 			print('sailboat: error: {} is not a valid command. Please make sure you have installed it.'.format(command))
-		return	
+		return
 
 	if t!='core' and command not in data['build'] and command not in data['release'] and command not in data['command']:
 		print('sailboat: error: {} *is* a valid command, but it isn\'t installed on this project. Install it with the `add` command.'.format(command))
@@ -175,13 +175,13 @@ def main():
 		release  = release if release != {'release':{}} else {}
 		other  = other if other != {'other':{}} else {}
 		o = [*map(toml.dumps,[basic_data,resources,commands,builds,release,other])]
-		out="""#	  _____       _ _ _                 _     
-#	 / ____|     (_) | |               | |  _ 
-#	| (___   __ _ _| | |__   ___   __ _| |_(_)
-#	 \___ \ / _` | | | '_ \ / _ \ / _` | __|  
-#	 ____) | (_| | | | |_) | (_) | (_| | |_ _ 
-#	|_____/ \__,_|_|_|_.__/ \___/ \__,_|\__(_)
-                                          
+		out="""#	  _____	   _ _ _		 _
+#	/ ____|	 (_) | |		   | |  _
+#	   | (___   __ _ _| | |__   ___   __ _| |_(_)
+#	\___ \ / _` | | | '_ \ / _ \ / _` | __|
+#	____) | (_| | | | |_) | (_) | (_| | |_ _
+#	   |_____/ \__,_|_|_|_.__/ \___/ \__,_|\__(_)
+
 # Basic Setup:
 {}
 

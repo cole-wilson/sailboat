@@ -74,11 +74,10 @@ class Build(Plugin):
 			shutil.copyfile(filename,'LICENSE')
 		if not os.path.isfile(target_dir+'__init__.py'):
 			open(target_dir+'__init__.py','w+').write('# This file must exist, empty or not')
-		if self.data['resources']['file']!="" and not os.path.isfile(self.data['short_name']+os.sep+'__main__.py'):
+		if self.data['resources']['file']!="" and not os.path.isfile(self.data['short_name']+os.sep+'__main__.py') and os.path.isfile(self.data['resources']['file']):
 			try:
-				os.rename(self.data['short_name']+os.sep+self.data['resources']['file'],self.data['short_name']+os.sep+'__main__.py')
-				open(self.data['short_name']+os.sep+self.data['resources']['file'],'w+').write('# Please edit __main__.py for the main code. Thanks!\n(you can delete this file.)')
-			except FileNotFoundError:
+				os.rename(self.data['resources']['file'],self.data['short_name']+os.sep+'__main__.py')
+			except:
 				pass
  #=====================================================================================
 		print('\n\n\u001b[4m\u001b[1;36mFetching Modules:\u001b[0m')

@@ -57,9 +57,9 @@ class QuickStart(Plugin):
 			self.data = self.runPlugin(plug,plugins)
 		print()
 		print("\n\n"+self.red('plugins')+"\n"+(len('plugins')*"-")+"\n")
-		pypi = "pypi" if input('Would you like to generate pypi files for your project? [Y/n]')+"y"[0] == 'y' else ""
-		pyinstaller = "pyinstaller" if input('Would you like to generate pyinstaller files for your project? [Y/n]')+"y"[0] == 'y' else ""
-		homebrew = "homebrew" if input('Would you like to generate homebrew files for your project? [Y/n]')+"y"[0] == 'y' else ""
+		pypi = "pypi" if (input('Would you like to generate pypi files for your project? [Y/n]')+"y")[0] == 'y' else ""
+		pyinstaller = "pyinstaller" if (input('Would you like to generate pyinstaller files for your project? [Y/n]')+"y")[0] == 'y' else ""
+		homebrew = "homebrew" if (input('Would you like to generate homebrew files for your project? [Y/n]')+"y")[0] == 'y' else ""
 		combined = f"{pypi} {pyinstaller} {homebrew}"
 		if len(combined) > 0:
 			print()
