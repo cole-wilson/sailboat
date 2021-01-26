@@ -253,7 +253,7 @@ class PyInstaller(Plugin):
 		typ = '--nowindowed' if self.getData('type')==1 else '--noconsole'
 
 		ico = ['--icon',self.data['resources']['icon']] if 'icon' in self.data['resources'] else []
-		osname = "macos" if sys.platform.startwith('darwin') else sys.platform
+		osname = "macos" if sys.platform.startswith('darwin') else sys.platform
 		options = [
 			self.data['short_name']+os.sep+'__main__.py',
 			'--onefile',
