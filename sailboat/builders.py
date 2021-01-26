@@ -281,7 +281,7 @@ class PyInstaller(Plugin):
 		except:
 			print('removing app.spec...')
 			try:
-				os.remove("app.spec")			
+				os.remove("app.spec")
 			except:
 				pass
     # MAC APP BUNDLE==============
@@ -307,7 +307,7 @@ class PyInstaller(Plugin):
 			))
 			infoPlist.close()
 
-			os.rename('./../../pyinstaller/'+self.data['name'],'MacOS'+self.data['name'])
+			os.rename('./../../pyinstaller/'+self.data['name'],'MacOS/'+self.data['name'])
 			os.chdir('./../../..')
 
 			os.rename('./dist/'+self.data['name'],'./dist/pyinstaller/'+self.data['name']+".app")
