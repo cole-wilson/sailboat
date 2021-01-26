@@ -330,7 +330,7 @@ class PyInstaller(Plugin):
 			open('build'+os.sep+'settings.py','w+').write(self.getResource('resources'+os.sep+'settings.py.template').read().format(
 				**self.data,
 				version=self.version,
-				icns=self.data['resources']['icon'],
+				icns=self.data['resources']['icns'],
 				keywo=", ".join(self.data['keywords'])
 			))
 			os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{self.data["name"]} Installer" ./dist/pyinstaller/{self.data["short_name"]+"-"+self.version+"-macos"}.dmg')
