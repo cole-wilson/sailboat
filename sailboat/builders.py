@@ -307,7 +307,7 @@ class PyInstaller(Plugin):
 			))
 			infoPlist.close()
 
-			os.rename('./../../pyinstaller/'+self.data['name'],'MacOS/'+self.data['name'])
+			os.rename('./../../pyinstaller/'+self.data["short_name"]+"-"+self.version+"-macos",'MacOS/'+self.data['name'])
 			os.chdir('./../../..')
 
 			os.rename('./dist/'+self.data['name'],'./dist/pyinstaller/'+self.data['name']+".app")
