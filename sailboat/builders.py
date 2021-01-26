@@ -277,7 +277,7 @@ class PyInstaller(Plugin):
 			os.remove("app.spec")			
     # MAC APP BUNDLE==============
 		print('\n\n\u001b[4m\u001b[1;36mGenerating Mac .app bundle...\u001b[0m')
-		if self.getData('mac') and sys.platform.startswith('dar'):
+		if (self.getData('mac') and sys.platform.startswith('dar')):
 			os.chdir('dist')
 
 			os.mkdir(self.data['name'])
@@ -298,10 +298,10 @@ class PyInstaller(Plugin):
 			))
 			infoPlist.close()
 
-			shutil.copy('./../../pyinstaller/'+self.data['name'],'MacOS')
+			os.rename('./../../pyinstaller/'+self.data['name'],'MacOS'+self.data['name'])
 			os.chdir('./../../..')
 
-			os.rename('./dist/'+self.data['name'],'./dist/'+self.data['name']+".app")
+			os.rename('./dist/'+self.data['name'],'./dist/pyinstaller/'+self.data['name']+".app")
 		else:
 			print('not generating mac .app bundle because on {} not mac.'.format(sys.platform))
 		# ============== Generate Installer Package ===============================================
@@ -324,7 +324,7 @@ class PyInstaller(Plugin):
 				icns=self.data['resources']['icon'],
 				keywo=", ".join(self.data['keywords'])
 			))
-			os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{self.data["name"]} Installer" ./{self.data["name"]}.dmg')
+			os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{self.data["name"]} Installer" ./dist/pyinstaller/{self.data["short_name"]+"-"+self.version+"-macos"}.dmg')
 
 		else:
 			print(f'Installer creation not yet supported for {sys.platform}!')

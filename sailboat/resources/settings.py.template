@@ -12,7 +12,7 @@
 import os
 import glob
 
-filename = "./{name}.dmg"
+filename = "./dist/pyinstaller/{short_name}-{version}-macos.dmg"
 volume_name = "{name} Installer"
 format = "UDZO"
 files = [ './dist/{name}.app' ]
