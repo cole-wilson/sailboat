@@ -280,7 +280,10 @@ class PyInstaller(Plugin):
 			os.remove(self.data['name']+".spec")
 		except:
 			print('removing app.spec...')
-			os.remove("app.spec")			
+			try:
+				os.remove("app.spec")			
+			except:
+				pass
     # MAC APP BUNDLE==============
 		print('\n\n\u001b[4m\u001b[1;36mGenerating Mac .app bundle...\u001b[0m')
 		if (self.getData('mac') and sys.platform.startswith('dar')):
