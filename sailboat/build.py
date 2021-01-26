@@ -151,3 +151,7 @@ class Build(Plugin):
 			dones.append(build_plugin)
 		print(self.section('Finishing up...'))
 		os.system('python3 setup.py develop')
+		print(self.section('Built files:'))
+		for x in glob.glob(f'.{os.sep}dist{os.sep}*{os.sep}*') + glob.glob(f'.{os.sep}dist{os.sep}*'):
+			if os.path.isfile(x):
+				print(x)
