@@ -15,7 +15,7 @@ import glob
 filename = "./dist/pyinstaller/{short_name}-{version}-macos.dmg"
 volume_name = "{name} Installer"
 format = "UDZO"
-files = [ './dist/pyinstaller/{short_name}-{version}-macos.app' ]
+files = [ './dist/pyinstaller/{name}.app' ]
 symlinks = {{ 'Applications': '/Applications' }}
 badge_icon = '{icns}'
 con_locations = {{
