@@ -132,7 +132,7 @@ class Wizard(Plugin):
 		if 'resources' not in self.data:
 			self.data['resources']={}
 		questions = {
-			"icon":"Square .png icon for your project, leave blank if none",
+			"icns":"Mac .icns icon for your project, leave blank if none",
 			"data_files":"List of all data files for your project seperated with spaces. * counts as wildcard",
 			"modules":"Space seperated list of modules required for your project",
 			"file":"Main python file of your project. Leave blank if none"

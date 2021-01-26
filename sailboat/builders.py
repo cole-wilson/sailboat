@@ -252,7 +252,12 @@ class PyInstaller(Plugin):
 				datafiles.append(g+os.pathsep+g.replace(self.data['short_name']+os.sep,''))
 		typ = '--nowindowed' if self.getData('type')==1 else '--noconsole'
 
-		ico = ['--icon',self.data['resources']['icon']] if 'icon' in self.data['resources'] else []
+		if sys.platform.startswith('dar') and 'icns' in self.data['resources']:
+			ico = ["--icon",self.data['resources']['icns']]
+
+		else:
+			ico = []
+
 		osname = "macos" if sys.platform.startswith('darwin') else sys.platform
 		options = [
 			self.data['short_name']+os.sep+'__main__.py',
