@@ -266,6 +266,7 @@ class PyInstaller(Plugin):
 			self.data['short_name']+'-'+self.version+'-'+osname,
 			'--distpath',
 			'.'+os.sep+'dist'+os.sep+'pyinstaller',
+			*(self.getData('options') if 'options' in self.data2 else []),
 			*mods,
 			*datafiles,
 			typ,
