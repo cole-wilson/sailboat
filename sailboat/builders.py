@@ -302,6 +302,7 @@ class PyInstaller(Plugin):
 			infoPlist = open('Info.plist','w+')
 			infoPlist.write(self.getResource('resources'+os.sep+'info.plist.xml').read().format(
 				**self.data,
+				bundleicon="" if not "icns" in self.data['resources'] else self.data['resources']['icns'].split(os.sep)[-1],
 				**self.data['build'],
 				version = self.version,
 				bundle_id = self.getData('bundle_id')
@@ -309,6 +310,8 @@ class PyInstaller(Plugin):
 			infoPlist.close()
 
 			os.rename('./../../pyinstaller/'+self.data["short_name"]+"-"+self.version+"-macos",'MacOS/'+self.data['name'])
+			shutil.copy('./../../../'+("" if not "icns" in self.data['resources'] else self.data['resources']["icns"]),'Resources/icon.icns')
+
 			os.chdir('./../../..')
 
 			os.rename('./dist/'+self.data['name'],'./dist/pyinstaller/'+self.data['name']+".app")
@@ -331,7 +334,7 @@ class PyInstaller(Plugin):
 			open('build'+os.sep+'settings.py','w+').write(self.getResource('resources'+os.sep+'settings.py.template').read().format(
 				**self.data,
 				version=self.version,
-				icns=self.data['resources']['icns'],
+				icns="" if not "icns" in self.data['resources'] else	self.data['resources']['icns'],
 				keywo=", ".join(self.data['keywords'])
 			))
 			os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{self.data["name"]} Installer" ./dist/pyinstaller/{self.data["short_name"]+"-"+self.version+"-macos"}.dmg')
