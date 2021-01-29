@@ -302,6 +302,7 @@ class PyInstaller(Plugin):
 			infoPlist = open('Info.plist','w+')
 			infoPlist.write(self.getResource('resources'+os.sep+'info.plist.xml').read().format(
 				**self.data,
+				execname=self.data['name'].replace('_',''),
 				bundleicon="" if not "icns" in self.data['resources'] else self.data['resources']['icns'].split(os.sep)[-1],
 				**self.data['build'],
 				version = self.version,
@@ -309,7 +310,7 @@ class PyInstaller(Plugin):
 			))
 			infoPlist.close()
 
-			os.rename('./../../pyinstaller/'+self.data["short_name"]+"-"+self.version+"-macos",'MacOS/'+self.data['name'])
+			os.rename('./../../pyinstaller/'+self.data["short_name"]+"-"+self.version+"-macos",'MacOS/'+self.data['name'].replace('_',''))
 			shutil.copy('./../../../'+("" if not "icns" in self.data['resources'] else self.data['resources']["icns"]),'Resources/icon.icns')
 
 			os.chdir('./../../..')
