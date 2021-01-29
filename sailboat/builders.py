@@ -249,7 +249,7 @@ class PyInstaller(Plugin):
 		for x in self.data['resources']['data_files']:
 			for g in glob.glob(self.data['short_name']+os.sep+x):
 				datafiles.append('--add-data')
-				datafiles.append(g+os.pathsep+os.sep.join(g.replace(self.data['short_name']+os.sep,'').split(os.sep)[:-1]))
+				datafiles.append(g+os.pathsep+"."+os.sep+os.sep.join(g.replace(self.data['short_name']+os.sep,'').split(os.sep)[:-1]))
 		typ = '--nowindowed' if self.getData('type')==1 else '--noconsole'
 
 		if sys.platform.startswith('dar') and 'icns' in self.data['resources']:
