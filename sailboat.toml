@@ -13,10 +13,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.24.1"
+latest_build = "0.24.2"
 author = "Cole Wilson"
-latest_release = "0.23.15"
-release-notes = "a"
+latest_release = "0.24.1"
+release-notes = "apparently you cant have an underscore in a mac executable name when its in a .app bundle.weird."
 
 
 # Resource Setup:
