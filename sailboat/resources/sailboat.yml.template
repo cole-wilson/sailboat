@@ -39,7 +39,7 @@ jobs:
         python-version: '3.x'
     - name: Install Dependencies and Build
       run: |
-        pip install sailboat
+        pip install sailboat {dependencies}
         python -m sailboat.__main__ build + ${{{{ matrix.builds }}}}
         
     - name: Check for prerelease
