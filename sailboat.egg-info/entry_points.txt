@@ -17,6 +17,7 @@ pypi = sailboat.builders:PyPi
 quickstart = sailboat.core:QuickStart
 release = sailboat.core:Release
 remove = sailboat.core:Remove
+setcodeversion = sailboat.other:SetVersion
 tasks = sailboat.other:Tasks
 wizard = sailboat.core:Wizard
 workflow = sailboat.core:Actions

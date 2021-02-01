@@ -35,6 +35,15 @@
       "release": true,
       "show": true,
       "type": "build"
+    },
+    "setcodeversion": {
+      "default_os": "linux",
+      "description": "<no description provided>",
+      "dist": "sailboat",
+      "order": 0,
+      "release": false,
+      "show": false,
+      "type": "build"
     }
   },
   "command": {
@@ -132,7 +141,7 @@
     },
     "wizard": {
       "default_os": "linux",
-      "description": "configure you project or a plugin.",
+      "description": "configure your project or a plugin.",
       "dist": "sailboat",
       "order": 0,
       "release": false,

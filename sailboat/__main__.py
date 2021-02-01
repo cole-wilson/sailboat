@@ -75,6 +75,9 @@ def main():
 # =============================================================================
 	plugins = json.loads(open(prefix+'plugins.json').read())
 
+	if 'v' in switches or 'version' in switches:
+		print('Sailboat version {}\n\nHelp:\ncontact cole@colewilson.xyz'.format(sailboat.__version__))
+		sys.exit(0)
 	if 'refresh' in switches or 'r' in switches or plugins=={} or (len(plugins.keys())!=4):
 		plugins = refreshEntries()
 		print('reloaded plugins')

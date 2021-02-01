@@ -13,9 +13,9 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.24.5-rc.2"
+latest_build = "0.24.6"
 author = "Cole Wilson"
-latest_release = "0.24.5-rc.1"
+latest_release = "0.24.5-rc.2"
 release-notes = "a"
 
 
@@ -45,6 +45,8 @@ bundle_id = "xyz.colewilson.sailboat"
 
 [build.build_docs_readme]
 
+[build.setcodeversion]
+
 [build.pypi.commands]
 sail = "__main__.main"
 sailboat = "__main__.main"
@@ -67,6 +69,7 @@ workflow = "sailboat.core:Actions"
 github = "sailboat.core:Git"
 github_release = "sailboat.core:GithubRelease"
 build_docs_readme = "sailboat.other:BuildDocs"
+setcodeversion = "sailboat.other:SetVersion"
 
 
 # Release Routines:
