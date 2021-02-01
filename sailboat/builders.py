@@ -314,7 +314,8 @@ class PyInstaller(Plugin):
 			infoPlist.close()
 
 			os.rename('./../../pyinstaller/'+self.data["short_name"]+"-"+self.version+"-macos",'MacOS/'+self.data['name'].replace('_',''))
-			shutil.copy('./../../../'+("" if not "icns" in self.data['resources'] else self.data['resources']["icns"]),'Resources/icon.icns')
+			if "icns" in self.data['resources']:
+				shutil.copy('./../../../'+("" if not "icns" in self.data['resources'] else self.data['resources']["icns"]),'Resources/icon.icns')
 
 			os.chdir('./../../..')
 

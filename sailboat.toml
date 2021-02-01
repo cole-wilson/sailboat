@@ -13,10 +13,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.24.3+4e5c2dd.1"
+latest_build = "0.24.4"
 author = "Cole Wilson"
-latest_release = "0.24.2"
-release-notes = "fixed bug inInfo.plist"
+latest_release = "0.24.3"
+release-notes = "added dependencies to workflow file, removed build from pyinstaller version filename"
 
 
 # Resource Setup:
