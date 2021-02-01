@@ -257,6 +257,8 @@ class PyInstaller(Plugin):
 
 		if sys.platform.startswith('dar') and 'icns' in self.data['resources']:
 			ico = ["--icon",self.data['resources']['icns']]
+		if sys.platform.startswith('win') and 'ico' in self.data['resources']:
+			ico = ["--icon",self.data['resources']['ico']]
 
 		else:
 			ico = []

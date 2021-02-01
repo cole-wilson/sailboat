@@ -4,7 +4,7 @@
 <br>
 sailboat
 <br>
-<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/cole-wilson/sailboat?style=social">
+<a href="https://github.com/cole-wilson/sailboat"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/cole-wilson/sailboat?style=social"></a>
 <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fsole-wilson%2Fsailboat"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fsole-wilson%2Fsailboat"></a>
 <br>
 <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/cole-wilson/sailboat">
