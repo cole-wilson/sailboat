@@ -340,7 +340,8 @@ class PyInstaller(Plugin):
 				**self.data,
 				version=self.version,
 				icns="" if not "icns" in self.data['resources'] else	self.data['resources']['icns'],
-				keywo=", ".join(self.data['keywords'])
+				keywo=", ".join(self.data['keywords']),
+				dd=self.prefix + 'dragdrop.png'
 			))
 			os.system(f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{self.data["name"]} Installer" ./dist/pyinstaller/{self.data["short_name"]+"-"+self.version+"-macos"}.dmg')
 

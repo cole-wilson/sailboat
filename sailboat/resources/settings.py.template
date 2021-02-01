@@ -19,10 +19,10 @@ files = [ './dist/pyinstaller/{name}.app' ]
 symlinks = {{ 'Applications': '/Applications' }}
 badge_icon = '{icns}'
 icon_locations = {{
-    '{name}': (400, 100),
+    '{name}.app': (400, 100),
     'Applications': (200, 300)
 }}
-# background
+# background = "{ddimage}"
 show_status_bar = False
 show_tab_view = False
 show_toolbar = False
