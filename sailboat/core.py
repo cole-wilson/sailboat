@@ -409,7 +409,8 @@ class Actions(Plugin):
 				l="#" if linux == "" else "",
 				m="#" if mac == "" else "",
 				w="#" if windows == "" else "",
-				**self.data
+				**self.data,
+				dependencies = " ".join(self.data['resources']['modules'])
 			)
 			try:
 				f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')

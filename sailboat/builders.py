@@ -8,6 +8,7 @@ import glob
 import shutil
 import requests
 import time
+from semver import VersionInfo
 from sailboat.plugins import Plugin
 
 class PyPi(Plugin):
@@ -231,6 +232,8 @@ class PyInstaller(Plugin):
 			self.storeData('bundle_id',"com."+self.data['author'].lower().replace(' ','')+"."+self.data['short_name'])
 
 	def run(self,**kwargs):
+		version = VersionInfo.parse(self.version)
+		self.version = str(VersionInfo(major=version.major,minor=version.minor,patch=version.patch,prerelease=version.prerelease))
 		if not(self.getData('mac') or self.getData('windows') or self.getData('unix')):
 			return
 		try:
