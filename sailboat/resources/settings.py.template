@@ -19,8 +19,8 @@ files = [ './dist/pyinstaller/{name}.app' ]
 symlinks = {{ 'Applications': '/Applications' }}
 badge_icon = '{icns}'
 icon_locations = {{
-    '{name}': (100, 100),
-    'Applications': (600, 100)
+    '{name}': (200, 100),
+    'Applications': (200, 300)
 }}
 background = 'builtin-arrow'
 show_status_bar = False
@@ -29,6 +29,7 @@ show_toolbar = False
 show_pathbar = False
 show_sidebar = False
 sidebar_width = 180
+window_rect = ((100, 100), (400, 500))
 default_view = 'icon-view'
 show_icon_preview = True
 include_icon_view_settings = 'auto'
