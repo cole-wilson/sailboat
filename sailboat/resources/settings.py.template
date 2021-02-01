@@ -18,7 +18,7 @@ format = "UDZO"
 files = [ './dist/pyinstaller/{name}.app' ]
 symlinks = {{ 'Applications': '/Applications' }}
 badge_icon = '{icns}'
-con_locations = {{
+icon_locations = {{
     '{name}': (100, 100),
     'Applications': (600, 100)
 }}
@@ -36,7 +36,7 @@ include_list_view_settings = 'auto'
 grid_offset = (100, 100)
 grid_spacing = 100
 scroll_position = (0, 0)
-label_pos = 'bottom' or 'right'
+label_pos = 'bottom'
 text_size = 16
 icon_size = 48
 if len(glob.glob('LICEN*')) > 0:
