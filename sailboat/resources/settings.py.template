@@ -19,10 +19,10 @@ files = [ './dist/pyinstaller/{name}.app' ]
 symlinks = {{ 'Applications': '/Applications' }}
 badge_icon = '{icns}'
 icon_locations = {{
-    '{name}': (200, 100),
+    '{name}': (400, 100),
     'Applications': (200, 300)
 }}
-background = 'builtin-arrow'
+# background
 show_status_bar = False
 show_tab_view = False
 show_toolbar = False
@@ -39,7 +39,7 @@ grid_spacing = 100
 scroll_position = (0, 0)
 label_pos = 'bottom'
 text_size = 16
-icon_size = 48
+icon_size = 72
 if len(glob.glob('LICEN*')) > 0:
 	license = {{
 	    'default-language': 'en_US',
