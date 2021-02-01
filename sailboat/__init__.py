@@ -1,4 +1,5 @@
-__version__ = "0.24.10"  # Added by Sailboat
+__version__ = "0.24.11"  # Added by Sailboat
+
 
 
 
