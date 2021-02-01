@@ -15,6 +15,7 @@ Install plugins with `sail add <plugin_name_1> <plugin_name_2> ...`
 |homebrew|Make homebrew formulae for your projects|yep|
 |pypi|Make PyPi files and setup.py|yep|
 |pyinstaller|Make your projects into apps|yep|
+|setcodeversion|Add a `__version__` attribute to your project|yep|
 
 ## Release Plugins:
 

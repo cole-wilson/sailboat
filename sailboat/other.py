@@ -24,19 +24,20 @@ class SetVersion(Plugin):
 	_type = "build"
 	_show = False
 	def run(self):
-		try:
-			file = open(self.data['short_name'] + os.sep + '__init__.py')
-			data = file.read()
-			file.close()
-			if "__version__" in data:
-				data = re.sub("^__version__.*",'# Added by Sailboat:\n__version__ = "{}"\n'.format(self.version),data)
-			else:
-				data = "# Added by Sailboat:\n__version__ = \"{}\"\n".format(self.version) + data
-			file = open(self.data['short_name'] + os.sep + '__init__.py','w+')
-			file.write(data)
-			file.close()
-		except:
-			pass
+		# try:
+		file = open(self.data['short_name'] + os.sep + '__init__.py')
+		data = file.read()
+		file.close()
+		if "__version__" in data:
+			data = re.sub("^__version__.*",'__version__ = "{}"  # Added by Sailboat\n'.format(self.version),data,re.MULTILINE)
+			data = re.sub("\n__version__.*",'__version__ = "{}"  # Added by Sailboat\n'.format(self.version),data,re.MULTILINE)
+		else:
+			data = "__version__ = \"{}\"  # Added by Sailboat\n".format(self.version) + data
+		file = open(self.data['short_name'] + os.sep + '__init__.py','w+')
+		file.write(data)
+		file.close()
+		# except:
+		# 	pass
 class BuildDocs(Plugin):
 	_type = "build"
 	_show = False
