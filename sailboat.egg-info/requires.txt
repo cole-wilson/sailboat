@@ -1,5 +1,0 @@
-toml
-semver
-requests
-setuptools
-twine
