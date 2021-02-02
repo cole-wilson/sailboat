@@ -13,10 +13,10 @@ description = ""
 url = "https://github.com/cole-wilson/sailboat"
 keywords = ""
 license = "MIT"
-latest_build = "0.24.12"
+latest_build = "0.24.12+bb7e899.1"
 author = "Cole Wilson"
-latest_release = "0.24.11"
-release-notes = "fixed .dmg drag and drop installer"
+latest_release = "0.24.12"
+release-notes = "added .ico"
 
 
 # Resource Setup:
