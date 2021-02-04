@@ -25,7 +25,7 @@ def refreshEntries():
 			"order" : temp._order,
 			"default_os":str(temp._os)
 		}
-	f = open(os.path.abspath(path.parent)+os.sep+'plugins.json','w+')
+	f = open(prefix + 'plugins.json','w+')
 	f.write(json.dumps(plugins, indent=2, sort_keys=True))
 	f.close()
 	del f

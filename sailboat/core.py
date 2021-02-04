@@ -7,7 +7,8 @@ import json
 from pathlib import Path
 from semver import VersionInfo
 
-
+import colorama
+colorama.init()  # For Windows
 import traceback
 
 def refreshEntries():
@@ -23,12 +24,8 @@ def refreshEntries():
 			"order" : temp._order,
 			"default_os": str(temp._os)
 		}
-	try:
-		path = Path(__file__)
-		prefix = os.wwpath.abspath(path.parent)
-	except:
-		prefix = os.path.dirname(os.path.abspath(__file__))+os.sep
-	f = open(prefix+os.sep+'plugins.json','w+')
+	prefix = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__))) + os.sep
+	f = open(prefix +'plugins.json','w+')
 	f.write(json.dumps(plugins, indent=2, sort_keys=True))
 	f.close()
 

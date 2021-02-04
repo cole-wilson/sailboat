@@ -1,7 +1,8 @@
 import os
 import glob
 import sys
-
+import colorama
+colorama.init()  # For Windows
 
 class Plugin:
 	"""

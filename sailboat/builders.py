@@ -10,6 +10,8 @@ import requests
 import time
 from semver import VersionInfo
 from sailboat.plugins import Plugin
+import colorama
+colorama.init()  # For Windows
 
 class PyPi(Plugin):
 	_type = "build"

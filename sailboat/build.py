@@ -8,7 +8,8 @@ import requests
 import sys
 import traceback
 import pkg_resources
-
+import colorama
+colorama.init()  # For Windows
 from semver import VersionInfo
 from semver import compare
 		
