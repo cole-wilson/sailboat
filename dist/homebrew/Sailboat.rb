@@ -1,6 +1,6 @@
 # Created with sailboat, the Python releaser
 
-# v0.24.12
+# v0.24.12-rc.1
 
 class Sailboat < Formula
   include Language::Python::Virtualenv
@@ -36,6 +36,10 @@ class Sailboat < Formula
    resource "twine" do
       url "https://files.pythonhosted.org/packages/f9/43/51c3139667e90399a4d7886013631ad020ad102db5c2907cb240ce56f3c1/twine-3.3.0.tar.gz"
       sha256 "fcffa8fc37e8083a5be0728371f299598870ee1eccc94e9a25cef7b1dcfa8297"
+   end
+   resource "colorama" do
+      url "https://files.pythonhosted.org/packages/1f/bb/5d3246097ab77fa083a61bd8d3d527b7ae063c7d8e8671b1cf8c4ec10cbe/colorama-0.4.4.tar.gz"
+      sha256 "5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"
    end
 
 

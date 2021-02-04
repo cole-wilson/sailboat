@@ -3,3 +3,4 @@ semver
 requests
 setuptools
 twine
+colorama
