@@ -1,7 +1,7 @@
 # Security Policy
 
 ## Supported Versions
-Currently, only versions `>=0.24.0` are supported.
+Currently, only versions `>=0.24.0` are supported. If you are using a previous version, you need to upgrade now.
 
 ## Reporting a Vulnerability
 
