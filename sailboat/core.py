@@ -204,7 +204,7 @@ class Release(Plugin):
 		# print('Release description: (^c to exit)')
 		# try:
 		# 	while True:
-		# 		self.data['release-notes'] += input('> ') + "\n"
+		# 		"\n" + self.data['release-notes'] += input('> ')
 		# except KeyboardInterrupt:
 		# 		print('\n')
 		version = VersionInfo.parse(self.data['latest_build'])
