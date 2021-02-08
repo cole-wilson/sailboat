@@ -1,25 +1,31 @@
-from sailboat.plugins import Plugin
-
+from sailboat import Plugin, get_plugin, PluginNotFound
+import enlighten
 import os
 import glob
 import shutil
 import re
 import requests
-import sys
 import traceback
-import pkg_resources
+import blessed
+import sys
+import time
+import colorama
 
+
+colorama.init()  # For Windows
 from semver import VersionInfo
 from semver import compare
 		
 class Build(Plugin):
 	_type = "core"
 	description = "build your project for release."
-	def run(self,plugins,**kwargs):
+	def run(self,**kwargs):
+		manager = enlighten.get_manager()
+		term = blessed.Terminal()
 		if len(self.options)>0 and self.options[0] == 'help':
-			print("usage: sail build [version (increment)]\n\tThis command builds your project using the sailboat.toml file.\n\tValid options for version:\n\t\t- Valid semver.org string: set that as version\n\t\t- `major`: increments the major version by one.\n\t\t- `minor`: increments the minor version by one.\n\t\t- `patch`: increments the patch version by one.\n\t\t- `pre`: increments the prerelease version by one.\n\t\t- None: increments build version by one.")
+			print("usage: sail build [version (or) increment]\n\tThis command builds your project using the sailboat.toml file.\n\tValid options for version:\n\t\t- Valid semver.org string: set that as version\n\t\t- `major`: increments the major version by one.\n\t\t- `minor`: increments the minor version by one.\n\t\t- `patch`: increments the patch version by one.\n\t\t- `pre`: increments the prerelease version by one.\n\t\t- None: increments build version by one.")
 			return
-  #=====================================================================================
+		# Get Version =====================================================================================
 		if 'latest_build' not in self.data:
 			self.data['latest_build'] = '0.0.1'
 		if len(self.options) >= 1: #Something provided
@@ -31,13 +37,14 @@ class Build(Plugin):
 				version = str(VersionInfo.parse(self.data['latest_build']).bump_minor())
 			elif self.options[0].startswith('pat'):
 				version = str(VersionInfo.parse(self.data['latest_build']).bump_patch())
-			elif self.options[0].startswith('pre') or self.options[0].startswith('dev'):
-				version = str(VersionInfo.parse(self.data['latest_build']).bump_prerelease())
 			elif self.options[0].startswith('+') or self.options[0].startswith('build'):
 				version = str(VersionInfo.parse(self.data['latest_build']).bump_build())
 			else:
 				print('Unknown version `{}`'.format(self.options[0]))
 				return
+			if '.pre' in self.options[0] or '.dev' in self.options[0]:
+				version = str(VersionInfo.parse(self.data['latest_build']).bump_prerelease())
+
 		else:
 			try:
 				latestcommit = os.popen('git rev-parse --short HEAD').read().replace('\n','')
@@ -48,14 +55,21 @@ class Build(Plugin):
 			else:
 				version = str(VersionInfo.parse(self.data['latest_build']).replace(build=latestcommit+".1"))
 		if compare(version,self.data['latest_build']) == -1 and not (self.options[0].startswith('pre') or self.options[0].startswith('dev')):
-			if input(f'\u001b[31mYou are building a version ({version}) that comes before the previously built version ({self.data["latest_build"]}). Do you wish to continue? [y/n] \u001b[0m')[0]=='n' or ('-y' in self.options or '--no-interaction' in self.options):
+			if input(term.red + f'You are building a version ({version}) that comes before the previously built version ({self.data["latest_build"]}). Do you wish to continue? [y/n]'+term.normal)[0]=='n' or ('-y' in self.options or '--no-interaction' in self.options):
 				print()
 				return
+		status_format = '{program}{fill}{current}{fill}{version}'
+		status_bar = manager.status_bar(status_format=status_format, color='white_on_blue', program=self.data['name'], current='building directory structure', version=version)
 		print('\nPreparing to build version {}\n'.format(version))
 		self.data['latest_build'] = version
- #=====================================================================================
-		print('\n\n\u001b[4m\u001b[1;36mGenerating Directory Structure\u001b[0m')
-		print('This step will generate a correct directory structure for your project.')
+		if len(self.options[1:]) == 0:
+			notdones = [*self.data['build'].keys()]
+		else:
+			notdones = self.options[1:]
+		progress_bar = manager.counter(total=len(notdones)+3, desc='Build', unit='jobs', color="grey")
+		prebuild = progress_bar.add_subcounter('white')
+		postbuild = progress_bar.add_subcounter('darkgrey')
+		#=====================================================================================
 		if not os.path.isfile('.gitignore'):
 			open('.'+os.sep+'.gitignore','w+').write(self.getResource('resources'+os.sep+'gitignore.template').read().replace('/',os.sep))
 		source_dir = os.getcwd()
@@ -79,8 +93,9 @@ class Build(Plugin):
 				os.rename(self.data['resources']['file'],self.data['short_name']+os.sep+'__main__.py')
 			except:
 				pass
+		time.sleep(0.1);status_bar.update(current="scanning imports")
+		prebuild.update()
  #=====================================================================================
-		print('\n\n\u001b[4m\u001b[1;36mFetching Modules:\u001b[0m')
 		print('Scanning module imports...')
 		if 'no_import' not in self.data['resources']:
 			self.data['resources']['no_import'] = []
@@ -102,17 +117,15 @@ class Build(Plugin):
 					self.data['resources']['modules'].append(module)
 				else:
 					self.data['resources']['no_import'].append(module)
+		time.sleep(0.1);status_bar.update(current="removing previous builds")
+		prebuild.update()
   #=====================================================================================
 		try:
 			shutil.rmtree('dist')
 		except FileNotFoundError:
 			pass
 		dones = []
-		if len(self.options[1:]) == 0:
-			notdones = [*self.data['build'].keys()]
-		else:
-			notdones = self.options[1:]
-		for build_plugin in notdones:
+		for build_plugin in progress_bar(notdones):
 			if build_plugin not in self.options and ('_run' in self.data['build'][build_plugin] and not self.data['build'][build_plugin]['_run']):
 				continue
 			if build_plugin in dones:
@@ -126,10 +139,10 @@ class Build(Plugin):
 					if x not in dones:
 						notdones.append(build_plugin)
 						build_plugin = x
-			print('\n\u001b[4m\u001b[1;36m{}:\u001b[0m'.format(build_plugin.title()))
+			print(term.cyan + term.underline + build_plugin + term.normal + term.nounderline + "\n\n")
+			time.sleep(0.2);status_bar.update(current=build_plugin)
 			try:
-				dist = plugins['build'][build_plugin]['dist']
-				job = pkg_resources.load_entry_point(dist,'sailboat_plugins',build_plugin)
+				plugin_type, job = get_plugin(build_plugin, plugin_type = "build")
 				job = job(
 					data=self.data,
 					options=[],
@@ -137,21 +150,25 @@ class Build(Plugin):
 					prefix=self.prefix,
 					version=version
 				)
-			except KeyError as plugin:
-				sys.exit(f'You seem to have added the {plugin} plugin, but it does not appear to be installed!')
+			except PluginNotFound:
+				sys.exit(f'You seem to have added the {build_plugin} plugin, but it does not appear to be installed!')
 			try:
 				job.run()
 			except KeyboardInterrupt:
 				print('\n\nUser has aborted at step {}.\n\n'.format(build_plugin))
-				return
+				sys.exit(0)
 			except BaseException as error:
-				print('\n\nError at step {}:\n\n\t{}\n\n'.format(build_plugin,self.red(error)))
-				return
+				print('\n\nError at step {}:\n\n\t{}\n\n'.format(build_plugin,self.red(traceback.print_exc())))
+				sys.exit(1)
 			self.data[job._type][build_plugin] = job.data[job._type][build_plugin]
 			dones.append(build_plugin)
+		time.sleep(0.1);status_bar.update(current="running develop")
 		print(self.section('Finishing up...'))
 		os.system('python3 setup.py develop')
+		postbuild.update()
 		print(self.section('Built files:'))
 		for x in glob.glob(f'.{os.sep}dist{os.sep}*{os.sep}*') + glob.glob(f'.{os.sep}dist{os.sep}*'):
 			if os.path.isfile(x):
 				print(x)
+		time.sleep(0.2);status_bar.update(current='Finished Build!')
+		manager.stop()

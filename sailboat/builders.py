@@ -9,7 +9,61 @@ import shutil
 import requests
 import time
 from semver import VersionInfo
-from sailboat.plugins import Plugin
+from sailboat import Plugin, refresh_plugins
+import colorama
+colorama.init()  # For Windows
+
+class Actions(Plugin):
+	description = "Generate a GH Actions workflow file."
+	_type = "build"
+	_release = True
+	def release(self):
+		os.system(f"""git init;
+git add .;
+git config --global credential.helper "cache --timeout=3600";
+git config user.name "{self.data["author"]}";
+git config user.email "{self.data["email"]}";
+git commit -m "{self.data['release-notes']}";
+git tag v{self.version};
+git remote add origin https://github.com/{self.data['git']['github']}.git||echo origin already added;
+git push -u origin master --tags;
+""")
+
+	def run(self,**kwargs):
+		linux = ""
+		mac = ""
+		windows = ""
+		plugins = refresh_plugins()
+		for x in self.data['build']:
+			if 'windows' in plugins['build'][x]['default_os']:
+				windows = windows + " " + x
+			if 'linux' in plugins['build'][x]['default_os']:
+				linux = linux + " " + x
+			if 'mac' in plugins['build'][x]['default_os']:
+				mac = mac + " " + x
+
+		with self.getResource(f'resources{os.sep}sailboat.yml.template') as temp:
+			new = temp.read().format(
+				linux=linux,
+				mac=mac,
+				windows=windows,
+				l="#" if linux == "" else "",
+				m="#" if mac == "" else "",
+				w="#" if windows == "" else "",
+				**self.data,
+				dependencies = " ".join(self.data['resources']['modules'])
+			)
+			try:
+				f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
+			except:
+				os.mkdir('.github')
+				os.mkdir(f'.github{os.sep}workflows')
+				f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
+			f.write(new)
+			f.close()
+		
+		print('Workflow generated. Remember to push twice in order for new workflow to take effect.')
+
 
 class PyPi(Plugin):
 	_type = "build"
