@@ -1,8 +1,0 @@
-toml
-semver
-requests
-setuptools
-twine
-colorama
-enlighten
-blessed

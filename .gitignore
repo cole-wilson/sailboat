@@ -9,6 +9,8 @@ __pycache__/
 # Sailboat
 .release-notes-latest
 a
+poetry.lock
+pyproject.toml
 .env
 
 # Distribution / packaging
