@@ -1,42 +1,18 @@
-from sailboat.plugins import Plugin
-import pkg_resources
+from sailboat import Plugin, refresh_plugins, get_plugin, PluginNotFound
 import os
 import glob
 import sys
-import json
-from pathlib import Path
-from semver import VersionInfo
-
-import colorama
-colorama.init()  # For Windows
 import traceback
-
-def refreshEntries():
-	plugins={"core":{},"build":{},"release":{},"command":{}}
-	for entry_point in pkg_resources.iter_entry_points(group='sailboat_plugins'):
-		temp = entry_point.load()
-		plugins[temp._type][entry_point.name] = {
-			"show" : temp._show,
-			"dist" : str(entry_point.dist).split(' ')[0],
-			"description" : temp.description,
-			"type" : temp._type,
-			"release" : temp._release,
-			"order" : temp._order,
-			"default_os": str(temp._os)
-		}
-	prefix = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__))) + os.sep
-	f = open(prefix +'plugins.json','w+')
-	f.write(json.dumps(plugins, indent=2, sort_keys=True))
-	f.close()
-
-	del f
+import colorama
+from semver import VersionInfo
+colorama.init()  # For Windows
 
 class QuickStart(Plugin):
 	_type = "core"
 	description = "Get your project up and running."
 
 	def runPlugin(self,plug,plugins,opts=[]):
-		b = pkg_resources.load_entry_point('sailboat','sailboat_plugins',plug)
+		plugin_type, b = get_plugin(plug)
 		temp = b(
 			data=self.data,
 			options=opts,
@@ -73,7 +49,7 @@ class ManagePlugins(Plugin):
 		if self.options == []:
 			print("usage: sail plugins [refresh]\n\n\trefresh: reload previously installed plugins.")
 		elif self.options == ['refresh'] or self.options == ['-r']:
-			refreshEntries();
+			refresh_plugins();
 			print('Done!')
 		elif self.options == ['list']:
 			print('Build:')
@@ -97,6 +73,7 @@ class Develop(Plugin):
 			os.system('python setup.py develop')
 		else:
 			self.info("Can't find setup.py. Create one using sail build.")
+
 class Wizard(Plugin):
 	_type = "core"
 	description = "configure your project or a plugin."
@@ -117,12 +94,12 @@ class Wizard(Plugin):
 		licen = len(glob.glob('.'+os.sep+'LICENS*'))>0
 		if licen:
 			if 'license' not in self.data:
-				print('\033[1;34mYou seem to have a license file in your project, but what type is it?')
+				print(self.term.cyan + 'You seem to have a license file in your project, but what type is it?')
 				for license in lt.split(os.sep+''):
 					print(f'\t- {license}')
-				self.data['license'] = input(">>>\033[0m ")
+				self.data['license'] = input(">>>"+self.term.normal+" ")
 			else:
-				print('\u001b[34mLicense:\u001b[0m {}'.format(self.data['license']))
+				print(self.blue('License') + ' {}'.format(self.data['license']))
 		else:
 			self.data['license'] = "none"
 		print(self.section('Resource Settings:'))
@@ -145,21 +122,20 @@ class Wizard(Plugin):
 		self.data['name'] = self.data['name'].replace(' ','_')
 		self.data['short_name'] = self.data['short_name'].replace(' ','_')
 		
-		print(self.red('Be sure to prefix any paths to any resources with \u001b[4m`os.path.dirname(os.path.abspath(__file__))+os.sep`\u001b[0m\033[1;31m to make sure that they use the correct path and not the current directory.'))
+		print(self.red('Be sure to prefix any paths to any resources with '+ self.term.underline + '4m`os.path.dirname(os.path.abspath(__file__))+os.sep`'+self.term.nounderline+self.term.red+' to make sure that they use the correct path and not the current directory.'))
 	def run(self,plugins={}):
 		if self.options == []:
 			self.wizard()
 			for tt in ['command','build','release']:
 				for x in self.data[tt]:
 					print(self.section(x.title()+":"))
-					dist = plugins[tt][x]['dist']
-					b = pkg_resources.load_entry_point(dist,'sailboat_plugins',x)
+					plugin_type, b = get_plugin(x)
 					b = b(
-							data=self.data,
-							options=[],
+						data=self.data,
+						options=[],
 						name=x,
 						prefix=self.prefix,
-							version=None
+						version=None
 					)
 					try:
 						b.wizard()
@@ -172,17 +148,11 @@ class Wizard(Plugin):
 			
 		else:
 			for x in self.options:
-				if x in plugins['command']:
-					t = 'command'
-				elif x in plugins['release']:
-					t = 'release'
-				elif x in plugins['build']:
-					t = 'build'
-				else:
+				try:
+					plugin_type, temp = get_plugin(x)
+				except PluginNotFound: 
 					print("Couldn't find the {} plugin.".format(x))
 					continue
-				dist = plugins[t][x]['dist']
-				temp = pkg_resources.load_entry_point(dist,'sailboat_plugins',x)
 				temp = temp(
 					data=self.data,
 					options=[],
@@ -196,7 +166,7 @@ class Wizard(Plugin):
 					print('Abborted by user')
 				except BaseException as e:
 					print('Error in `{}` wizard script:\n\t{}'.format(x,e))
-				self.data[t][x] = temp.data[t][x]
+				self.data[plugin_type][x] = temp.data[plugin_type][x]
 
 class Git(Plugin):
 	_type = "core"
@@ -225,26 +195,18 @@ git push -u origin master;
 """)
 		print('Your GitHub repo is setup. To update your repo, type:\n\n\tgit add .;git commit -a -m "Your message here";git push;\n\nin your terminal, or `sail git push`')
 
-class GithubRelease(Plugin):
-	_type = "release"
-	description = "GitHub Tagged Release"
-	def release(self):
-		os.system(f"""git init;
-git add .;
-git config --global credential.helper "cache --timeout=3600";
-git config user.name "{self.data["author"]}";
-git config user.email "{self.data["email"]}";
-git commit -m "{self.data['release-notes']}";
-git tag v{self.version};
-git remote add origin https://github.com/{self.data['git']['github']}.git||echo origin already added;
-git push -u origin master --tags;
-""")
-
 class Release(Plugin):
 	_type = "core"
 	description = "Release your project."
-	def run(self,plugins={},**kwargs):
-		self.data['release-notes'] = input('Release Notes: ')
+	def run(self, **kwargs):
+		plugins = refresh_plugins()
+		self.data['release-notes'] = input('Release Title: ')
+		# print('Release description: (^c to exit)')
+		# try:
+		# 	while True:
+		# 		self.data['release-notes'] += input('> ') + "\n"
+		# except KeyboardInterrupt:
+		# 		print('\n')
 		version = VersionInfo.parse(self.data['latest_build'])
 		version = str(VersionInfo(major=version.major,minor=version.minor,patch=version.patch,prerelease=version.prerelease))
 		runs = {}
@@ -285,18 +247,11 @@ class Release(Plugin):
 			runs.append(name)
 		input(f'Press enter to release version {version} the following ways:\n\t- '+'\n\t- '.join(runs)+'\n\n>>>')
 		dones = []
-		lorder = 0
 		for release_plugin in runs:
 			if release_plugin in dones:
 				continue
 			print(self.section(release_plugin+":"))
-			if release_plugin in self.data['release']:
-				dist = plugins['release'][release_plugin]['dist']
-			elif release_plugin in self.data['build']:
-				dist = plugins['build'][release_plugin]['dist']
-			else:
-				dist = plugins['core'][release_plugin]['dist']
-			temp = pkg_resources.load_entry_point(dist,'sailboat_plugins',release_plugin)
+			plugin_type, temp = get_plugin(release_plugin)
 			temp = temp(
 				data=self.data,
 				options=[self.options],
@@ -310,12 +265,8 @@ class Release(Plugin):
 			else:
 				self.data[temp._type][release_plugin] = temp.data[temp._type][release_plugin]
 			dones.append(release_plugin)
-			lorder = order
 		print()
 		self.data['latest_release'] = version
-
-		
-
 
 class Remove(Plugin):
 	_type = "core"
@@ -352,7 +303,8 @@ class Add(Plugin):
 
 	Install PLUGINS to current project.
 	''')
-		for point in pkg_resources.iter_entry_points('sailboat_plugins'):
+		from pkg_resources import iter_entry_points
+		for point in iter_entry_points('sailboat_plugins'):
 			if (point.name in self.data['build'] or point.name in self.data['command'] or point.name in self.data['release']) and point.name in self.options:
 				print('{} already added'.format(point.name))
 				continue
@@ -379,43 +331,6 @@ class Add(Plugin):
 		for x in self.options:
 			if x not in done and (x not in self.data['build'] and x not in self.data['command'] and x not in self.data['release']):
 				print('error: could not find {}, please make sure you have downloaded it.'.format(x))
-		refreshEntries()
+		refresh_plugins()
 		return self.data
 
-class Actions(Plugin):
-	description = "Generate a GH Actions workflow file."
-	_type = "core"
-	
-	def run(self,plugins,**kwargs):
-		linux = ""
-		mac = ""
-		windows = ""
-		for x in self.data['build']:
-			if 'windows' in plugins['build'][x]['default_os']:
-				windows = windows + " " + x
-			if 'linux' in plugins['build'][x]['default_os']:
-				linux = linux + " " + x
-			if 'mac' in plugins['build'][x]['default_os']:
-				mac = mac + " " + x
-
-		with self.getResource(f'resources{os.sep}sailboat.yml.template') as temp:
-			new = temp.read().format(
-				linux=linux,
-				mac=mac,
-				windows=windows,
-				l="#" if linux == "" else "",
-				m="#" if mac == "" else "",
-				w="#" if windows == "" else "",
-				**self.data,
-				dependencies = " ".join(self.data['resources']['modules'])
-			)
-			try:
-				f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
-			except:
-				os.mkdir('.github')
-				os.mkdir(f'.github{os.sep}workflows')
-				f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml','w+')
-			f.write(new)
-			f.close()
-		
-		print('Workflow generated. Remember to push twice in order for new workflow to take effect.')

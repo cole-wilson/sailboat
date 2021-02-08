@@ -2,7 +2,6 @@ import os
 import sys
 
 prefix = os.path.dirname(os.path.abspath(__file__))+os.sep
-
 try:
 	f = open(prefix+'autocomplete','r')
 	data = f.read().split('\n')

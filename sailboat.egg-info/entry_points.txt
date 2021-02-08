@@ -7,9 +7,7 @@ add = sailboat.core:Add
 build = sailboat.build:Build
 build_docs_readme = sailboat.other:BuildDocs
 dev = sailboat.core:Develop
-git = sailboat.core:Git
 github = sailboat.core:Git
-github_release = sailboat.core:GithubRelease
 homebrew = sailboat.builders:Homebrew
 plugins = sailboat.core:ManagePlugins
 pyinstaller = sailboat.builders:PyInstaller
@@ -20,5 +18,5 @@ remove = sailboat.core:Remove
 setcodeversion = sailboat.other:SetVersion
 tasks = sailboat.other:Tasks
 wizard = sailboat.core:Wizard
-workflow = sailboat.core:Actions
+workflow = sailboat.builders:Actions
 

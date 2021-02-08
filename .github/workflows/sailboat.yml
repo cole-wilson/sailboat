@@ -15,7 +15,7 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_path: ./dist/*/*
-            builds:  homebrew pyinstaller build_docs_readme setcodeversion pypi
+            builds:  homebrew pyinstaller build_docs_readme setcodeversion workflow pypi
             asset_name: default
             glob: true
 
@@ -39,7 +39,7 @@ jobs:
         python-version: '3.x'
     - name: Install Dependencies and Build
       run: |
-        pip install sailboat toml semver requests setuptools twine colorama
+        pip install sailboat toml semver requests setuptools twine colorama enlighten blessed
         python -m sailboat.__main__ build + ${{ matrix.builds }}
         
     - name: Check for prerelease

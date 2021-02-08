@@ -1,151 +1,109 @@
 import sys
 import os
-import pkg_resources
 import toml
 import json
-import sailboat.plugins
-import sailboat.core
 import colorama
+import blessed
+import sailboat
+
 colorama.init()  # For Windows
-
 prefix = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__))) + os.sep
+term = blessed.Terminal()
 
-__doc__ = "usage: sail [options ...] [command]\n"
 
-def refreshEntries():
-	plugins={"core":{},"build":{},"release":{},"command":{}}
-	for entry_point in pkg_resources.iter_entry_points(group='sailboat_plugins'):
-		temp = entry_point.load()
-		plugins[temp._type][entry_point.name] = {
-			"show" : temp._show,
-			"dist" : str(entry_point.dist).split(' ')[0],
-			"description" : temp.description,
-			"type" : temp._type,
-			'release' : temp._release,
-			"order" : temp._order,
-			"default_os":str(temp._os)
-		}
-	f = open(prefix + 'plugins.json','w+')
-	f.write(json.dumps(plugins, indent=2, sort_keys=True))
-	f.close()
-	del f
-	return plugins
-
-def main():
-	global __doc__
-	opath = os.getcwd()
-	while not os.path.isfile('sailboat.toml') and os.getcwd().count(os.sep)>2:
+def main(argv: list = []) -> None:
+	"""Program entry point for all of the sail/sailboat terminal program."""
+	# Move to project root, check for sailboat.toml, and then read it.
+	if argv == []:
+		argv = sys.argv
+	orginal_path = os.getcwd()
+	while not os.path.isfile('sailboat.toml') and os.getcwd().count(os.sep) > 2:
 		os.chdir('..')
 	if not os.path.isfile('sailboat.toml'):
-		needswizard = True
+		needs_setup = True
 		data = {}
-		os.chdir(opath)
+		os.chdir(orginal_path)
 	else:
-		needswizard = False
-		with open('sailboat.toml') as file:
+		needs_setup = False
+		with open('sailboat.toml','r') as file:
 			data = toml.loads(file.read())
 			if data == {}:
-				needswizard = True
-	needswizard =False
-	if 'command' not in data:
-		data['command'] = {}
-	if 'build' not in data:
-		data['build'] = {}
-	if 'release' not in data:
-		data['release'] = {}
-	if 'git' not in data:
-		data['git'] = {}
+				needs_setup = True
 
+	# Add required sections to data.
+	for required_section in ("command", "build", "release", "git"):
+		if required_section not in data:
+			data[required_section] = {}
+
+	# Search for options in argv
 	switches = []
 	startindex = 0
-	for index,value in enumerate(sys.argv[1:]):
+	for index, value in enumerate(argv[1:]):
 		if value.startswith('--'):
 			switches.append(value[2:])
 		elif value.startswith('-'):
 			switches.extend(value[1:])
 		else:
 			startindex = index
+			options = [argv[0],*argv[1:][startindex:]]
 			break
-	options = [sys.argv[0],*sys.argv[1:][startindex:]]
+	else:
+		options = [argv[0]]
 
-# =============================================================================
 	plugins = json.loads(open(prefix+'plugins.json').read())
 
-	if 'v' in switches or 'version' in switches:
+	if 'version' in switches or 'v' in switches:
 		print('Sailboat version {}\n\nHelp:\ncontact cole@colewilson.xyz'.format(sailboat.__version__))
 		sys.exit(0)
 	if 'refresh' in switches or 'r' in switches or plugins=={} or (len(plugins.keys())!=4):
-		plugins = refreshEntries()
-		print('reloaded plugins')
-
-	a_commands = []
-
-	if len(plugins['core'].keys())!=0:
-		__doc__+="\n\tcore commands:"
-
+		print("Refreshing plugins list (this could take a couple seconds...)")		
+		plugins = sailboat.refresh_plugins()
+		print('Done!\n')
+	helptext = "usage: sail [options ...] [subcommand] [subcommand options ...]\n\n\tcore commands:"
 	for command in plugins['core'].keys():
 		if plugins['core'][command]['show']:
-			__doc__+="\n\t\t- \u001b[36;1m"+command+"\u001b[0m: "+plugins['core'][command]['description'].capitalize()
-			a_commands.append(command)
-
-	__doc__+="\n\t\t- \u001b[36;1mhelp\u001b[0m: Display this message."
-
+			helptext+="\n\t\t- " + term.cyan + command + term.normal + ": " + plugins['core'][command]['description'].capitalize()
+	helptext+="\n\t\t- " + term.cyan + "help" + term.normal + ": Display this message."
 	if len(plugins['command'].keys())!=0:
-		__doc__+="\n\n\tother commands:"
-
+		helptext+="\n\n\tother commands:"
 	for command in plugins['command'].keys():
 		if plugins['command'][command]['show'] and command in data['command']:
-			__doc__+="\n\t\t- \u001b[36;1m"+command+"\u001b[0m: "+plugins['command'][command]['description'].capitalize()
-			a_commands.append(command)
+			helptext+="\n\t\t- "+term.cyan+command+term.normal+": "+plugins['command'][command]['description'].capitalize()
 
-	__doc__+="\n"
-
-# =============================================================================
-
+	helptext+="\n"
+	
 	if len(options) < 2:
-		print(__doc__)
+		print(helptext)
 		return
-	if needswizard:
+	if needs_setup:
 		command = 'wizard'
 	else:
 		command = options[1]
-	autocomplete = False
-	if command == 'help' or 'help' in switches or 'h' in switches:
-		print(__doc__)
+	if command == 'help' or 'help' in options or 'h' in options:
+		print(helptext)
 		return
 
-	if command in plugins['core']:
-		t = 'core'
-	elif command in plugins['command']:
-		t = 'command'
-	else:
-		if not autocomplete:
-			print('sailboat: error: {} is not a valid command. Please make sure you have installed it.'.format(command))
+	try:
+		plugin_type, temp = sailboat.get_plugin(command)
+	except sailboat.PluginNotFound:
+		print('sailboat: error: {} is not a valid command. Please make sure you have installed it.'.format(command))
 		return
-
-	if t!='core' and command not in data['build'] and command not in data['release'] and command not in data['command']:
+	if plugin_type!='core' and command not in data['build'] and command not in data['release'] and command not in data['command']:
 		print('sailboat: error: {} *is* a valid command, but it isn\'t installed on this project. Install it with the `add` command.'.format(command))
 		return
-
-	dist = plugins[t][command]['dist']
-	temp = pkg_resources.load_entry_point(dist,'sailboat_plugins',command)
 	temp = temp(
 		data=data,
 		options=options[2:],
 		name=command,
 		prefix=prefix
 	)
-	if autocomplete:
-		print(" ".join(temp.autocomplete()))
-	elif t == "core":
-		temp.run(plugins=plugins)
-	else:
-		temp.run()
-
-	if t == 'core':
+	##############################
+	temp.run()  # Run the plugin!
+	##############################
+	if plugin_type == 'core':
 		data = temp.data
 	else:
-		data[t][command] = temp.data[t][command]
+		data[plugin_type][command] = temp.data[plugin_type][command]
 
 	basic_data = {}
 	resources = {'resources':{}}
@@ -205,4 +163,4 @@ def main():
 		f.write(out)
 
 if __name__ == "__main__":
-	main()
+	main(argv = [sys.argv])

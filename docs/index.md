@@ -7,8 +7,6 @@ description: "Sailboat is a Python developer's best friend. It's a Python build 
 
 <!-- Included twice for docs theme. This file is built, do not edit. Instead edit README.md -->
 
-
-
 <h1 align="center"><img src="https://www.pinclipart.com/picdir/big/383-3832964_im-on-a-boat-stamp-sailboat-stencil-clipart.png" width="70px">
 <br>
 sailboat

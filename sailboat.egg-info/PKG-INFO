@@ -1,14 +1,12 @@
 Metadata-Version: 2.1
 Name: sailboat
-Version: 0.24.13
+Version: 0.24.13rc2
 Summary: A quick and easy way to distribute your Python projects!
 Home-page: https://github.com/cole-wilson/sailboat
 Author: Cole Wilson
 Author-email: cole@colewilson.xyz
 License: MIT
-Description: 
-        
-        <h1 align="center"><img src="https://www.pinclipart.com/picdir/big/383-3832964_im-on-a-boat-stamp-sailboat-stencil-clipart.png" width="70px">
+Description: <h1 align="center"><img src="https://www.pinclipart.com/picdir/big/383-3832964_im-on-a-boat-stamp-sailboat-stencil-clipart.png" width="70px">
         <br>
         sailboat
         <br>

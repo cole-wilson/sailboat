@@ -4,3 +4,5 @@ requests
 setuptools
 twine
 colorama
+enlighten
+blessed
