@@ -19,7 +19,7 @@ except:
 
 options = {
 	"name":"sailboat",
-	"version":"0.25.0",
+	"version":"0.25.1",
 	"scripts":[],
 	"entry_points":{'console_scripts': ['sail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main'], 'sailboat_plugins': ['quickstart=sailboat.core:QuickStart', 'pypi=sailboat.builders:PyPi', 'homebrew=sailboat.builders:Homebrew', 'pyinstaller=sailboat.builders:PyInstaller', 'dev=sailboat.core:Develop', 'release=sailboat.core:Release', 'build=sailboat.build:Build', 'wizard=sailboat.core:Wizard', 'remove=sailboat.core:Remove', 'add=sailboat.core:Add', 'plugins=sailboat.core:ManagePlugins', 'tasks=sailboat.other:Tasks', 'workflow=sailboat.builders:Actions', 'github=sailboat.core:Git', 'build_docs_readme=sailboat.other:BuildDocs', 'setcodeversion=sailboat.other:SetVersion']},
 	"author":"Cole Wilson",

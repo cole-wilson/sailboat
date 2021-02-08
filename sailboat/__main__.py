@@ -163,4 +163,4 @@ def main(argv: list = []) -> None:
 		f.write(out)
 
 if __name__ == "__main__":
-	main(argv = [sys.argv])
+	main(argv = sys.argv)
