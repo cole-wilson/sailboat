@@ -333,4 +333,3 @@ class Add(Plugin):
 				print('error: could not find {}, please make sure you have downloaded it.'.format(x))
 		refresh_plugins()
 		return self.data
-
