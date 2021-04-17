@@ -1,0 +1,70 @@
+# Workflow version v0.1.2, workflow subs: [name: `{name}`, short_name: `{short_name}`]
+name: Publish release files for {name}.
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    name: Publish for ${{{{ matrix.os }}}}
+    runs-on: ${{{{ matrix.os }}}}
+    strategy:
+      matrix:
+        include:
+{l}          - os: ubuntu-latest
+{l}            artifact_path: ./dist/*/*
+{l}            builds: {linux}
+{l}            asset_name: default
+{l}            glob: true
+
+{w}          - os: windows-latest
+{w}            builds: {windows}
+{w}            artifact_path: .\dist\*\*
+{w}            asset_name: default
+{w}            glob: true
+
+{m}          - os: macos-latest
+{m}            builds: {mac}
+{m}            artifact_path: ./dist/*/*
+{m}            asset_name: default
+{m}            glob: true
+
+# ===================== EDIT AT YOUR OWN RISK ============================================
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install Dependencies and Build
+      run: |
+        pip install sailboat {dependencies}
+        python -m sailboat.__main__ build + ${{{{ matrix.builds }}}}
+        
+    - name: Check for prerelease
+      run: python -m sailboat.prerelease ${{{{ github.ref }}}} >> $GITHUB_ENV
+
+    - name: Upload binaries to prerelease
+      if: env.prerel == 'true'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
+        file: ${{{{ matrix.artifact_path }}}}
+        asset_name: ${{{{ matrix.asset_name }}}}
+        tag: ${{{{ github.ref }}}}
+        file_glob: ${{{{ matrix.glob }}}}
+        body: ${{{{ github.event.head_commit.message }}}}
+        prerelease: true
+      
+    - name: Upload binaries to production release
+      if: env.prerel != 'true'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}
+        file: ${{{{ matrix.artifact_path }}}}
+        asset_name: ${{{{ matrix.asset_name }}}}
+        tag: ${{{{ github.ref }}}}
+        file_glob: ${{{{ matrix.glob }}}}
+        body: ${{{{ github.event.head_commit.message }}}}
+        prerelease: false

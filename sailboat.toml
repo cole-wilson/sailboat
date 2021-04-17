@@ -1,0 +1,91 @@
+#            _  _  _                _   
+#  ___ __ _ (_)| || |__  ___  __ _ | |_ 
+# (_-</ _` || || || '_ \/ _ \/ _` ||  _|
+# /__/\__,_||_||_||_.__/\___/\__,_| \__|
+                                      
+# Basic Setup:
+_comments = true
+name = "Sailboat"
+short_name = "sailboat"
+email = "cole@colewilson.xyz"
+short_description = "A quick and easy way to distribute your Python projects!"
+description = ""
+url = "https://github.com/cole-wilson/sailboat"
+keywords = ""
+license = "MIT"
+latest_build = "0.25.1+bd7483b.1"
+author = "Cole Wilson"
+latest_release = "0.25.1"
+release-notes = "Emergency patch for error in sys.argv :rotating_light:"
+
+
+# Resource Setup:
+[resources]
+icon = ""
+data_files = [ "resources/*", "plugins.json",]
+modules = [ "toml", "semver", "requests", "setuptools", "twine", "colorama", "enlighten", "blessed",]
+file = "__main__.py"
+no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceback", "json", "subprocess", "thismoduledoesntexistihope_fortesting_48927348",]
+
+
+# Plugin Commands:
+[command.tasks]
+
+
+# Build Routines:
+[build.homebrew]
+
+[build.pyinstaller]
+_run = false
+type = 1
+mac = true
+windows = true
+unix = true
+bundle_id = "xyz.colewilson.sailboat"
+
+[build.build_docs_readme]
+
+[build.setcodeversion]
+
+[build.workflow]
+
+[build.pypi.commands]
+sail = "__main__.main"
+ssail = "__main__.main"
+sssail = "__main__.main"
+ssssail = "__main__.main"
+sailboat = "__main__.main"
+ssailboat = "__main__.main"
+sssailboat = "__main__.main"
+ssssailboat = "__main__.main"
+
+[build.pypi.entry_points.sailboat_plugins]
+quickstart = "sailboat.core:QuickStart"
+pypi = "sailboat.builders:PyPi"
+homebrew = "sailboat.builders:Homebrew"
+pyinstaller = "sailboat.builders:PyInstaller"
+dev = "sailboat.core:Develop"
+release = "sailboat.core:Release"
+build = "sailboat.build:Build"
+wizard = "sailboat.core:Wizard"
+remove = "sailboat.core:Remove"
+add = "sailboat.core:Add"
+plugins = "sailboat.core:ManagePlugins"
+tasks = "sailboat.other:Tasks"
+workflow = "sailboat.builders:Actions"
+github = "sailboat.core:Git"
+build_docs_readme = "sailboat.other:BuildDocs"
+setcodeversion = "sailboat.other:SetVersion"
+
+
+# Release Routines:
+[release.github_release]
+
+
+# Other:
+[git]
+brew = "cole-wilson/homebrew-taps"
+github = "cole-wilson/sailboat"
+
+
+# Thank you for using Sailboat!
