@@ -9,11 +9,11 @@ name = "Sailboat"
 short_name = "sailboat"
 email = "cole@colewilson.xyz"
 short_description = "A quick and easy way to distribute your Python projects!"
-description = ""
+description = "Sailboat is a Python developer's best friend. It's a Python build tool that can do anything you need it to!"
 url = "https://github.com/cole-wilson/sailboat"
-keywords = ""
+keywords = "sail package python setup.py sailboat shipsnake distribute ship snake snek release build"
 license = "MIT"
-latest_build = "0.25.1+bd7483b.1"
+latest_build = "0.25.5+565b981.1"
 author = "Cole Wilson"
 latest_release = "0.25.1"
 release-notes = "Emergency patch for error in sys.argv :rotating_light:"
@@ -36,7 +36,7 @@ no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceba
 [build.homebrew]
 
 [build.pyinstaller]
-_run = false
+_run = true
 type = 1
 mac = true
 windows = true
@@ -47,7 +47,7 @@ bundle_id = "xyz.colewilson.sailboat"
 
 [build.setcodeversion]
 
-[build.workflow]
+[build.actions]
 
 [build.pypi.commands]
 sail = "__main__.main"
@@ -61,19 +61,19 @@ ssssailboat = "__main__.main"
 
 [build.pypi.entry_points.sailboat_plugins]
 quickstart = "sailboat.core:QuickStart"
+remove = "sailboat.core:Remove"
+add = "sailboat.core:Add"
+git = "sailboat.core:Git"
+dev = "sailboat.core:Develop"
+release = "sailboat.core:Release"
+plugins = "sailboat.core:ManagePlugins"
+wizard = "sailboat.core:Wizard"
+build = "sailboat.build:Build"
 pypi = "sailboat.builders:PyPi"
 homebrew = "sailboat.builders:Homebrew"
 pyinstaller = "sailboat.builders:PyInstaller"
-dev = "sailboat.core:Develop"
-release = "sailboat.core:Release"
-build = "sailboat.build:Build"
-wizard = "sailboat.core:Wizard"
-remove = "sailboat.core:Remove"
-add = "sailboat.core:Add"
-plugins = "sailboat.core:ManagePlugins"
+actions = "sailboat.builders:Actions"
 tasks = "sailboat.other:Tasks"
-workflow = "sailboat.builders:Actions"
-github = "sailboat.core:Git"
 build_docs_readme = "sailboat.other:BuildDocs"
 setcodeversion = "sailboat.other:SetVersion"
 

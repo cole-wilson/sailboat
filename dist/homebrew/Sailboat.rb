@@ -1,6 +1,6 @@
 # Created with sailboat, the Python releaser
 
-# v0.25.1+bd7483b.1
+# v0.25.5+565b981.1
 
 class Sailboat < Formula
   include Language::Python::Virtualenv
@@ -30,20 +30,20 @@ class Sailboat < Formula
       sha256 "27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804"
    end
    resource "setuptools" do
-      url "https://files.pythonhosted.org/packages/f6/1c/1a76007a43500cbd118b126107e88fbfd59bbcdef276ade5175f7698e618/setuptools-54.1.0.tar.gz"
-      sha256 "36bc07925c77dd6e30c64c91c2d080212a46910aa79073990c11d4c48a006240"
+      url "https://files.pythonhosted.org/packages/f6/e9/19af16328705915233299f6f1f02db95899fb00c75ac9da4757aa1e5d1de/setuptools-56.0.0.tar.gz"
+      sha256 "08a1c0f99455307c48690f00d5c2ac2c1ccfab04df00454fef854ec145b81302"
    end
    resource "twine" do
-      url "https://files.pythonhosted.org/packages/f9/43/51c3139667e90399a4d7886013631ad020ad102db5c2907cb240ce56f3c1/twine-3.3.0.tar.gz"
-      sha256 "fcffa8fc37e8083a5be0728371f299598870ee1eccc94e9a25cef7b1dcfa8297"
+      url "https://files.pythonhosted.org/packages/ac/5c/e12811190a3560c85dfb4caea752635abea59c53390592493549d88f086a/twine-3.4.1.tar.gz"
+      sha256 "a56c985264b991dc8a8f4234eb80c5af87fa8080d0c224ad8f2cd05a2c22e83b"
    end
    resource "colorama" do
       url "https://files.pythonhosted.org/packages/1f/bb/5d3246097ab77fa083a61bd8d3d527b7ae063c7d8e8671b1cf8c4ec10cbe/colorama-0.4.4.tar.gz"
       sha256 "5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"
    end
    resource "enlighten" do
-      url "https://files.pythonhosted.org/packages/ad/3c/af2df7f0fe7e8c56ca6a7de0b7eb4d3a97181714410c5cd291d0283bcf59/enlighten-1.8.0.tar.gz"
-      sha256 "1cb098a1f6acb7a80cb9c98ca35671b12a0abca276344112e9180aef29edb0bc"
+      url "https://files.pythonhosted.org/packages/cf/3f/f0e005fea4a5216423369250167263a7e2fba5b0c72d7e97ec9e54d80ac1/enlighten-1.9.0.tar.gz"
+      sha256 "539cc308ccc0c3bfb50feb1b2da94c1a1ac21e80fe95e984221de8966d48f428"
    end
    resource "blessed" do
       url "https://files.pythonhosted.org/packages/68/c7/5f21c1b0e7f343bad166c3139e594639cd54e9b97db7760dff035b35065e/blessed-1.18.0.tar.gz"

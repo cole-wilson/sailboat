@@ -12,6 +12,8 @@ a
 poetry.lock
 pyproject.toml
 .env
+dev/
+../../Desktop/sailboattest/test/
 
 # Distribution / packaging
 .Python

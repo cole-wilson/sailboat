@@ -15,12 +15,12 @@ import glob
 filename = "./dist/pyinstaller/{short_name}-{version}-macos.dmg"
 volume_name = "{name} Installer"
 format = "UDZO"
-files = [ './dist/pyinstaller/{name}.app' ]
-symlinks = {{ 'Applications': '/Applications' }}
+files = ['./dist/pyinstaller/{name}.app']
+symlinks = {{'Applications': '/Applications'}}
 badge_icon = '{icns}'
 icon_locations = {{
     '{name}.app': (200, 100),
-    'Applications': (200, 300)
+    'Applications': (200, 400)
 }}
 background = "{ddimage}"
 show_status_bar = False
@@ -29,7 +29,7 @@ show_toolbar = False
 show_pathbar = False
 show_sidebar = False
 sidebar_width = 180
-window_rect = ((100, 100), (400, 500))
+window_rect = ((100, 100), (400, 600))
 default_view = 'icon-view'
 show_icon_preview = True
 include_icon_view_settings = 'auto'
@@ -41,9 +41,9 @@ label_pos = 'bottom'
 text_size = 16
 icon_size = 72
 if len(glob.glob('LICEN*')) > 0:
-	license = {{
-	    'default-language': 'en_US',
-	    'licenses': {{
-				'en_US': open(glob.glob('LICEN*')[0]).read(),
-	    }}
-	}}
+    license = {{
+        'default-language': 'en_US',
+        'licenses': {{
+            'en_US': open(glob.glob('LICEN*')[0]).read(),
+        }}
+    }}
