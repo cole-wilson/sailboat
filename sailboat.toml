@@ -13,10 +13,10 @@ description = "Sailboat is a Python developer's best friend. It's a Python build
 url = "https://github.com/cole-wilson/sailboat"
 keywords = "sail package python setup.py sailboat shipsnake distribute ship snake snek release build"
 license = "MIT"
-latest_build = "0.25.5+565b981.1"
+latest_build = "0.26.0"
 author = "Cole Wilson"
-latest_release = "0.25.1"
-release-notes = "Emergency patch for error in sys.argv :rotating_light:"
+latest_release = "0.25.5"
+release-notes = "Tidy Up"
 
 
 # Resource Setup:
@@ -25,7 +25,7 @@ icon = ""
 data_files = [ "resources/*", "plugins.json",]
 modules = [ "toml", "semver", "requests", "setuptools", "twine", "colorama", "enlighten", "blessed",]
 file = "__main__.py"
-no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceback", "json", "subprocess", "thismoduledoesntexistihope_fortesting_48927348",]
+no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceback", "json", "subprocess", "thismoduledoesntexistihope_fortesting_48927348", "stat",]
 
 
 # Plugin Commands:
@@ -36,7 +36,7 @@ no_import = [ "shutil", "pathlib", "re", "os", "glob", "pkg_resources", "traceba
 [build.homebrew]
 
 [build.pyinstaller]
-_run = true
+_run = false
 type = 1
 mac = true
 windows = true

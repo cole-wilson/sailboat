@@ -28,8 +28,7 @@ class SetVersion(Plugin):
 		data = file.read()
 		file.close()
 		if "__version__" in data:
-			data = re.sub("^__version__.*",'__version__ = "{}"  # Added by Sailboat'.format(self.version),data,re.MULTILINE)
-			data = re.sub("\n__version__.*",'__version__ = "{}"  # Added by Sailboat'.format(self.version),data,re.MULTILINE)
+			data = re.sub("^__version__.*",'__version__ = "{}"  # Added by Sailboat'.format(self.version),data)
 		else:
 			data = "__version__ = \"{}\"  # Added by Sailboat\n".format(self.version) + data
 		file = open(self.data['short_name'] + os.sep + '__init__.py','w+')

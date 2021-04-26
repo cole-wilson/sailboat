@@ -26,7 +26,7 @@ except FileNotFoundError:
 
 options = {
 	"name": "sailboat",
-	"version": "0.25.5",
+	"version": "0.26.0",
 	"scripts": [],
 	"entry_points": {'console_scripts': ['sail=sailboat.__main__:main', 'ssail=sailboat.__main__:main', 'sssail=sailboat.__main__:main', 'ssssail=sailboat.__main__:main', 'sailboat=sailboat.__main__:main', 'ssailboat=sailboat.__main__:main', 'sssailboat=sailboat.__main__:main', 'ssssailboat=sailboat.__main__:main'], 'sailboat_plugins': ['quickstart=sailboat.core:QuickStart', 'remove=sailboat.core:Remove', 'add=sailboat.core:Add', 'git=sailboat.core:Git', 'dev=sailboat.core:Develop', 'release=sailboat.core:Release', 'plugins=sailboat.core:ManagePlugins', 'wizard=sailboat.core:Wizard', 'build=sailboat.build:Build', 'pypi=sailboat.builders:PyPi', 'homebrew=sailboat.builders:Homebrew', 'pyinstaller=sailboat.builders:PyInstaller', 'actions=sailboat.builders:Actions', 'tasks=sailboat.other:Tasks', 'build_docs_readme=sailboat.other:BuildDocs', 'setcodeversion=sailboat.other:SetVersion']},
 	"author": "Cole Wilson",

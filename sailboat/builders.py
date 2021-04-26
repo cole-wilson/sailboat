@@ -14,6 +14,7 @@
 # IN THE SOFTWARE.
 import os
 import sys
+import stat
 import glob
 import shutil
 import requests
@@ -379,16 +380,13 @@ class PyInstaller(Plugin):
         ]
         print(options)
         PyInstaller.__main__.run(options)
-        try:
-            print('removing ' + self.data['name'] + ".spec...")
-            os.remove(self.data['name'] + ".spec")
-        except FileNotFoundError:
-            print('removing app.spec...')
-            try:
-                os.remove("app.spec")
-            except:
-                pass
+        print('removing *.spec files')
+        for specfile in glob.glob('*.spec'):
+            os.remove(specfile)
         # MAC APP BUNDLE==============
+        for appbundle in glob.glob('dist/pyinstaller/*.app'):
+            print(appbundle)
+            shutil.rmtree(appbundle)  # We don't want the .app file PyInstaller made!
         print('\n\n\u001b[4m\u001b[1;36mGenerating Mac .app bundle...\u001b[0m')
         if self.getData('mac') and sys.platform.startswith('dar'):
             os.chdir('dist')
@@ -414,11 +412,22 @@ class PyInstaller(Plugin):
 
             os.rename('./../../pyinstaller/' + self.data["short_name"] + "-" + self.version + "-macos",
                       'MacOS/' + self.data['name'].replace('_', ''))
+            if self.getData('type') == 1:
+                os.rename('MacOS/' + self.data['name'].replace('_', ''), 'MacOS/main')
+                with open('MacOS/' + self.data['name'].replace('_', ''), 'w+') as f:
+                    f.write(f'#!/bin/bash\n'
+                            'DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"\n'
+                            'open -a Terminal ${DIR}/main')
+                # with open('MacOS/runner', 'w+') as f:
+                #     f.write(f'#!/bin/bash\n'
+                #             'DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"\n'
+                #             '${DIR}/main')
+                st = os.stat('MacOS/' + self.data['name'].replace('_', ''))
+                os.chmod('MacOS/' + self.data['name'].replace('_', ''), st.st_mode | stat.S_IEXEC)
             if "icns" in self.data['resources'] and os.path.isfile("./../../../"+self.data['resources']["icns"]):
                 shutil.copy('./../../../' + self.data['resources']["icns"], 'Resources/icon.icns')
 
             os.chdir('./../../..')
-
             os.rename('./dist/' + self.data['name'], './dist/pyinstaller/' + self.data['name'] + ".app")
         else:
             print('not generating mac .app bundle because on {} not mac.'.format(sys.platform))
@@ -445,7 +454,7 @@ class PyInstaller(Plugin):
                     ddimage=self.prefix + 'resources' + os.sep + 'dragdrop.png'
                 ))
             os.system(
-                f'cat build/settings.py;dmgbuild -s .{os.sep}build{os.sep}settings.py "{self.data["name"]} Installer" ./dist/pyinstaller/{self.data["short_name"] + "-" + self.version + "-macos"}.dmg')
+                f'dmgbuild -s .{os.sep}build{os.sep}settings.py "{self.data["name"]} Installer" ./dist/pyinstaller/{self.data["short_name"] + "-" + self.version + "-macos"}.dmg')
 
         else:
             print(f'Installer creation not yet supported for {sys.platform}!')
