@@ -19,9 +19,12 @@ licensetext = """# Copyright 2020 Cole Wilson and other contributors
 
 
 """
+
+
 class SetVersion(Plugin):
 	_type = "build"
 	_show = False
+
 	def run(self):
 		# try:
 		file = open(self.data['short_name'] + os.sep + '__init__.py')
@@ -36,6 +39,8 @@ class SetVersion(Plugin):
 		file.close()
 		# except:
 		# 	pass
+
+
 class BuildDocs(Plugin):
 	_type = "build"
 	_show = False

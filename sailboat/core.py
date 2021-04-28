@@ -97,7 +97,7 @@ class Wizard(Plugin):
         "short_description::str": "Short description of your project: ",
         "description::str": "Long description of your project: ",
         "url::str": "Home URL of your project",
-        "keywords::str": "Your project's keywords, seperated with a a space.",
+        "keywords::str": "Your project's keywords, seperated with a space.",
     }
 
     def wizard(self):
