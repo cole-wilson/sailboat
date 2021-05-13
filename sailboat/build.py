@@ -81,7 +81,7 @@ class Build(Plugin):
         postbuild = progress_bar.add_subcounter('darkgrey')
         # =====================================================================================
         if not os.path.isfile('.gitignore'):
-            open('.' + os.sep + '.gitignore', 'w+').write(
+            open('.' + os.sep + '.gitignore', 'w+', encoding="utf8").write(
                 self.getResource('resources' + os.sep + 'gitignore.template').read().replace('/', os.sep))
         source_dir = os.getcwd()
         target_dir = self.data["short_name"] + os.sep
@@ -98,7 +98,7 @@ class Build(Plugin):
         for filename in glob.glob(target_dir + os.sep + 'LICE*'):
             shutil.copyfile(filename, 'LICENSE')
         if not os.path.isfile(target_dir + '__init__.py'):
-            open(target_dir + '__init__.py', 'w+').write('# This file must exist, empty or not')
+            open(target_dir + '__init__.py', 'w+', encoding="utf8").write('# This file must exist, empty or not')
         if self.data['resources']['file'] != "" and not os.path.isfile(
                 self.data['short_name'] + os.sep + '__main__.py') and os.path.isfile(self.data['resources']['file']):
             try:
@@ -114,7 +114,7 @@ class Build(Plugin):
             self.data['resources']['no_import'] = []
         mods = []
         for x in glob.glob(self.data['short_name'] + os.sep + '*.py'):
-            f = open(x)
+            f = open(x, encoding="utf8")
             b = f.read()
             f.close()
             mods += re.findall('^import[ ]+(.*)', b, re.M)

@@ -68,11 +68,11 @@ git push -u origin master --tags;
                 dependencies=" ".join(self.data['resources']['modules'])
             )
             try:
-                f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml', 'w+')
+                f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml', 'w+', encoding="utf8")
             except FileNotFoundError:
                 os.mkdir('.github')
                 os.mkdir(f'.github{os.sep}workflows')
-                f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml', 'w+')
+                f = open(f'.github{os.sep}workflows{os.sep}sailboat.yml', 'w+', encoding="utf8")
             f.write(new)
             f.close()
 

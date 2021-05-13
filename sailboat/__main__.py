@@ -27,7 +27,7 @@ def main(argv=()) -> None:
         os.chdir(ordinal_path)
     else:
         needs_setup = False
-        with open('sailboat.toml', 'r') as file:
+        with open('sailboat.toml', 'r', encoding="utf8") as file:
             data = toml.loads(file.read())
             if data == {}:
                 needs_setup = True

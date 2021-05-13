@@ -1,4 +1,4 @@
-__version__ = "0.26.1"  # Added by Sailboat
+__version__ = "0.26.2"  # Added by Sailboat
 
 import os
 import glob
