@@ -17,6 +17,10 @@ sailboat
 
 <a style="display:inline-block;" align="center" href="//sailboat.colewilson.xyz">View Documentation Site</a>
 
+> **Note:** While this program is still in early stages, it is suitable for use in production. If you have any problems/suggestions/questions please let me know in a GitHub Issue. This is my first big open-source project, so feel free to submit a pull-request!
+> Thanks!
+> \- Cole Wilson
+
 ## About
 Sailboat is a Python developer's best friend. It's a Python build tool that can do anything you need it to! It suports a countless number of plugins — you can even [make your own](#plugins). Sailboat is made for anyone, whether you are a beginner on your very first project, or a senior software engineer with years of experience. 
 
