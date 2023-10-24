@@ -15,7 +15,9 @@ sailboat
 
 </h1>
 
-<a style="display:inline-block;" align="center" href="//sailboat.colewilson.xyz">View Documentation Site</a>
+<a style="display:inline-block;" align="center" href="https://cole-wilson.github.io/sailboat/">View Documentation Site</a>, <a href="https://www.youtube.com/watch?v=zQQ3B5MDV0s">View YouTube Demo</a>
+
+presented at PyCon USA
 
 > **Note:** While this program is still in early stages of development,
 > it is suitable for use in production.
